@@ -1,0 +1,17 @@
+# Netlify CLI artefacts (we keep .netlify/state.json out of Git so each clone
+# can `netlify link` to its own site or use the deploy.sh scripts directly)
+.netlify/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backup files
+*.bak
+*~
