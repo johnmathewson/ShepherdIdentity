@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Shepherd Apps</title>
 <meta name="theme-color" content="#1c1f26" />
+<meta name="description" content="The digital tools of Shepherd Church — Northwest Indiana." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -16,18 +17,16 @@
     --bg-night: #111318;
     --sage: #6f8d81;
     --sage-light: #8aaa9e;
-    --sage-dark: #5a7a6d;
     --sage-glow: rgba(111,141,129,0.45);
     --wheat: #c2b280;
-    --gold: #d4a843;
     --text-primary: #f0f0ec;
     --text-secondary: #a0a8b8;
     --text-muted: #5e6578;
     --border-soft: rgba(255,255,255,0.08);
-    --border-glass: rgba(255,255,255,0.13);
-    --danger: #c97070;
   }
+
   * { box-sizing: border-box; }
+
   html, body {
     margin: 0; padding: 0;
     background: var(--bg-deep);
@@ -37,1130 +36,236 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
+
   body {
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
+    /* Atmospheric backdrop: deep night → midnight gradient with a soft sage bloom */
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(111,141,129,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 60% at 50% 100%, rgba(194,178,128,0.06) 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-night) 100%);
+    background-attachment: fixed;
   }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
+
   a { color: inherit; text-decoration: none; }
   ::selection { background-color: rgba(111,141,129,0.4); }
 
-  /* ---------- Liquid Glass ---------- */
-  .glass {
-    position: relative;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(26px) saturate(150%);
-    -webkit-backdrop-filter: blur(26px) saturate(150%);
-    border: 1px solid rgba(255,255,255,0.11);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.09) inset,
-      0 -1px 0 rgba(0,0,0,0.28) inset,
-      0 12px 32px rgba(0,0,0,0.35),
-      0 2px 6px rgba(0,0,0,0.2);
-    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-  }
-  /* Specular edge highlight — gives it that "glass" material feel */
-  .glass::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-      140deg,
-      rgba(255,255,255,0.32) 0%,
-      rgba(255,255,255,0.08) 18%,
-      rgba(255,255,255,0) 45%,
-      rgba(255,255,255,0) 72%,
-      rgba(255,255,255,0.12) 100%
-    );
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    pointer-events: none;
-  }
-  /* Subtle inner radial highlight — implies refraction */
-  .glass::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(ellipse 80% 60% at 30% 0%, rgba(255,255,255,0.08) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .glass:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.2);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.13) inset,
-      0 -1px 0 rgba(0,0,0,0.3) inset,
-      0 18px 40px rgba(0,0,0,0.4),
-      0 3px 8px rgba(0,0,0,0.22);
-  }
-  .glass-nav {
-    background: rgba(17,19,24,0.6);
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+  /* Layout */
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 24px 48px;
   }
 
-  /* ---------- Hero background photo ---------- */
-  .hero-bg { position: relative; overflow: hidden; isolation: isolate; }
-  .hero-bg-image {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center center;
-    filter: grayscale(90%) brightness(0.5) contrast(1.1);
-    z-index: 0; pointer-events: none;
-    opacity: 0.55;
-  }
-  .hero-overlay {
-    position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background:
-      radial-gradient(ellipse at 30% 20%, rgba(111,141,129,0.18) 0%, transparent 55%),
-      radial-gradient(ellipse at 70% 80%, rgba(212,168,67,0.1) 0%, transparent 55%),
-      linear-gradient(to bottom, rgba(17,19,24,0.25) 0%, rgba(17,19,24,0.55) 55%, rgba(17,19,24,0.92) 88%, rgba(17,19,24,1) 100%);
-  }
-  .hero-content { position: relative; z-index: 2; }
-
-  /* ---------- Animations ---------- */
-  @keyframes fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes pulse-dot { 0%,100% { box-shadow: 0 0 6px var(--sage-glow); } 50% { box-shadow: 0 0 16px var(--sage-glow); } }
-  .anim-fade-up { animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) both; }
-  .anim-fade-in { animation: fade-in 0.5s ease-out both; }
-  .delay-1 { animation-delay: 0.08s; }
-  .delay-2 { animation-delay: 0.16s; }
-  .delay-3 { animation-delay: 0.26s; }
-  .delay-4 { animation-delay: 0.36s; }
-
-  /* ---------- Nav ---------- */
-  nav.topnav {
-    position: sticky; top: 0; z-index: 50;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 28px;
-  }
+  /* Header / brand */
   .brand {
-    display: flex; align-items: center; gap: 10px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700; font-size: 0.95rem;
-    letter-spacing: 0.01em;
-  }
-  .brand-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--sage);
-    animation: pulse-dot 3s ease-in-out infinite;
-  }
-  .nav-right { display: flex; align-items: center; gap: 18px; }
-  .nav-chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 5px 11px;
-    background: rgba(111,141,129,0.16);
-    border: 1px solid rgba(111,141,129,0.32);
-    border-radius: 999px;
-    font-size: 0.7rem; font-weight: 600;
-    color: var(--sage-light);
-    letter-spacing: 0.04em;
-  }
-  .nav-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage-light); box-shadow: 0 0 6px var(--sage-glow); }
-  .nav-link {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    transition: color 0.2s;
-    background: transparent; border: 0; cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    padding: 6px 0;
-  }
-  .nav-link:hover { color: var(--text-primary); }
-
-  /* ========== SIGNED-OUT HERO ========== */
-  .signin-hero { min-height: 100vh; display: flex; flex-direction: column; }
-  .signin-hero .hero-inner {
-    flex: 1;
-    display: flex; align-items: center; justify-content: center;
-    padding: 40px 24px 80px;
-  }
-  .signin-card {
-    max-width: 460px; width: 100%;
-    padding: 44px 36px 34px;
-    border-radius: 12px;
     text-align: center;
+    margin-bottom: 56px;
   }
-  .signin-eyebrow {
-    color: var(--sage-light);
-    font-size: 0.7rem; font-weight: 600;
-    letter-spacing: 0.26em; text-transform: uppercase;
+  .brand-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--sage);
     margin-bottom: 14px;
   }
-  .signin-title {
-    font-size: 2.15rem; font-weight: 700;
-    margin-bottom: 14px; line-height: 1.1;
-  }
-  .signin-title .accent { color: var(--sage-light); }
-  .signin-sub {
-    color: var(--text-secondary);
-    font-size: 0.95rem; line-height: 1.6;
-    margin: 0 auto 28px; max-width: 360px;
-  }
-  .btn-primary {
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    width: 100%; padding: 15px 22px;
-    border-radius: 10px;
-    background: linear-gradient(180deg, var(--sage) 0%, var(--sage-dark) 100%);
-    color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600; font-size: 0.92rem;
-    border: 0; cursor: pointer;
-    box-shadow: 0 8px 20px rgba(111,141,129,0.3), inset 0 1px 0 rgba(255,255,255,0.18);
-    transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
-  }
-  .btn-primary:hover {
-    filter: brightness(1.08);
-    transform: translateY(-1px);
-    box-shadow: 0 12px 28px rgba(111,141,129,0.42), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-  .signin-footnote {
-    margin-top: 18px;
-    color: var(--text-muted); font-size: 0.76rem;
-  }
-  .signin-input {
-    width: 100%;
-    padding: 14px 16px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: var(--text);
-    font-family: inherit;
-    font-size: 0.92rem;
-    text-align: center;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-  }
-  .signin-input:focus {
-    border-color: var(--sage);
-    background: rgba(111, 141, 129, 0.08);
-    box-shadow: 0 0 0 3px rgba(111, 141, 129, 0.18);
-  }
-  .signin-input::placeholder { color: var(--text-muted); }
-  /* Demoted PCO option — small, low-emphasis, clearly for staff. */
-  .signin-secondary-block {
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .signin-secondary-eyebrow {
-    font-size: 0.65rem; font-weight: 600;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-  }
-  .signin-secondary-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 0.82rem; color: var(--text-secondary);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .signin-secondary-link:hover { color: var(--sage-light); }
-
-  /* ========== SIGNED-IN HUB (centered hero, cards inside) ========== */
-  .hub-screen {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    position: relative;
-  }
-  .hub-hero {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 24px 120px;
-    position: relative;
-    text-align: center;
-    min-height: calc(100vh - 70px);
-  }
-  .hub-inner {
-    max-width: 1040px; width: 100%;
-    margin: 0 auto;
-  }
-  .hub-eyebrow {
-    color: var(--sage-light);
-    font-size: 0.72rem; font-weight: 600;
-    letter-spacing: 0.28em; text-transform: uppercase;
-    margin-bottom: 18px;
-  }
-  .hub-title {
-    font-size: clamp(2.4rem, 5.5vw, 3.8rem);
-    font-weight: 800;
+  .brand-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 500;
+    font-size: 44px;
     line-height: 1.05;
-    margin-bottom: 18px;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin: 0;
   }
-  .hub-title .accent { color: var(--sage-light); }
-  .hub-sub {
+  .brand-sub {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.4;
     color: var(--text-secondary);
-    font-size: clamp(1rem, 1.5vw, 1.12rem); line-height: 1.6;
-    max-width: 560px;
-    margin: 0 auto 56px;
+    margin-top: 14px;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  /* ---------- App cards ---------- */
+  /* Cards */
   .cards {
     display: grid;
     grid-template-columns: 1fr;
     gap: 18px;
-    max-width: 880px;
-    margin: 0 auto;
-    text-align: left;
   }
   @media (min-width: 720px) {
-    .cards { grid-template-columns: 1fr 1fr; }
+    .cards {
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
   }
 
   .card {
-    display: flex; flex-direction: column;
-    padding: 30px 30px 26px;
-    border-radius: 12px;
-    color: inherit; cursor: pointer;
-    overflow: hidden;
-    min-height: 220px;
-  }
-  .card:hover { transform: translateY(-3px); }
-  .card:active { transform: translateY(-1px); }
-
-  .card-head {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 14px; margin-bottom: 22px;
-  }
-  .card-icon {
-    display: flex; align-items: center; justify-content: center;
-    width: 52px; height: 52px;
-    background: linear-gradient(135deg, rgba(111,141,129,0.28) 0%, rgba(111,141,129,0.08) 100%);
-    color: var(--sage-light);
-    border-radius: 10px;
-    border: 1px solid rgba(111,141,129,0.32);
+    position: relative;
+    background: rgba(255,255,255,0.045);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 22px;
+    padding: 28px 24px 26px;
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.15),
-      0 6px 14px rgba(111,141,129,0.18);
-    flex-shrink: 0;
+      0 1px 0 rgba(255,255,255,0.08) inset,
+      0 8px 28px rgba(0,0,0,0.32);
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
   }
-  .card-badge {
-    padding: 5px 11px;
-    background: rgba(212,168,67,0.14);
-    border: 1px solid rgba(212,168,67,0.32);
-    border-radius: 999px;
-    color: var(--gold);
-    font-size: 0.64rem; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    white-space: nowrap;
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%);
+    pointer-events: none;
   }
-  .card h3 {
-    font-size: 1.32rem; font-weight: 600;
-    margin-bottom: 10px;
-    transition: color 0.2s;
-  }
-  .card:hover h3 { color: var(--sage-light); }
-  .card p {
-    color: var(--text-secondary);
-    font-size: 0.94rem; line-height: 1.55;
-    margin: 0 0 auto;
-    padding-bottom: 22px;
-  }
-  .card-cta {
-    display: flex; align-items: center; gap: 8px;
-    color: var(--sage-light);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.76rem; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    transition: gap 0.2s;
-    margin-top: auto;
-  }
-  .card:hover .card-cta { gap: 14px; }
-  .card-cta svg { transition: transform 0.2s; flex-shrink: 0; }
-
-  /* ---------- Error ---------- */
-  .err {
-    background: rgba(201,112,112,0.12);
-    border: 1px solid rgba(201,112,112,0.3);
-    color: #f4c6c6;
-    padding: 12px 16px; border-radius: 10px;
-    margin: 0 auto 20px; max-width: 440px;
-    font-size: 0.88rem; text-align: left;
+  .card:hover, .card:focus-visible {
+    background: rgba(255,255,255,0.075);
+    border-color: rgba(255,255,255,0.20);
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.13) inset,
+      0 14px 36px rgba(0,0,0,0.4),
+      0 0 0 1px var(--sage-glow);
+    outline: none;
   }
 
-  /* ---------- Footer ---------- */
-  footer {
-    padding: 24px 24px 32px;
-    text-align: center;
-    color: var(--text-muted); font-size: 0.76rem;
-    position: relative; z-index: 2;
-  }
-  footer .footer-line { margin-top: 5px; opacity: 0.6; font-size: 0.7rem; }
-
-  /* ---------- Loading ---------- */
-  .loading-screen {
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 14px;
-    color: var(--text-secondary);
-  }
-  .spinner {
-    width: 30px; height: 30px;
-    border: 2px solid rgba(255,255,255,0.08);
-    border-top-color: var(--sage-light);
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .hidden { display: none !important; }
-
-  /* ========== MOBILE REFINEMENTS ========== */
-  @media (max-width: 720px) {
-    nav.topnav { padding: 14px 18px; }
-    .brand { font-size: 0.88rem; }
-    .nav-right { gap: 12px; }
-    .nav-chip { padding: 4px 9px; font-size: 0.66rem; }
-
-    /* Signed-out */
-    .signin-hero .hero-inner { padding: 32px 18px 60px; }
-    .signin-card { padding: 36px 26px 28px; }
-    .signin-title { font-size: 1.9rem; }
-    .signin-sub { font-size: 0.92rem; }
-
-    /* Signed-in hub — crucial fix: don't force full-viewport hero that buries the cards */
-    .hub-hero {
-      padding: 40px 20px 56px;
-      min-height: 0;
-      justify-content: flex-start;
-    }
-    .hub-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; margin-bottom: 12px; }
-    .hub-title { font-size: 2.1rem; margin-bottom: 12px; }
-    .hub-sub { font-size: 0.98rem; margin-bottom: 32px; }
-
-    .cards { gap: 14px; }
-    .card {
-      padding: 22px 22px 20px;
-      min-height: 0;
-    }
-    .card-head { margin-bottom: 16px; }
-    .card-icon { width: 44px; height: 44px; border-radius: 9px; }
-    .card-icon svg { width: 20px; height: 20px; }
-    .card h3 { font-size: 1.15rem; }
-    .card p { font-size: 0.9rem; padding-bottom: 16px; }
-    .card-cta { font-size: 0.72rem; letter-spacing: 0.12em; }
-
-    footer { padding: 18px 20px 28px; font-size: 0.72rem; }
-  }
-
-  /* Extra tight: iPhone SE / very narrow */
-  @media (max-width: 380px) {
-    .signin-card { padding: 32px 22px 26px; }
-    .signin-title { font-size: 1.7rem; }
-    .hub-title { font-size: 1.85rem; }
-    .card { padding: 20px 20px 18px; }
-    .card h3 { font-size: 1.08rem; }
-  }
-
-  /* ========== ADMIN SECTION (hidden unless server confirms admin) ========== */
-  #adminSection { display: none; max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
-  #adminSection.visible { display: block; }
-  .admin-head {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
-  }
-  .admin-eyebrow {
-    color: var(--sage-light);
-    font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.24em; text-transform: uppercase;
-  }
-  .admin-actions { display: flex; align-items: center; gap: 10px; }
-  .admin-btn {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: var(--text-secondary);
-    padding: 7px 14px; border-radius: 999px;
-    font-size: 0.78rem; font-weight: 500;
-    cursor: pointer; transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
-  }
-  .admin-btn:hover { color: var(--cream); border-color: rgba(113,142,130,0.4); background: rgba(255,255,255,0.06); }
-  .admin-btn.live-on { background: rgba(111,141,129,0.2); border-color: rgba(111,141,129,0.5); color: var(--sage-light); }
-  .admin-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 28px; }
-  @media (min-width: 640px) { .admin-stats { grid-template-columns: repeat(4, 1fr); } }
-  .admin-stat {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+  .card-icon {
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
-    padding: 18px 14px; text-align: center;
-  }
-  .admin-stat-num {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.7rem; font-weight: 700;
-    color: var(--cream); line-height: 1.05;
-    letter-spacing: -0.02em;
-  }
-  .admin-stat-label {
-    color: var(--text-secondary);
-    font-size: 0.66rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.18em;
-    margin-top: 6px;
-  }
-  .admin-feed-title {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--text-secondary);
-    font-size: 0.7rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.22em;
-    margin-bottom: 14px;
-  }
-  .admin-feed { display: flex; flex-direction: column; gap: 10px; }
-  .admin-event {
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 10px;
-    padding: 14px 16px;
-    cursor: pointer; transition: all 0.2s;
-    text-align: left;
-    width: 100%;
-    font-family: inherit;
-    color: inherit;
-  }
-  .admin-event:hover { border-color: rgba(113,142,130,0.35); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
-  .admin-event-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
-  .admin-event-icon { font-size: 0.95rem; line-height: 1; }
-  .admin-event-name { font-weight: 600; color: var(--cream); font-size: 0.88rem; }
-  .admin-event-type {
-    color: var(--sage-light);
-    font-size: 0.66rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.14em;
-  }
-  .admin-event-time { color: var(--text-muted); font-size: 0.74rem; margin-left: auto; }
-  .admin-event-preview { color: var(--text-secondary); font-size: 0.86rem; line-height: 1.5; }
-  .admin-empty { color: var(--text-muted); font-style: italic; font-size: 0.88rem; padding: 20px; text-align: center; }
-  .admin-loading { color: var(--text-secondary); font-size: 0.85rem; padding: 20px; text-align: center; }
-
-  /* Detail modal */
-  .admin-modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 100;
-    display: none; align-items: center; justify-content: center;
-    padding: 20px;
-    padding-top: calc(20px + env(safe-area-inset-top, 0px));
-    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-    overflow-y: auto;
-  }
-  .admin-modal-overlay.open { display: flex; }
-  .admin-modal {
-    background: var(--bg-deep);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 14px;
-    padding: 28px 24px;
-    max-width: 580px; width: 100%;
-    max-height: calc(100vh - 80px);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-  }
-  .admin-modal-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; gap: 16px; }
-  .admin-modal-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.05rem; font-weight: 700;
-    color: var(--cream); letter-spacing: -0.01em;
-  }
-  .admin-modal-sub { color: var(--text-muted); font-size: 0.78rem; margin-top: 4px; }
-  .admin-modal-close {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-    width: 34px; height: 34px; border-radius: 8px;
-    color: var(--text-secondary); cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .admin-modal-close:hover { color: var(--cream); border-color: var(--sage); }
-  .admin-modal-content {
-    color: var(--text-primary);
-    font-size: 0.94rem; line-height: 1.7;
-    white-space: pre-wrap; word-wrap: break-word;
-    background: rgba(255,255,255,0.03);
-    border-left: 2px solid var(--sage);
-    padding: 16px 18px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 16px;
-  }
-  .admin-modal-meta { display: flex; flex-direction: column; gap: 8px; }
-  .admin-meta-row { display: flex; gap: 10px; align-items: baseline; }
-  .admin-meta-label {
-    color: var(--sage-light);
-    font-size: 0.66rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.16em;
-    min-width: 80px; flex-shrink: 0;
-  }
-  .admin-meta-value { color: var(--text-secondary); font-size: 0.86rem; }
-  .admin-chip {
-    display: inline-block; padding: 3px 9px;
-    background: rgba(111,141,129,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(111,141,129,0.18);
     border: 1px solid rgba(111,141,129,0.3);
-    border-radius: 999px;
-    color: var(--sage-light); font-size: 0.7rem;
-    margin-right: 4px; margin-bottom: 4px;
+    color: var(--sage-light);
+    margin-bottom: 18px;
   }
+  .card-icon svg { width: 22px; height: 22px; }
+
+  .card.tan .card-icon {
+    background: rgba(194,178,128,0.16);
+    border-color: rgba(194,178,128,0.32);
+    color: var(--wheat);
+  }
+
+  .card h2 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+  }
+  .card .tagline {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+
+  .card .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 22px;
+    color: var(--sage-light);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .card.tan .cta { color: var(--wheat); }
+
+  /* Footer */
+  .foot {
+    margin-top: 64px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .foot a { color: var(--text-secondary); }
+  .foot a:hover { color: var(--text-primary); }
+  .foot .sep { opacity: 0.4; padding: 0 8px; }
+
+  /* Subtle fade-in on load */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anim { animation: fadeUp 0.6s cubic-bezier(0.2,0.7,0.3,1) both; }
+  .d1 { animation-delay: 0s; }
+  .d2 { animation-delay: 0.1s; }
+  .d3 { animation-delay: 0.2s; }
+  .d4 { animation-delay: 0.3s; }
 </style>
 </head>
 <body>
 
-<!-- Loading -->
-<div id="loadingView" class="loading-screen">
-  <div class="spinner"></div>
-  <p>Loading…</p>
-</div>
+<div class="wrap">
 
-<!-- Signed-out -->
-<div id="signinView" class="hidden">
-  <div class="signin-hero hero-bg">
-    <img src="https://shepherd-prayer-wall.netlify.app/worship-bg.jpg" alt="" class="hero-bg-image" onerror="this.style.display='none'" />
-    <div class="hero-overlay"></div>
+  <header class="brand anim d1">
+    <div class="brand-eyebrow">Shepherd Church · Northwest Indiana</div>
+    <h1 class="brand-title">The tools we&rsquo;ve built.</h1>
+    <p class="brand-sub">Two spaces for the life of the church. Pick the door that fits where you are.</p>
+  </header>
 
-    <nav class="topnav hero-content">
-      <div class="brand"><span class="brand-dot"></span> Shepherd Apps</div>
-    </nav>
+  <main class="cards">
 
-    <div class="hero-inner hero-content">
-      <div class="anim-fade-up">
-        <div id="signinError" class="err hidden"></div>
-        <div class="signin-card glass">
-          <div class="signin-eyebrow">Shepherd Church NWI</div>
-          <h1 class="signin-title">Welcome to<br/><span class="accent">Shepherd Apps</span></h1>
-          <p class="signin-sub">
-            We&rsquo;ll email you a one-tap sign-in link &mdash; no password needed.
-          </p>
-
-          <!-- Magic-link primary path -->
-          <div id="magicLinkStep">
-            <input id="hubEmail" class="signin-input" type="email" placeholder="Your email address" autocomplete="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" />
-            <button id="signinBtn" class="btn-primary" type="button">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
-              </svg>
-              Send me a sign-in link
-            </button>
-          </div>
-
-          <!-- "Check your email" confirmation state (revealed after a link is sent) -->
-          <div id="magicLinkSent" class="hidden" style="text-align:center;">
-            <div style="font-size:2rem;margin-bottom:6px;">📩</div>
-            <div style="font-weight:600;color:var(--text);margin-bottom:8px;">Check your email</div>
-            <p style="color:var(--text-secondary);font-size:0.85rem;line-height:1.55;margin:0 auto 14px;max-width:300px;">
-              We sent a sign-in link to <span id="magicSentTo" style="color:var(--text);font-weight:500;"></span>.
-              Tap the link in your inbox and you&rsquo;re in.
-            </p>
-            <a id="magicResetBtn" style="font-size:0.78rem;color:var(--text-muted);cursor:pointer;text-decoration:none;">&larr; Use a different email</a>
-          </div>
-
-          <!-- Secondary: Planning Center for Serve Team / Staff -->
-          <div class="signin-secondary-block">
-            <div class="signin-secondary-eyebrow">For Serve Team &amp; Staff</div>
-            <a id="pcoLinkBtn" href="#" class="signin-secondary-link">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/></svg>
-              Sign in with Planning Center &rarr;
-            </a>
-          </div>
-
-          <div class="signin-footnote">One sign-in, all your Shepherd apps.</div>
-        </div>
+    <a class="card anim d2" href="https://nwiprays.com" rel="noopener">
+      <div class="card-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21s-7-4.5-7-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-7 11-7 11"/>
+          <path d="M9 11h6M12 8v6" opacity="0.6"/>
+        </svg>
       </div>
-    </div>
-  </div>
-</div>
+      <h2>NWI Prays</h2>
+      <p class="tagline">Submit a prayer request or take an hour with the prayer team. Anyone can ask. The team prays. You hear back.</p>
+      <span class="cta">
+        Open NWI Prays
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </span>
+    </a>
 
-<!-- Signed-in hub -->
-<div id="dashboardView" class="hidden hub-screen hero-bg">
-  <img src="https://shepherd-prayer-wall.netlify.app/worship-bg.jpg" alt="" class="hero-bg-image" onerror="this.style.display='none'" />
-  <div class="hero-overlay"></div>
-
-  <nav class="topnav glass-nav hero-content">
-    <div class="brand"><span class="brand-dot"></span> Shepherd Apps</div>
-    <div class="nav-right">
-      <span id="navChip" class="nav-chip hidden"><span class="dot"></span> Prayer Team</span>
-      <button id="signoutBtn" class="nav-link" type="button">Sign out</button>
-    </div>
-  </nav>
-
-  <div class="hub-hero hero-content">
-    <div class="hub-inner">
-      <div class="hub-eyebrow anim-fade-up">Welcome back</div>
-      <h1 class="hub-title anim-fade-up delay-1">Hello, <span id="greetName" class="accent">friend</span>.</h1>
-      <p class="hub-sub anim-fade-up delay-2">
-        Your Shepherd apps are below. Tap any card — you're already signed in everywhere.
-      </p>
-
-      <div class="cards">
-        <!-- Shepherd Formation — always -->
-        <a id="cardFormation" href="#" class="card glass anim-fade-up delay-3" data-dest="formation">
-          <div class="card-head">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4M20.6 6A11.95 11.95 0 0 1 12 3a11.95 11.95 0 0 1-8.6 3A12 12 0 0 0 3 9c0 5.6 3.8 10.3 9 11.6 5.2-1.3 9-6 9-11.6 0-1-.1-2-.4-3z"/></svg>
-            </div>
-          </div>
-          <h3>Shepherd Formation</h3>
-          <p>Record what God is speaking — prophetic words, dreams, gifts, and your identity in Christ.</p>
-          <div class="card-cta">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
-        </a>
-
-        <!-- Prayer Team Dashboard -->
-        <a id="cardPrayerTeam" href="#" class="card glass hidden anim-fade-up delay-4" data-dest="prayer_team">
-          <div class="card-head">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 12h18M3 17h12"/><circle cx="19" cy="17" r="2"/></svg>
-            </div>
-            <span class="card-badge">Team Only</span>
-          </div>
-          <h3>Prayer Team Dashboard</h3>
-          <p>Pick up prayer cards, pray over them, and log prophetic encouragement with the team.</p>
-          <div class="card-cta">Open Dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
-        </a>
-
-        <!-- Prayer Wall submit -->
-        <a id="cardPrayerWall" href="#" class="card glass hidden anim-fade-up delay-4" data-dest="prayer_wall">
-          <div class="card-head">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.3 6.3a4.5 4.5 0 0 0 0 6.4L12 20.4l7.7-7.7a4.5 4.5 0 0 0-6.4-6.4L12 7.6l-1.3-1.3a4.5 4.5 0 0 0-6.4 0z"/></svg>
-            </div>
-          </div>
-          <h3>Submit a Prayer Request</h3>
-          <p>Share what's on your heart. Our prayer team will lift it up and reply with encouragement.</p>
-          <div class="card-cta">Submit Request <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
-        </a>
-
-        <!-- Day/Night Prayer Initiative — visible to everyone -->
-        <a id="cardPrayerWeek" href="#" class="card glass anim-fade-up delay-5" data-dest="prayer_week">
-          <div class="card-head">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
-            </div>
-            <span class="card-badge">May 17–23</span>
-          </div>
-          <h3>Day/Night Prayer Initiative</h3>
-          <p>Claim a one-hour slot during our week of unbroken prayer — pick any time, day or night.</p>
-          <div class="card-cta">Pick a Slot <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
-        </a>
+    <a class="card tan anim d3" href="https://shepherd-identity-tool.netlify.app" rel="noopener">
+      <div class="card-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5V4.5a1.5 1.5 0 0 1 1.5-1.5H20v18H5.5A1.5 1.5 0 0 1 4 19.5z"/>
+          <path d="M8 7h8M8 11h6M8 15h4" opacity="0.7"/>
+        </svg>
       </div>
-    </div>
-  </div>
+      <h2>Shepherd Formation</h2>
+      <p class="tagline">Your private journal for what God is shaping in you — what stirred, what He&rsquo;s saying, the prayers you&rsquo;re carrying.</p>
+      <span class="cta">
+        Open Formation
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </span>
+    </a>
 
-  <!-- Admin section — hidden until server confirms admin via apps-activity edge function -->
-  <section id="adminSection" aria-label="Admin overview">
-    <div class="admin-head">
-      <div class="admin-eyebrow">Admin Overview</div>
-      <div class="admin-actions">
-        <span id="adminGenerated" style="font-size:0.72rem;color:var(--text-muted);"></span>
-        <button id="adminRefreshBtn" class="admin-btn" type="button">↻ Refresh</button>
-        <button id="adminLiveBtn" class="admin-btn" type="button">⏵ Live</button>
-      </div>
-    </div>
-    <div class="admin-stats">
-      <div class="admin-stat"><div class="admin-stat-num" id="statSignups">—</div><div class="admin-stat-label">Signups Today</div></div>
-      <div class="admin-stat"><div class="admin-stat-num" id="statEntries">—</div><div class="admin-stat-label">Entries Today</div></div>
-      <div class="admin-stat"><div class="admin-stat-num" id="statAi">—</div><div class="admin-stat-label">AI Calls Today</div></div>
-      <div class="admin-stat"><div class="admin-stat-num" id="statActive">—</div><div class="admin-stat-label">Active Today</div></div>
-    </div>
-    <div class="admin-feed-title">Recent Activity</div>
-    <div id="adminFeed" class="admin-feed">
-      <div class="admin-loading">Loading…</div>
-    </div>
-  </section>
+  </main>
 
-  <!-- Detail modal -->
-  <div id="adminModalOverlay" class="admin-modal-overlay" role="dialog" aria-modal="true">
-    <div class="admin-modal">
-      <div class="admin-modal-head">
-        <div>
-          <div id="adminModalTitle" class="admin-modal-title"></div>
-          <div id="adminModalSub" class="admin-modal-sub"></div>
-        </div>
-        <button id="adminModalClose" class="admin-modal-close" type="button" aria-label="Close">✕</button>
-      </div>
-      <div id="adminModalContent" class="admin-modal-content"></div>
-      <div id="adminModalMeta" class="admin-modal-meta"></div>
-    </div>
-  </div>
-
-  <footer>
-    <div>Shepherd Church NWI</div>
-    <div id="debugInfo" class="footer-line"></div>
+  <footer class="foot anim d4">
+    Shepherd Church
+    <span class="sep">·</span>
+    Merrillville, Indiana
+    <span class="sep">·</span>
+    <a href="https://shepherdchurch.co" rel="noopener">shepherdchurch.co</a>
   </footer>
+
 </div>
-
-<script type="module">
-  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
-  const SUPABASE_URL = 'https://epkuvykamufrrgbacbel.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwa3V2eWthbXVmcnJnYmFjYmVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NzQ4NzIsImV4cCI6MjA4OTI1MDg3Mn0.EBKnKeOzNcZGbzpQIX7Uzz76j780XQ9N8sCNBJyojeE';
-  const PCO_CLIENT_ID = 'b108ec172f700a7830451d2548f16a6afe1a6979f901755ad252783686857ec1';
-  const PCO_REDIRECT_URI = 'https://epkuvykamufrrgbacbel.supabase.co/functions/v1/pco-signin';
-
-  const DEST_URLS = {
-    formation: 'https://shepherd-identity-tool.netlify.app/',
-    prayer_team: 'https://nwiprays.com/hub-handoff?next=team',
-    prayer_wall: 'https://nwiprays.com/hub-handoff?next=submit',
-    prayer_week: 'https://nwiprays.com/hub-handoff?next=prayer-week',
-  };
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: { persistSession: true, detectSessionInUrl: true, autoRefreshToken: true, flowType: 'implicit' },
-  });
-
-  const $ = (id) => document.getElementById(id);
-  const show = (id) => $(id).classList.remove('hidden');
-  const hide = (id) => $(id).classList.add('hidden');
-
-  function showError(msg) {
-    const el = $('signinError');
-    el.textContent = msg;
-    el.classList.remove('hidden');
-  }
-
-  function buildPcoAuthUrl(state) {
-    const params = new URLSearchParams({
-      client_id: PCO_CLIENT_ID,
-      redirect_uri: PCO_REDIRECT_URI,
-      response_type: 'code',
-      scope: 'people services',
-      state,
-    });
-    return `https://api.planningcenteronline.com/oauth/authorize?${params.toString()}`;
-  }
-
-  // Capture the original button content so we can restore it after an error
-  // (the button label changes to "Sending…" while the request is in flight).
-  let _signinBtnHtml = null;
-
-  async function sendMagicLink() {
-    const emailInput = $('hubEmail');
-    const email = (emailInput.value || '').trim();
-    const errEl = $('signinError');
-    errEl.classList.add('hidden');
-
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showError('Enter a valid email address.');
-      emailInput.focus();
-      return;
-    }
-
-    const btn = $('signinBtn');
-    if (_signinBtnHtml === null) _signinBtnHtml = btn.innerHTML;
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          // Land back on this page; the Supabase client picks up the
-          // session from the URL hash via detectSessionInUrl:true.
-          emailRedirectTo: window.location.origin,
-          shouldCreateUser: true,
-        },
-      });
-      if (error) throw error;
-      $('magicSentTo').textContent = email;
-      hide('magicLinkStep');
-      show('magicLinkSent');
-    } catch (e) {
-      showError(e.message || 'Could not send the sign-in link. Please try again.');
-      btn.disabled = false;
-      btn.innerHTML = _signinBtnHtml;
-    }
-  }
-
-  function resetMagicLinkForm() {
-    show('magicLinkStep');
-    hide('magicLinkSent');
-    $('signinError').classList.add('hidden');
-    const btn = $('signinBtn');
-    btn.disabled = false;
-    if (_signinBtnHtml !== null) btn.innerHTML = _signinBtnHtml;
-    $('hubEmail').focus();
-  }
-
-  async function handoffTo(destKey) {
-    const destUrl = DEST_URLS[destKey];
-    if (!destUrl) return;
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) { window.location.href = destUrl; return; }
-    const hash = new URLSearchParams({
-      access_token: session.access_token,
-      refresh_token: session.refresh_token,
-      expires_in: String(session.expires_in || 3600),
-      token_type: 'bearer',
-      type: 'signin',
-    }).toString();
-    const sep = destUrl.includes('#') ? '&' : '#';
-    window.location.href = `${destUrl}${sep}${hash}`;
-  }
-
-  async function render() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const pcoError = urlParams.get('pco_error');
-    if (pcoError) {
-      showError(`Sign-in error: ${pcoError}`);
-      history.replaceState(null, '', window.location.pathname);
-    }
-
-    const { data: { session } } = await supabase.auth.getSession();
-    hide('loadingView');
-
-    if (!session) {
-      show('signinView');
-
-      // Magic-link primary: send a one-tap email link via Supabase OTP.
-      // shouldCreateUser:true folds signup into login — first verify
-      // creates the auth.users row automatically.
-      $('signinBtn').addEventListener('click', sendMagicLink);
-      $('hubEmail').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') { e.preventDefault(); sendMagicLink(); }
-      });
-      $('magicResetBtn').addEventListener('click', resetMagicLinkForm);
-
-      // Planning Center stays available for serve team / staff but is
-      // intentionally a small text link, not a primary button.
-      $('pcoLinkBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = buildPcoAuthUrl('hub');
-      });
-
-      return;
-    }
-
-    if (window.location.hash) {
-      history.replaceState(null, '', window.location.pathname + window.location.search);
-    }
-
-    show('dashboardView');
-
-    const meta = session.user.user_metadata || {};
-    const firstName = (meta.display_name || '').split(' ')[0] || 'friend';
-    $('greetName').textContent = firstName;
-
-    // Team-member status: canonical source is the team_members table (admin
-    // can add members by email, no PC tag needed). The am_i_team_member RPC
-    // checks team_members first and falls back to user_metadata.is_prayer_team
-    // so legacy PC team members don't lose access during the cutover.
-    let isTeamMember = false;
-    try {
-      const { data: status } = await supabase.rpc('am_i_team_member');
-      isTeamMember = status?.is_team_member === true;
-    } catch (err) {
-      // Fail-safe: if the RPC is unreachable, fall back to the legacy metadata
-      // flag. Means worst case we revert to the pre-fix behavior, never worse.
-      console.warn('am_i_team_member RPC failed, falling back to metadata', err);
-      isTeamMember = !!meta.is_prayer_team;
-    }
-
-    if (isTeamMember) {
-      show('cardPrayerTeam');
-      show('navChip');
-    } else {
-      show('cardPrayerWall');
-    }
-
-    document.querySelectorAll('.card').forEach((card) => {
-      card.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const dest = card.getAttribute('data-dest');
-        await handoffTo(dest);
-      });
-    });
-
-    $('signoutBtn').addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      window.location.reload();
-    });
-
-    const tags = (meta.pco_tags || []).join(', ');
-    $('debugInfo').textContent = tags ? `Signed in as ${session.user.email} · PCO tags: ${tags}` : `Signed in as ${session.user.email}`;
-
-    // Try to load admin overview. The edge function is server-gated by an
-    // email allowlist — non-admin users get 403 and the section stays hidden.
-    // Wrapped in try/catch so any failure is invisible and never affects the
-    // rest of the hub UX.
-    try { await initAdminSection(session); } catch (e) { console.warn('admin init skipped', e); }
-  }
-
-  // ============================================================
-  // ADMIN OVERVIEW (gated entirely by server response)
-  // ============================================================
-  let _liveTimer = null;
-
-  async function initAdminSection(session) {
-    const ok = await fetchAdminAndRender(session);
-    if (!ok) return; // 401/403/error → section stays hidden
-    $('adminSection').classList.add('visible');
-    $('adminRefreshBtn').addEventListener('click', () => fetchAdminAndRender(session));
-    $('adminLiveBtn').addEventListener('click', () => toggleLive(session));
-    $('adminModalClose').addEventListener('click', closeAdminModal);
-    $('adminModalOverlay').addEventListener('click', (e) => {
-      if (e.target === $('adminModalOverlay')) closeAdminModal();
-    });
-  }
-
-  function toggleLive(session) {
-    const btn = $('adminLiveBtn');
-    if (_liveTimer) {
-      clearInterval(_liveTimer);
-      _liveTimer = null;
-      btn.classList.remove('live-on');
-      btn.textContent = '⏵ Live';
-    } else {
-      _liveTimer = setInterval(() => fetchAdminAndRender(session), 30000);
-      btn.classList.add('live-on');
-      btn.textContent = '⏸ Live';
-    }
-  }
-
-  async function fetchAdminAndRender(session) {
-    try {
-      const resp = await fetch(`${SUPABASE_URL}/functions/v1/apps-activity`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-          'apikey': SUPABASE_ANON_KEY,
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!resp.ok) return false;
-      const data = await resp.json();
-      renderAdmin(data);
-      return true;
-    } catch (e) {
-      console.warn('apps-activity fetch failed', e);
-      return false;
-    }
-  }
-
-  function renderAdmin(data) {
-    const stats = data.stats || {};
-    $('statSignups').textContent = stats.signups_today ?? '—';
-    $('statEntries').textContent = stats.entries_today ?? '—';
-    $('statAi').textContent = `${stats.ai_calls_today ?? '—'}${stats.ai_cost_today != null ? ` · $${(stats.ai_cost_today).toFixed(3)}` : ''}`;
-    $('statActive').textContent = stats.active_users_today ?? '—';
-    if (data.generated_at) {
-      const t = new Date(data.generated_at);
-      $('adminGenerated').textContent = `Updated ${t.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
-    }
-    const events = Array.isArray(data.events) ? data.events : [];
-    const feed = $('adminFeed');
-    if (events.length === 0) {
-      feed.innerHTML = '<div class="admin-empty">No activity in the last 24 hours.</div>';
-      return;
-    }
-    feed.innerHTML = '';
-    for (const ev of events) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'admin-event';
-      btn.innerHTML = `
-        <div class="admin-event-top">
-          <span class="admin-event-icon">${eventIcon(ev.type)}</span>
-          <span class="admin-event-name">${escapeHtml(ev.user?.display_name || ev.user?.email || '—')}</span>
-          <span class="admin-event-type">${escapeHtml(eventLabel(ev.type))}</span>
-          <span class="admin-event-time">${relativeTime(ev.timestamp)}</span>
-        </div>
-        ${ev.preview || ev.metadata?.feature ? `<div class="admin-event-preview">${escapeHtml(ev.preview || formatAiSummary(ev))}</div>` : ''}
-      `;
-      btn.addEventListener('click', () => openAdminModal(ev));
-      feed.appendChild(btn);
-    }
-  }
-
-  function eventIcon(type) {
-    return ({ dream:'🌙', vision:'👁', prayer:'🙏', prophetic:'✦', journal:'📓', signin:'⟶', ai_call:'⚡' }[type]) || '•';
-  }
-  function eventLabel(type) {
-    return ({ dream:'Dream', vision:'Vision', prayer:'Prayer Note', prophetic:'Prophetic Word', journal:'Journal', signin:'Signed In', ai_call:'AI Call' }[type]) || type;
-  }
-  function formatAiSummary(ev) {
-    const m = ev.metadata || {};
-    return `${m.feature || 'ai'} · ${m.model || ''}${m.cost != null ? ` · $${Number(m.cost).toFixed(4)}` : ''}`;
-  }
-  function relativeTime(iso) {
-    const t = new Date(iso).getTime();
-    const diff = Date.now() - t;
-    const m = Math.floor(diff / 60000);
-    if (m < 1) return 'just now';
-    if (m < 60) return `${m}m ago`;
-    const h = Math.floor(m / 60);
-    if (h < 24) return `${h}h ago`;
-    const d = Math.floor(h / 24);
-    return `${d}d ago`;
-  }
-  function escapeHtml(s) {
-    return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
-  }
-
-  function openAdminModal(ev) {
-    $('adminModalTitle').textContent = `${eventLabel(ev.type)} · ${ev.user?.display_name || ev.user?.email || '—'}`;
-    const ts = new Date(ev.timestamp);
-    $('adminModalSub').textContent = `${ts.toLocaleString()} · ${ev.user?.email || ''}`;
-    const contentEl = $('adminModalContent');
-    if (ev.content) {
-      contentEl.textContent = ev.content;
-      contentEl.style.display = '';
-    } else {
-      contentEl.textContent = '';
-      contentEl.style.display = 'none';
-    }
-    const metaEl = $('adminModalMeta');
-    metaEl.innerHTML = '';
-    const m = ev.metadata || {};
-    const addRow = (label, value) => {
-      if (value == null || value === '' || (Array.isArray(value) && value.length === 0)) return;
-      const row = document.createElement('div');
-      row.className = 'admin-meta-row';
-      const lab = document.createElement('div');
-      lab.className = 'admin-meta-label';
-      lab.textContent = label;
-      const val = document.createElement('div');
-      val.className = 'admin-meta-value';
-      if (Array.isArray(value)) {
-        val.innerHTML = value.map((v) => `<span class="admin-chip">${escapeHtml(v)}</span>`).join('');
-      } else {
-        val.textContent = String(value);
-      }
-      row.appendChild(lab); row.appendChild(val);
-      metaEl.appendChild(row);
-    };
-    addRow('Tone', m.tone);
-    addRow('Symbols', m.symbols);
-    addRow('Context', m.context);
-    addRow('Scripture', m.scripture);
-    addRow('Source', m.source);
-    addRow('Clarity', m.clarity);
-    addRow('Interpretation', m.interpretation);
-    addRow('Feature', m.feature);
-    addRow('Model', m.model);
-    if (m.cost != null) addRow('Cost', `$${Number(m.cost).toFixed(4)}`);
-    if (m.input_tokens != null) addRow('Tokens', `${m.input_tokens} in / ${m.output_tokens} out`);
-    $('adminModalOverlay').classList.add('open');
-  }
-  function closeAdminModal() {
-    $('adminModalOverlay').classList.remove('open');
-  }
-
-  render().catch((err) => {
-    console.error(err);
-    hide('loadingView');
-    show('signinView');
-    showError(`Error: ${err?.message || err}`);
-  });
-</script>
 
 </body>
 </html>
