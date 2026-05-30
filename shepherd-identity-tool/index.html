@@ -813,6 +813,96 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .app-footer a{color:var(--muted);cursor:pointer;text-decoration:none;transition:color 0.2s;}
 .app-footer a:hover{color:var(--sage);text-decoration:underline;}
 .app-footer .footer-sep{margin:0 8px;opacity:0.4;}
+
+/* ═══ Daily Devotional ═══ */
+.dev-teaser{background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px 14px;margin-bottom:16px;cursor:pointer;transition:all 0.25s ease;position:relative;overflow:hidden;}
+.dev-teaser:hover{border-color:var(--sage);transform:translateY(-1px);}
+.dev-teaser::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--sage);}
+.dev-teaser-label{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.dev-teaser-pill{font-size:0.6rem;color:var(--sage);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;padding:3px 9px;background:var(--sage-dim);border-radius:10px;}
+.dev-teaser-date{font-size:0.7rem;color:var(--muted);font-weight:400;}
+.dev-teaser-title{font-family:var(--font-serif);font-size:1.15rem;color:var(--cream);font-weight:400;line-height:1.25;margin-bottom:6px;}
+.dev-teaser-snippet{font-size:0.78rem;color:var(--text-secondary);line-height:1.55;font-weight:300;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.dev-teaser-cta{font-size:0.72rem;color:var(--sage);font-weight:500;display:flex;align-items:center;gap:5px;}
+.dev-teaser-cta-arrow{transition:transform 0.2s ease;display:inline-block;}
+.dev-teaser:hover .dev-teaser-cta-arrow{transform:translateX(3px);}
+
+.devmodal-overlay{position:fixed;inset:0;background:rgba(28,31,38,0.97);backdrop-filter:blur(8px);z-index:1000;display:none;overflow-y:auto;}
+.devmodal-overlay.active{display:block;}
+.devmodal-card{max-width:680px;margin:0 auto;padding:20px 18px 80px;}
+.devmodal-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(28,31,38,0.97);padding-top:8px;z-index:5;}
+.devmodal-archive-link{background:var(--surface2);border:1px solid var(--border);color:var(--sage);padding:6px 14px;border-radius:16px;font-size:0.72rem;cursor:pointer;transition:all 0.2s ease;font-family:var(--font-sans);}
+.devmodal-archive-link:hover{background:var(--sage-dim);border-color:var(--sage);}
+.devmodal-close{background:transparent;border:none;color:var(--text-secondary);font-size:1.4rem;cursor:pointer;padding:4px 10px;line-height:1;}
+.devmodal-close:hover{color:var(--cream);}
+.devmodal-date{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin-top:24px;margin-bottom:8px;}
+.devmodal-title{font-family:var(--font-serif);font-size:1.85rem;color:var(--cream);font-weight:400;line-height:1.2;margin-bottom:22px;}
+.devmodal-scripture{background:var(--surface2);border-left:3px solid var(--wheat);border-radius:8px;padding:14px 16px;margin-bottom:24px;}
+.devmodal-scripture-text{font-size:0.92rem;color:var(--text);line-height:1.7;font-style:italic;font-weight:300;margin-bottom:6px;}
+.devmodal-scripture-ref{font-size:0.74rem;color:var(--wheat);font-weight:500;letter-spacing:0.04em;}
+.devmodal-video{margin-bottom:24px;}
+.devmodal-video-label{font-size:0.68rem;color:var(--sage);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:8px;}
+.devmodal-video-wrap{position:relative;width:100%;padding-bottom:56.25%;background:#000;border-radius:8px;overflow:hidden;}
+.devmodal-video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.devmodal-video-fallback{display:block;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--sage);text-decoration:none;font-size:0.85rem;text-align:center;transition:all 0.2s;}
+.devmodal-video-fallback:hover{border-color:var(--sage);background:var(--sage-dim);}
+.devmodal-body{font-size:0.92rem;color:var(--text);line-height:1.75;font-weight:300;margin-bottom:28px;}
+.devmodal-body p{margin-bottom:14px;}
+.devmodal-body p:last-child{margin-bottom:0;}
+.devmodal-body strong{color:var(--cream);font-weight:500;}
+.devmodal-body em{color:var(--wheat);font-style:italic;}
+.devmodal-body ul{margin:10px 0 14px 20px;padding:0;}
+.devmodal-body li{margin-bottom:6px;}
+.devmodal-notes-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:24px;}
+.devmodal-notes-label{display:flex;align-items:center;gap:8px;font-size:0.78rem;font-weight:500;color:var(--cream);margin-bottom:10px;}
+.devmodal-notes-status{font-size:0.66rem;color:var(--muted);font-weight:400;margin-left:auto;}
+.devmodal-notes-status.saving{color:var(--wheat);}
+.devmodal-notes-status.saved{color:var(--sage);}
+.devmodal-notes textarea{width:100%;min-height:120px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;line-height:1.6;resize:vertical;}
+.devmodal-notes textarea:focus{outline:none;border-color:var(--sage);}
+.devmodal-author{font-size:0.74rem;color:var(--muted);font-style:italic;text-align:right;margin-top:24px;}
+
+.dev-archive-header{display:flex;justify-content:space-between;align-items:center;margin:24px 0 16px;}
+.dev-archive-heading{font-family:var(--font-serif);font-size:1.4rem;color:var(--cream);font-weight:400;}
+.dev-archive-back{background:transparent;border:1px solid var(--border);color:var(--sage);padding:6px 14px;border-radius:16px;font-size:0.72rem;cursor:pointer;}
+.dev-archive-back:hover{border-color:var(--sage);}
+.dev-archive-list{display:flex;flex-direction:column;gap:8px;}
+.dev-archive-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all 0.2s ease;}
+.dev-archive-item:hover{border-color:var(--sage);background:var(--surface2);}
+.dev-archive-date{font-size:0.7rem;color:var(--muted);margin-bottom:4px;letter-spacing:0.04em;}
+.dev-archive-title{font-family:var(--font-serif);font-size:1rem;color:var(--cream);font-weight:400;line-height:1.3;}
+.dev-archive-empty{text-align:center;color:var(--muted);padding:40px 20px;font-size:0.85rem;}
+
+.devadmin-composer{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:20px;}
+.devadmin-form-row{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:12px;}
+@media(min-width:600px){.devadmin-form-row.two{grid-template-columns:1fr 1fr;}}
+.devadmin-form-row .field label{display:block;font-size:0.68rem;color:var(--wheat);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-bottom:4px;}
+.devadmin-form-row input[type=text],.devadmin-form-row input[type=date],.devadmin-form-row input[type=url],.devadmin-form-row textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 11px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;}
+.devadmin-form-row input:focus,.devadmin-form-row textarea:focus{outline:none;border-color:var(--sage);}
+.devadmin-form-row textarea{min-height:90px;line-height:1.55;resize:vertical;}
+.devadmin-form-row textarea.tall{min-height:160px;}
+.devadmin-help{font-size:0.66rem;color:var(--muted);margin-top:3px;font-style:italic;}
+.devadmin-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;}
+.devadmin-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);padding:9px 18px;border-radius:20px;font-size:0.8rem;cursor:pointer;transition:all 0.2s ease;font-family:var(--font-sans);}
+.devadmin-btn:hover{border-color:var(--sage);color:var(--sage);}
+.devadmin-btn.primary{background:var(--sage);border-color:var(--sage);color:var(--bg);font-weight:500;}
+.devadmin-btn.primary:hover{opacity:0.88;color:var(--bg);}
+.devadmin-btn.danger{color:var(--red);}
+.devadmin-btn.danger:hover{border-color:var(--red);color:var(--red);}
+.devadmin-status{font-size:0.74rem;margin-top:10px;text-align:right;color:var(--muted);min-height:18px;}
+.devadmin-status.success{color:var(--sage);}
+.devadmin-status.error{color:var(--red);}
+.devadmin-empty{text-align:center;color:var(--muted);padding:24px;font-size:0.82rem;}
+.devadmin-checkbox-row{display:flex;align-items:center;gap:8px;}
+.devadmin-checkbox-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--sage);cursor:pointer;}
+.devadmin-checkbox-row label{margin-bottom:0;color:var(--cream);font-size:0.85rem;text-transform:none;letter-spacing:0;font-weight:400;cursor:pointer;}
+.devadmin-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;}
+.devadmin-badge.published{background:var(--sage-dim);color:var(--sage);}
+.devadmin-badge.draft{background:var(--wheat-dim);color:var(--wheat);}
+.devadmin-row-actions{display:flex;gap:6px;}
+.devadmin-row-actions button{background:transparent;border:1px solid var(--border);color:var(--text-secondary);padding:4px 10px;border-radius:12px;font-size:0.7rem;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);}
+.devadmin-row-actions button:hover{border-color:var(--sage);color:var(--sage);}
+.devadmin-row-actions button.danger:hover{border-color:var(--red);color:var(--red);}
 </style>
 </head>
 <body>
@@ -950,22 +1040,16 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 
   <!-- ═══ HOME SECTION ═══ -->
   <div class="main-section active" id="section-home">
-    <!-- About card — collapsible -->
-    <div id="aboutCard" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="const b=document.getElementById('aboutBody');const a=this.querySelector('.about-toggle');if(b.style.display==='none'){b.style.display='block';a.textContent='▾';}else{b.style.display='none';a.textContent='▸';localStorage.setItem('about_collapsed','true');}">
-        <span style="font-size:0.85rem;font-weight:500;color:var(--cream);">Welcome to Shepherd Formation</span>
-        <span class="about-toggle" style="color:var(--muted);font-size:0.8rem;">▾</span>
+    <!-- Today's Devotional teaser — hides if no devotional published for today -->
+    <div id="devTeaserCard" class="dev-teaser" style="display:none;" onclick="openTodayDevotional()">
+      <div class="dev-teaser-label">
+        <span class="dev-teaser-pill">Today's Devotional</span>
+        <span class="dev-teaser-date" id="devTeaserDate">—</span>
       </div>
-      <div id="aboutBody" style="margin-top:12px;">
-        <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;font-weight:300;">This tool helps you discover and document the identity God is forming in you. Record prophetic words, dreams, prayers, and visions. Track your spiritual gifts and skills. Watch as patterns emerge that reveal who God says you are.</p>
-        <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;font-weight:300;"><strong style="color:var(--cream);">How it works:</strong> Use the <strong>Journal</strong> to capture what God is speaking. Explore your <strong>Identity</strong> through gifts, skills, and the guided worksheet. Browse <strong>Resources</strong> for Pastor Ken's sermon teachings and the Shepherd Guide.</p>
-        <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;font-weight:300;"><strong style="color:var(--cream);">About the Shepherd Guide:</strong> This AI assistant (powered by Claude from Anthropic) helps you find patterns across your entries — connecting dreams, words, gifts, and Scripture. It's a tool to assist your reflection, not a replacement for the Holy Spirit, Scripture, or your pastors. Your data is private and never used to train AI models.</p>
-        <div style="background:var(--surface2);border-left:3px solid var(--wheat);border-radius:8px;padding:12px 14px;margin-top:4px;">
-          <p style="font-size:0.76rem;color:var(--text-secondary);line-height:1.65;font-weight:300;margin:0;"><strong style="color:var(--cream);">If you're in crisis:</strong> This tool is not a substitute for pastoral care or professional help. If you're experiencing a mental health emergency or thoughts of self-harm, call or text <strong style="color:var(--wheat);">988</strong> (US Suicide &amp; Crisis Lifeline) or reach out directly to a pastor at Shepherd Church NWI.</p>
-        </div>
-      </div>
+      <div class="dev-teaser-title" id="devTeaserTitle">—</div>
+      <div class="dev-teaser-snippet" id="devTeaserSnippet">—</div>
+      <div class="dev-teaser-cta">Open Devotional <span class="dev-teaser-cta-arrow">→</span></div>
     </div>
-    <script>if(localStorage.getItem('about_collapsed')){const b=document.getElementById('aboutBody');if(b)b.style.display='none';const t=document.querySelector('.about-toggle');if(t)t.textContent='▸';}</script>
     <!-- Daily Declaration card — collapsible -->
     <div id="declarationCard" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;">
       <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="const b=document.getElementById('declarationBody');const a=this.querySelector('.declaration-toggle');if(b.style.display==='none'){b.style.display='block';a.textContent='▾';localStorage.removeItem('declaration_collapsed');}else{b.style.display='none';a.textContent='▸';localStorage.setItem('declaration_collapsed','true');}">
@@ -1378,6 +1462,80 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       </div>
     </div>
     <div class="section" style="margin-top:16px;">
+      <div class="admin-section-title">📖 Devotionals</div>
+      <div class="devadmin-composer">
+        <input type="hidden" id="devAdminEditId" value="">
+        <div class="devadmin-form-row two">
+          <div class="field">
+            <label>Publish Date</label>
+            <input type="date" id="devAdminDate">
+          </div>
+          <div class="field">
+            <label>Author (optional)</label>
+            <input type="text" id="devAdminAuthor" placeholder="Pastor Ken">
+          </div>
+        </div>
+        <div class="devadmin-form-row">
+          <div class="field">
+            <label>Title</label>
+            <input type="text" id="devAdminTitle" placeholder="Today's title">
+          </div>
+        </div>
+        <div class="devadmin-form-row">
+          <div class="field">
+            <label>Teaser (home card snippet — 1–2 sentences)</label>
+            <textarea id="devAdminTeaser" placeholder="One or two sentences that hook people to open the full devotional."></textarea>
+          </div>
+        </div>
+        <div class="devadmin-form-row two">
+          <div class="field">
+            <label>Scripture Reference</label>
+            <input type="text" id="devAdminScriptureRef" placeholder="John 15:5">
+          </div>
+          <div class="field">
+            <label>Scripture Text</label>
+            <textarea id="devAdminScriptureText" placeholder="I am the vine; you are the branches…"></textarea>
+          </div>
+        </div>
+        <div class="devadmin-form-row">
+          <div class="field">
+            <label>Reflection / Body</label>
+            <textarea id="devAdminBody" class="tall" placeholder="Write the daily reflection. Supports **bold**, *italic*, and - bullet lists. Use blank lines for paragraph breaks."></textarea>
+            <div class="devadmin-help">Markdown-lite: **bold**, *italic*, lines starting with "- " become bullets, blank lines separate paragraphs.</div>
+          </div>
+        </div>
+        <div class="devadmin-form-row two">
+          <div class="field">
+            <label>Worship Video URL (optional)</label>
+            <input type="url" id="devAdminWorshipUrl" placeholder="https://youtube.com/watch?v=…">
+            <div class="devadmin-help">YouTube or Vimeo. Pasted-in watch URLs auto-convert to embeds.</div>
+          </div>
+          <div class="field">
+            <label>Sermon Clip URL (optional)</label>
+            <input type="url" id="devAdminSermonUrl" placeholder="https://youtube.com/watch?v=…">
+            <div class="devadmin-help">Same — YouTube or Vimeo watch URL.</div>
+          </div>
+        </div>
+        <div class="devadmin-form-row">
+          <div class="field devadmin-checkbox-row">
+            <input type="checkbox" id="devAdminPublished" checked>
+            <label for="devAdminPublished">Published (uncheck to hide even after its date arrives)</label>
+          </div>
+        </div>
+        <div class="devadmin-actions">
+          <button class="devadmin-btn" onclick="clearDevotionalForm()">Clear</button>
+          <button class="devadmin-btn primary" onclick="saveDevotionalForm()">Save</button>
+        </div>
+        <div class="devadmin-status" id="devAdminStatus"></div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="admin-table devadmin-table" id="devAdminTable">
+          <thead><tr><th>Date</th><th>Title</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="devAdminTableBody"><tr><td colspan="4" style="text-align:center;color:var(--muted);">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="section" style="margin-top:16px;">
       <div class="admin-section-title">⚙️ App Settings</div>
       <div style="overflow-x:auto;">
         <table class="admin-table" id="adminSettingsTable">
@@ -1431,6 +1589,54 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
     <div id="connModalBody"></div>
     <div class="modal-actions">
       <button class="modal-btn" onclick="closeConnModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- DEVOTIONAL FULL VIEW MODAL -->
+<div id="devModalOverlay" class="devmodal-overlay" onclick="if(event.target===this)closeDevotionalModal()">
+  <div class="devmodal-card">
+    <div class="devmodal-header">
+      <button class="devmodal-archive-link" id="devModalArchiveBtn" onclick="openDevotionalArchive()">📖 Archive</button>
+      <button class="devmodal-close" onclick="closeDevotionalModal()" aria-label="Close">✕</button>
+    </div>
+    <!-- Single-devotional view -->
+    <div id="devModalView">
+      <div class="devmodal-date" id="devModalDate">—</div>
+      <div class="devmodal-title" id="devModalTitle">—</div>
+      <div class="devmodal-scripture" id="devModalScripture" style="display:none;">
+        <div class="devmodal-scripture-text" id="devModalScriptureText">—</div>
+        <div class="devmodal-scripture-ref" id="devModalScriptureRef">—</div>
+      </div>
+      <div class="devmodal-video" id="devModalWorshipWrap" style="display:none;">
+        <div class="devmodal-video-label">🎵 Worship</div>
+        <div id="devModalWorshipSlot"></div>
+      </div>
+      <div class="devmodal-body" id="devModalBody">—</div>
+      <div class="devmodal-video" id="devModalSermonWrap" style="display:none;">
+        <div class="devmodal-video-label">▶ Sermon Clip</div>
+        <div id="devModalSermonSlot"></div>
+      </div>
+      <div class="devmodal-notes-section">
+        <div class="devmodal-notes-label">
+          <span>✎ My Notes</span>
+          <span class="devmodal-notes-status" id="devModalNotesStatus">Synced across devices</span>
+        </div>
+        <div class="devmodal-notes">
+          <textarea id="devModalNotes" placeholder="What's God speaking to you through this?" oninput="onDevotionalNotesInput()"></textarea>
+        </div>
+      </div>
+      <div class="devmodal-author" id="devModalAuthor"></div>
+    </div>
+    <!-- Archive list view -->
+    <div id="devArchiveView" style="display:none;">
+      <div class="dev-archive-header">
+        <div class="dev-archive-heading">Past Devotionals</div>
+        <button class="dev-archive-back" onclick="closeDevotionalArchive()">← Back</button>
+      </div>
+      <div class="dev-archive-list" id="devArchiveList">
+        <div class="dev-archive-empty">Loading…</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1937,6 +2143,10 @@ async function loadAdminDashboard(){
         `<tr><td style="font-weight:500;color:var(--cream);">${s.key.replace(/_/g,' ')}</td><td style="color:var(--wheat);">${JSON.stringify(s.value)}</td><td style="font-size:0.72rem;color:var(--muted);">${s.description||''}</td></tr>`
       ).join('');
     }
+    // Devotionals admin: load list + prime date picker to today (if empty)
+    const dateEl=document.getElementById('devAdminDate');
+    if(dateEl&&!dateEl.value)dateEl.value=_devTodayLocalIso();
+    loadAdminDevotionals();
   }catch(e){
     console.error('Admin dashboard error:',e);
   }
@@ -5313,6 +5523,7 @@ function switchSection(section,btnEl){
   if(section==='home'){
     updateHomeFeed();
     updateIwProgress();
+    loadTodayDevotional();
   } else if(section==='journal'){
     // Show the currently active journal filter (default: all = prophetic)
     const activeChip=document.querySelector('#section-journal .jf-chip.active');
@@ -5957,6 +6168,377 @@ function pwaDismiss(){
   document.getElementById('pwaBanner').classList.remove('show');
   localStorage.setItem('shepherd_pwa_dismissed','1');
 }
+// ═══════════════════════════════════════════
+// DAILY DEVOTIONAL
+// ═══════════════════════════════════════════
+let _devCurrent=null;       // currently-viewed devotional row
+let _devNotesTimer=null;    // debounce timer for note save
+let _devNotesLast='';       // last saved note value
+const _devSession={};       // session cache: id -> row
+
+function _devEscapeHtml(s){
+  if(s==null)return '';
+  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function _devTodayLocalIso(){
+  const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function _devFormatDate(dateStr,opts){
+  if(!dateStr)return '';
+  const [y,m,d]=dateStr.split('-').map(Number);
+  if(!y||!m||!d)return dateStr;
+  const dt=new Date(y,m-1,d);
+  return dt.toLocaleDateString('en-US',opts||{weekday:'short',month:'short',day:'numeric'});
+}
+function _devRenderMarkdownLite(text){
+  if(!text)return '';
+  const esc=_devEscapeHtml(text);
+  const blocks=esc.split(/\n\s*\n/);
+  return blocks.map(block=>{
+    const lines=block.split('\n');
+    const allBullets=lines.every(l=>/^\s*-\s+/.test(l));
+    let html;
+    if(allBullets&&lines.length>0){
+      const items=lines.map(l=>'<li>'+_devInlineFmt(l.replace(/^\s*-\s+/,''))+'</li>').join('');
+      html='<ul>'+items+'</ul>';
+    }else{
+      html='<p>'+lines.map(l=>_devInlineFmt(l)).join('<br>')+'</p>';
+    }
+    return html;
+  }).join('');
+}
+function _devInlineFmt(s){
+  return s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\*([^*]+)\*/g,'<em>$1</em>');
+}
+function _devParseVideoEmbed(url){
+  if(!url)return null;
+  const u=url.trim();
+  // YouTube watch/shortlink/youtu.be
+  let m=u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if(m)return 'https://www.youtube.com/embed/'+m[1];
+  // Vimeo
+  m=u.match(/vimeo\.com\/(\d+)/);
+  if(m)return 'https://player.vimeo.com/video/'+m[1];
+  return null;
+}
+function _devVideoSlot(slotId,url){
+  const slot=document.getElementById(slotId);
+  if(!slot)return;
+  if(!url){slot.innerHTML='';return;}
+  const embed=_devParseVideoEmbed(url);
+  if(embed){
+    slot.innerHTML='<div class="devmodal-video-wrap"><iframe loading="lazy" src="'+_devEscapeHtml(embed)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
+  }else{
+    slot.innerHTML='<a class="devmodal-video-fallback" href="'+_devEscapeHtml(url)+'" target="_blank" rel="noopener">▶ Open video in new tab</a>';
+  }
+}
+
+async function loadTodayDevotional(){
+  const card=document.getElementById('devTeaserCard');
+  if(!card||!supa||!currentUser){if(card)card.style.display='none';return;}
+  try{
+    const today=_devTodayLocalIso();
+    const{data,error}=await supa.from('devotionals')
+      .select('*')
+      .eq('publish_date',today)
+      .eq('published',true)
+      .maybeSingle();
+    if(error){console.warn('devotional fetch:',error);card.style.display='none';return;}
+    if(!data){card.style.display='none';return;}
+    document.getElementById('devTeaserDate').textContent=_devFormatDate(data.publish_date);
+    document.getElementById('devTeaserTitle').textContent=data.title||'';
+    document.getElementById('devTeaserSnippet').textContent=data.teaser||(data.body||'').slice(0,180);
+    card.style.display='';
+    card.dataset.devId=data.id;
+    _devSession[data.id]=data;
+  }catch(e){console.warn('loadTodayDevotional:',e);card.style.display='none';}
+}
+
+async function openTodayDevotional(){
+  const card=document.getElementById('devTeaserCard');
+  const id=card?.dataset?.devId;
+  if(id&&_devSession[id]){openDevotionalModal(_devSession[id]);return;}
+  // Refetch as fallback
+  const today=_devTodayLocalIso();
+  const{data}=await supa.from('devotionals').select('*').eq('publish_date',today).eq('published',true).maybeSingle();
+  if(data)openDevotionalModal(data);
+}
+
+function openDevotionalModal(d){
+  _devCurrent=d;
+  _devSession[d.id]=d;
+  // Switch to single view, hide archive view
+  document.getElementById('devModalView').style.display='';
+  document.getElementById('devArchiveView').style.display='none';
+  document.getElementById('devModalDate').textContent=_devFormatDate(d.publish_date,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('devModalTitle').textContent=d.title||'';
+  // Scripture
+  const scWrap=document.getElementById('devModalScripture');
+  if(d.scripture_text||d.scripture_ref){
+    document.getElementById('devModalScriptureText').textContent=d.scripture_text||'';
+    document.getElementById('devModalScriptureRef').textContent=d.scripture_ref||'';
+    scWrap.style.display='';
+  }else{scWrap.style.display='none';}
+  // Worship
+  if(d.worship_video_url){
+    document.getElementById('devModalWorshipWrap').style.display='';
+    _devVideoSlot('devModalWorshipSlot',d.worship_video_url);
+  }else{
+    document.getElementById('devModalWorshipWrap').style.display='none';
+    document.getElementById('devModalWorshipSlot').innerHTML='';
+  }
+  // Body (markdown-lite)
+  document.getElementById('devModalBody').innerHTML=_devRenderMarkdownLite(d.body||'');
+  // Sermon
+  if(d.sermon_video_url){
+    document.getElementById('devModalSermonWrap').style.display='';
+    _devVideoSlot('devModalSermonSlot',d.sermon_video_url);
+  }else{
+    document.getElementById('devModalSermonWrap').style.display='none';
+    document.getElementById('devModalSermonSlot').innerHTML='';
+  }
+  // Author
+  document.getElementById('devModalAuthor').textContent=d.author?'— '+d.author:'';
+  // Notes
+  loadDevotionalNotes(d.id);
+  // Show overlay
+  document.getElementById('devModalOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function closeDevotionalModal(){
+  // Flush any pending note save synchronously-ish
+  if(_devNotesTimer){clearTimeout(_devNotesTimer);_devNotesTimer=null;saveDevotionalNotesNow();}
+  document.getElementById('devModalOverlay').classList.remove('active');
+  document.body.style.overflow='';
+  _devCurrent=null;
+  // Stop any video iframes from playing in background
+  document.getElementById('devModalWorshipSlot').innerHTML='';
+  document.getElementById('devModalSermonSlot').innerHTML='';
+}
+
+async function loadDevotionalNotes(devotionalId){
+  const ta=document.getElementById('devModalNotes');
+  const status=document.getElementById('devModalNotesStatus');
+  if(!ta)return;
+  ta.value='';
+  _devNotesLast='';
+  status.textContent='Synced across devices';
+  status.className='devmodal-notes-status';
+  if(!supa||!currentUser)return;
+  try{
+    const{data}=await supa.from('devotional_notes')
+      .select('notes')
+      .eq('user_id',currentUser.id)
+      .eq('devotional_id',devotionalId)
+      .maybeSingle();
+    if(data&&data.notes){ta.value=data.notes;_devNotesLast=data.notes;}
+  }catch(e){console.warn('notes load:',e);}
+}
+
+function onDevotionalNotesInput(){
+  const status=document.getElementById('devModalNotesStatus');
+  status.textContent='Saving…';
+  status.className='devmodal-notes-status saving';
+  if(_devNotesTimer)clearTimeout(_devNotesTimer);
+  _devNotesTimer=setTimeout(saveDevotionalNotesNow,900);
+}
+
+async function saveDevotionalNotesNow(){
+  _devNotesTimer=null;
+  if(!_devCurrent||!supa||!currentUser)return;
+  const ta=document.getElementById('devModalNotes');
+  const status=document.getElementById('devModalNotesStatus');
+  const val=ta.value;
+  if(val===_devNotesLast){status.textContent='Saved';status.className='devmodal-notes-status saved';return;}
+  try{
+    const{error}=await supa.from('devotional_notes').upsert({
+      user_id:currentUser.id,
+      devotional_id:_devCurrent.id,
+      notes:val
+    },{onConflict:'user_id,devotional_id'});
+    if(error)throw error;
+    _devNotesLast=val;
+    status.textContent='Saved · synced across devices';
+    status.className='devmodal-notes-status saved';
+  }catch(e){
+    console.warn('notes save:',e);
+    status.textContent='Save failed — will retry';
+    status.className='devmodal-notes-status';
+  }
+}
+
+async function openDevotionalArchive(){
+  document.getElementById('devModalView').style.display='none';
+  document.getElementById('devArchiveView').style.display='';
+  const list=document.getElementById('devArchiveList');
+  list.innerHTML='<div class="dev-archive-empty">Loading…</div>';
+  try{
+    const today=_devTodayLocalIso();
+    // Past 30 days (exclude today, since today is shown above the archive button)
+    const since=new Date();since.setDate(since.getDate()-30);
+    const sinceIso=since.getFullYear()+'-'+String(since.getMonth()+1).padStart(2,'0')+'-'+String(since.getDate()).padStart(2,'0');
+    const{data,error}=await supa.from('devotionals')
+      .select('id,publish_date,title,teaser')
+      .gte('publish_date',sinceIso)
+      .lt('publish_date',today)
+      .eq('published',true)
+      .order('publish_date',{ascending:false});
+    if(error)throw error;
+    if(!data||data.length===0){list.innerHTML='<div class="dev-archive-empty">No past devotionals yet.</div>';return;}
+    list.innerHTML=data.map(d=>{
+      _devSession[d.id]=d;
+      return '<div class="dev-archive-item" onclick="openDevotionalById(\''+d.id+'\')">'
+        +'<div class="dev-archive-date">'+_devEscapeHtml(_devFormatDate(d.publish_date,{weekday:'long',month:'long',day:'numeric'}))+'</div>'
+        +'<div class="dev-archive-title">'+_devEscapeHtml(d.title||'')+'</div>'
+        +'</div>';
+    }).join('');
+  }catch(e){
+    console.warn('archive load:',e);
+    list.innerHTML='<div class="dev-archive-empty">Couldn\'t load archive.</div>';
+  }
+}
+
+function closeDevotionalArchive(){
+  document.getElementById('devArchiveView').style.display='none';
+  document.getElementById('devModalView').style.display='';
+}
+
+async function openDevotionalById(id){
+  if(_devSession[id]&&_devSession[id].body!==undefined){openDevotionalModal(_devSession[id]);return;}
+  try{
+    const{data}=await supa.from('devotionals').select('*').eq('id',id).maybeSingle();
+    if(data)openDevotionalModal(data);
+  }catch(e){console.warn('open by id:',e);}
+}
+
+// ── Admin: Devotionals composer + table ──
+async function loadAdminDevotionals(){
+  if(!supa||!isAdminUser)return;
+  try{
+    const today=_devTodayLocalIso();
+    const past=new Date();past.setDate(past.getDate()-7);
+    const pastIso=past.getFullYear()+'-'+String(past.getMonth()+1).padStart(2,'0')+'-'+String(past.getDate()).padStart(2,'0');
+    const{data,error}=await supa.from('devotionals')
+      .select('id,publish_date,title,published')
+      .gte('publish_date',pastIso)
+      .order('publish_date',{ascending:false});
+    if(error)throw error;
+    const body=document.getElementById('devAdminTableBody');
+    if(!data||data.length===0){
+      body.innerHTML='<tr><td colspan="4" class="devadmin-empty">No devotionals yet. Write one above.</td></tr>';
+      return;
+    }
+    body.innerHTML=data.map(d=>{
+      const isUpcoming=d.publish_date>today;
+      const isToday=d.publish_date===today;
+      const dateLabel=_devFormatDate(d.publish_date,{weekday:'short',month:'short',day:'numeric',year:'2-digit'})
+        +(isToday?' · TODAY':(isUpcoming?' · upcoming':''));
+      const badge=d.published?'<span class="devadmin-badge published">Published</span>':'<span class="devadmin-badge draft">Hidden</span>';
+      return '<tr>'
+        +'<td style="font-size:0.75rem;color:'+(isToday?'var(--sage)':'var(--text-secondary)')+';">'+_devEscapeHtml(dateLabel)+'</td>'
+        +'<td style="color:var(--cream);">'+_devEscapeHtml(d.title||'')+'</td>'
+        +'<td>'+badge+'</td>'
+        +'<td><div class="devadmin-row-actions">'
+        +'<button onclick="editDevotional(\''+d.id+'\')">Edit</button>'
+        +'<button class="danger" onclick="deleteDevotional(\''+d.id+'\')">Delete</button>'
+        +'</div></td>'
+        +'</tr>';
+    }).join('');
+  }catch(e){
+    console.warn('admin devotionals load:',e);
+    const body=document.getElementById('devAdminTableBody');
+    if(body)body.innerHTML='<tr><td colspan="4" class="devadmin-empty">Failed to load.</td></tr>';
+  }
+}
+
+function clearDevotionalForm(){
+  document.getElementById('devAdminEditId').value='';
+  document.getElementById('devAdminDate').value=_devTodayLocalIso();
+  document.getElementById('devAdminAuthor').value='';
+  document.getElementById('devAdminTitle').value='';
+  document.getElementById('devAdminTeaser').value='';
+  document.getElementById('devAdminScriptureRef').value='';
+  document.getElementById('devAdminScriptureText').value='';
+  document.getElementById('devAdminBody').value='';
+  document.getElementById('devAdminWorshipUrl').value='';
+  document.getElementById('devAdminSermonUrl').value='';
+  document.getElementById('devAdminPublished').checked=true;
+  const status=document.getElementById('devAdminStatus');
+  status.textContent='';status.className='devadmin-status';
+}
+
+async function editDevotional(id){
+  try{
+    const{data,error}=await supa.from('devotionals').select('*').eq('id',id).maybeSingle();
+    if(error||!data)throw error||new Error('not found');
+    document.getElementById('devAdminEditId').value=data.id;
+    document.getElementById('devAdminDate').value=data.publish_date||'';
+    document.getElementById('devAdminAuthor').value=data.author||'';
+    document.getElementById('devAdminTitle').value=data.title||'';
+    document.getElementById('devAdminTeaser').value=data.teaser||'';
+    document.getElementById('devAdminScriptureRef').value=data.scripture_ref||'';
+    document.getElementById('devAdminScriptureText').value=data.scripture_text||'';
+    document.getElementById('devAdminBody').value=data.body||'';
+    document.getElementById('devAdminWorshipUrl').value=data.worship_video_url||'';
+    document.getElementById('devAdminSermonUrl').value=data.sermon_video_url||'';
+    document.getElementById('devAdminPublished').checked=data.published!==false;
+    document.querySelector('.devadmin-composer').scrollIntoView({behavior:'smooth',block:'start'});
+    const status=document.getElementById('devAdminStatus');
+    status.textContent='Editing — save to overwrite.';status.className='devadmin-status';
+  }catch(e){console.warn('edit load:',e);alert('Could not load that devotional.');}
+}
+
+async function saveDevotionalForm(){
+  const status=document.getElementById('devAdminStatus');
+  const editId=document.getElementById('devAdminEditId').value;
+  const row={
+    publish_date:document.getElementById('devAdminDate').value,
+    title:document.getElementById('devAdminTitle').value.trim(),
+    teaser:document.getElementById('devAdminTeaser').value.trim()||null,
+    scripture_ref:document.getElementById('devAdminScriptureRef').value.trim()||null,
+    scripture_text:document.getElementById('devAdminScriptureText').value.trim()||null,
+    body:document.getElementById('devAdminBody').value.trim()||null,
+    worship_video_url:document.getElementById('devAdminWorshipUrl').value.trim()||null,
+    sermon_video_url:document.getElementById('devAdminSermonUrl').value.trim()||null,
+    author:document.getElementById('devAdminAuthor').value.trim()||null,
+    published:document.getElementById('devAdminPublished').checked
+  };
+  if(!row.publish_date){status.textContent='Date is required.';status.className='devadmin-status error';return;}
+  if(!row.title){status.textContent='Title is required.';status.className='devadmin-status error';return;}
+  status.textContent='Saving…';status.className='devadmin-status';
+  try{
+    if(editId){
+      const{error}=await supa.from('devotionals').update(row).eq('id',editId);
+      if(error)throw error;
+    }else{
+      row.created_by=currentUser?.id||null;
+      const{error}=await supa.from('devotionals').upsert(row,{onConflict:'publish_date'});
+      if(error)throw error;
+    }
+    status.textContent='Saved.';status.className='devadmin-status success';
+    clearDevotionalForm();
+    await loadAdminDevotionals();
+    // If admin saved today's devotional, refresh the home teaser
+    if(row.publish_date===_devTodayLocalIso())loadTodayDevotional();
+  }catch(e){
+    console.warn('save devotional:',e);
+    status.textContent='Save failed: '+(e.message||e);
+    status.className='devadmin-status error';
+  }
+}
+
+async function deleteDevotional(id){
+  if(!confirm('Delete this devotional? This cannot be undone.'))return;
+  try{
+    const{error}=await supa.from('devotionals').delete().eq('id',id);
+    if(error)throw error;
+    await loadAdminDevotionals();
+    loadTodayDevotional();
+  }catch(e){console.warn('delete devotional:',e);alert('Delete failed: '+(e.message||e));}
+}
+
 function showLegal(type){
   const id=type==='privacy'?'privacyOverlay':'termsOverlay';
   const el=document.getElementById(id);

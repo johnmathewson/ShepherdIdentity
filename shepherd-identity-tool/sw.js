@@ -1,7 +1,7 @@
 // Shepherd Identity Tool — minimal service worker
 // Strategy: cache-first for the shell, network-first for everything else.
 // Bump CACHE_VERSION when you ship a new index.html so clients pick it up.
-const CACHE_VERSION = 'shepherd-identity-v1';
+const CACHE_VERSION = 'shepherd-identity-v2-devotional';
 const SHELL = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', (event) => {
