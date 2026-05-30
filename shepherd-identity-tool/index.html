@@ -826,6 +826,9 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .dev-teaser-cta{font-size:0.72rem;color:var(--sage);font-weight:500;display:flex;align-items:center;gap:5px;}
 .dev-teaser-cta-arrow{transition:transform 0.2s ease;display:inline-block;}
 .dev-teaser:hover .dev-teaser-cta-arrow{transform:translateX(3px);}
+.dev-archive-link-row{margin:-4px 0 18px;text-align:right;}
+.dev-archive-link{display:inline-block;font-size:0.74rem;color:var(--muted);text-decoration:none;cursor:pointer;padding:6px 4px;transition:color 0.2s ease;font-weight:400;letter-spacing:0.02em;}
+.dev-archive-link:hover{color:var(--sage);}
 
 .devmodal-overlay{position:fixed;inset:0;background:rgba(28,31,38,0.97);backdrop-filter:blur(8px);z-index:1000;display:none;overflow-y:auto;}
 .devmodal-overlay.active{display:block;}
@@ -899,8 +902,8 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .devadmin-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;}
 .devadmin-badge.published{background:var(--sage-dim);color:var(--sage);}
 .devadmin-badge.draft{background:var(--wheat-dim);color:var(--wheat);}
-.devadmin-row-actions{display:flex;gap:6px;}
-.devadmin-row-actions button{background:transparent;border:1px solid var(--border);color:var(--text-secondary);padding:4px 10px;border-radius:12px;font-size:0.7rem;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);}
+.devadmin-row-actions{display:flex;gap:8px;}
+.devadmin-row-actions button{background:transparent;border:1px solid var(--border);color:var(--text-secondary);width:34px;height:34px;padding:0;border-radius:8px;font-size:1rem;line-height:1;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);display:inline-flex;align-items:center;justify-content:center;}
 .devadmin-row-actions button:hover{border-color:var(--sage);color:var(--sage);}
 .devadmin-row-actions button.danger:hover{border-color:var(--red);color:var(--red);}
 </style>
@@ -1050,6 +1053,8 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       <div class="dev-teaser-snippet" id="devTeaserSnippet">—</div>
       <div class="dev-teaser-cta">Open Devotional <span class="dev-teaser-cta-arrow">→</span></div>
     </div>
+    <!-- Always-on link to past devotionals so the archive is reachable even when today's isn't published -->
+    <div class="dev-archive-link-row"><a class="dev-archive-link" onclick="openArchiveStandalone()">📖 Past Devotionals →</a></div>
     <!-- Daily Declaration card — collapsible -->
     <div id="declarationCard" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;">
       <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="const b=document.getElementById('declarationBody');const a=this.querySelector('.declaration-toggle');if(b.style.display==='none'){b.style.display='block';a.textContent='▾';localStorage.removeItem('declaration_collapsed');}else{b.style.display='none';a.textContent='▸';localStorage.setItem('declaration_collapsed','true');}">
@@ -6373,6 +6378,16 @@ async function saveDevotionalNotesNow(){
   }
 }
 
+// Open the archive directly without a current devotional context.
+// Used by the always-visible "Past Devotionals" link on home so the
+// archive is reachable even when today's devotional isn't published.
+async function openArchiveStandalone(){
+  _devCurrent=null;
+  document.getElementById('devModalOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+  await openDevotionalArchive();
+}
+
 async function openDevotionalArchive(){
   document.getElementById('devModalView').style.display='none';
   document.getElementById('devArchiveView').style.display='';
@@ -6405,6 +6420,9 @@ async function openDevotionalArchive(){
 }
 
 function closeDevotionalArchive(){
+  // If we opened archive standalone (no current devotional), Back closes the whole modal.
+  // Otherwise we return to viewing today's devotional.
+  if(!_devCurrent){closeDevotionalModal();return;}
   document.getElementById('devArchiveView').style.display='none';
   document.getElementById('devModalView').style.display='';
 }
@@ -6445,8 +6463,8 @@ async function loadAdminDevotionals(){
         +'<td style="color:var(--cream);">'+_devEscapeHtml(d.title||'')+'</td>'
         +'<td>'+badge+'</td>'
         +'<td><div class="devadmin-row-actions">'
-        +'<button onclick="editDevotional(\''+d.id+'\')">Edit</button>'
-        +'<button class="danger" onclick="deleteDevotional(\''+d.id+'\')">Delete</button>'
+        +'<button title="Edit" aria-label="Edit" onclick="editDevotional(\''+d.id+'\')">✎</button>'
+        +'<button class="danger" title="Delete" aria-label="Delete" onclick="deleteDevotional(\''+d.id+'\')">🗑</button>'
         +'</div></td>'
         +'</tr>';
     }).join('');
