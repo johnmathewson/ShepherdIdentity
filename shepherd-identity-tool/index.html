@@ -1490,12 +1490,6 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
             <div class="devadmin-help">Same — YouTube or Vimeo watch URL.</div>
           </div>
         </div>
-        <div class="devadmin-form-row">
-          <div class="field devadmin-checkbox-row">
-            <input type="checkbox" id="devAdminPublished" checked>
-            <label for="devAdminPublished">Published (uncheck to hide even after its date arrives)</label>
-          </div>
-        </div>
         <div class="devadmin-actions">
           <button class="devadmin-btn" onclick="clearDevotionalForm()">Clear</button>
           <button class="devadmin-btn primary" onclick="saveDevotionalForm()">Save</button>
@@ -1504,8 +1498,8 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       </div>
       <div style="overflow-x:auto;">
         <table class="admin-table devadmin-table" id="devAdminTable">
-          <thead><tr><th>Date</th><th>Title</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody id="devAdminTableBody"><tr><td colspan="4" style="text-align:center;color:var(--muted);">Loading…</td></tr></tbody>
+          <thead><tr><th>Date</th><th>Title</th><th>Actions</th></tr></thead>
+          <tbody id="devAdminTableBody"><tr><td colspan="3" style="text-align:center;color:var(--muted);">Loading…</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -6484,7 +6478,7 @@ async function loadAdminDevotionals(){
     if(error)throw error;
     const body=document.getElementById('devAdminTableBody');
     if(!data||data.length===0){
-      body.innerHTML='<tr><td colspan="4" class="devadmin-empty">No devotionals yet. Write one above.</td></tr>';
+      body.innerHTML='<tr><td colspan="3" class="devadmin-empty">No devotionals yet. Write one above.</td></tr>';
       return;
     }
     body.innerHTML=data.map(d=>{
@@ -6492,11 +6486,9 @@ async function loadAdminDevotionals(){
       const isToday=d.publish_date===today;
       const dateLabel=_devFormatDate(d.publish_date,{weekday:'short',month:'short',day:'numeric',year:'2-digit'})
         +(isToday?' · TODAY':(isUpcoming?' · upcoming':''));
-      const badge=d.published?'<span class="devadmin-badge published">Published</span>':'<span class="devadmin-badge draft">Hidden</span>';
       return '<tr>'
         +'<td style="font-size:0.75rem;color:'+(isToday?'var(--sage)':'var(--text-secondary)')+';">'+_devEscapeHtml(dateLabel)+'</td>'
         +'<td style="color:var(--cream);">'+_devEscapeHtml(d.title||'')+'</td>'
-        +'<td>'+badge+'</td>'
         +'<td><div class="devadmin-row-actions">'
         +'<button title="Edit" aria-label="Edit" onclick="editDevotional(\''+d.id+'\')">✎</button>'
         +'<button class="danger" title="Delete" aria-label="Delete" onclick="deleteDevotional(\''+d.id+'\')">🗑</button>'
@@ -6506,7 +6498,7 @@ async function loadAdminDevotionals(){
   }catch(e){
     console.warn('admin devotionals load:',e);
     const body=document.getElementById('devAdminTableBody');
-    if(body)body.innerHTML='<tr><td colspan="4" class="devadmin-empty">Failed to load.</td></tr>';
+    if(body)body.innerHTML='<tr><td colspan="3" class="devadmin-empty">Failed to load.</td></tr>';
   }
 }
 
@@ -6521,7 +6513,6 @@ function clearDevotionalForm(){
   document.getElementById('devAdminBody').value='';
   document.getElementById('devAdminWorshipUrl').value='';
   document.getElementById('devAdminSermonUrl').value='';
-  document.getElementById('devAdminPublished').checked=true;
   const status=document.getElementById('devAdminStatus');
   status.textContent='';status.className='devadmin-status';
 }
@@ -6540,7 +6531,6 @@ async function editDevotional(id){
     document.getElementById('devAdminBody').value=data.body||'';
     document.getElementById('devAdminWorshipUrl').value=data.worship_video_url||'';
     document.getElementById('devAdminSermonUrl').value=data.sermon_video_url||'';
-    document.getElementById('devAdminPublished').checked=data.published!==false;
     document.querySelector('.devadmin-composer').scrollIntoView({behavior:'smooth',block:'start'});
     const status=document.getElementById('devAdminStatus');
     status.textContent='Editing — save to overwrite.';status.className='devadmin-status';
@@ -6560,7 +6550,8 @@ async function saveDevotionalForm(){
     worship_video_url:document.getElementById('devAdminWorshipUrl').value.trim()||null,
     sermon_video_url:document.getElementById('devAdminSermonUrl').value.trim()||null,
     author:document.getElementById('devAdminAuthor').value.trim()||null,
-    published:document.getElementById('devAdminPublished').checked
+    // Always published on its publish_date — admins decide visibility via the date itself
+    published:true
   };
   if(!row.publish_date){status.textContent='Date is required.';status.className='devadmin-status error';return;}
   if(!row.title){status.textContent='Title is required.';status.className='devadmin-status error';return;}
