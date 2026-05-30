@@ -1422,46 +1422,9 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
         <p style="font-size:0.78rem;color:var(--muted);font-weight:300;">Platform overview and usage analytics</p>
         <button class="admin-refresh" onclick="loadAdminDashboard()">↻ Refresh</button>
       </div>
-      <div class="admin-stat-grid" id="adminStats">
-        <div class="admin-stat"><div class="admin-stat-num" id="adminTotalUsers">—</div><div class="admin-stat-label">Total Users</div><div class="admin-stat-sub" id="adminUsersToday">—</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="adminJournalTotal">—</div><div class="admin-stat-label">Journal Entries</div><div class="admin-stat-sub" id="adminJournalToday">—</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="adminDreamsTotal">—</div><div class="admin-stat-label">Dreams</div><div class="admin-stat-sub" id="adminDreamsToday">—</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="adminVisionsTotal">—</div><div class="admin-stat-label">Visions</div><div class="admin-stat-sub" id="adminVisionsToday">—</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="adminPrayerTotal">—</div><div class="admin-stat-label">Prayer Notes</div><div class="admin-stat-sub" id="adminPrayerToday">—</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="adminPropheticTotal">—</div><div class="admin-stat-label">Prophetic Words</div><div class="admin-stat-sub" id="adminPropheticToday">—</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="adminStirredTotal">—</div><div class="admin-stat-label">Stirred</div><div class="admin-stat-sub" id="adminStirredToday">—</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="adminTotalEntries">—</div><div class="admin-stat-label">AI Requests</div><div class="admin-stat-sub" id="adminTodayRequests">—</div></div>
-        <div class="admin-stat"><div class="admin-stat-num admin-cost" id="adminTotalCost">—</div><div class="admin-stat-label">Total AI Cost</div><div class="admin-stat-sub" id="adminTodayCost">—</div></div>
-      </div>
     </div>
-    <div class="section">
-      <div class="admin-section-title">👥 Users</div>
-      <div style="overflow-x:auto;">
-        <table class="admin-table" id="adminUsersTable">
-          <thead><tr><th>User</th><th>Role</th><th>Joined</th></tr></thead>
-          <tbody id="adminUsersBody"><tr><td colspan="3" style="text-align:center;color:var(--muted);">Loading...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-    <div class="section" style="margin-top:16px;">
-      <div class="admin-section-title">🤖 AI Usage Breakdown</div>
-      <div style="overflow-x:auto;">
-        <table class="admin-table" id="adminAiTable">
-          <thead><tr><th>Feature</th><th>Requests</th><th>Tokens In</th><th>Tokens Out</th><th>Cost</th></tr></thead>
-          <tbody id="adminAiBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);">Loading...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-    <div class="section" style="margin-top:16px;">
-      <div class="admin-section-title">📊 Recent AI Activity</div>
-      <div style="overflow-x:auto;">
-        <table class="admin-table" id="adminRecentTable">
-          <thead><tr><th>User</th><th>Feature</th><th>Cost</th><th>When</th></tr></thead>
-          <tbody id="adminRecentBody"><tr><td colspan="4" style="text-align:center;color:var(--muted);">Loading...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-    <div class="section" style="margin-top:16px;">
+    <!-- Devotionals — top of admin so writing the next day is the first action -->
+    <div class="section" style="margin-bottom:16px;">
       <div class="admin-section-title">📖 Devotionals</div>
       <div class="devadmin-composer">
         <input type="hidden" id="devAdminEditId" value="">
@@ -1532,6 +1495,47 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
         <table class="admin-table devadmin-table" id="devAdminTable">
           <thead><tr><th>Date</th><th>Title</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="devAdminTableBody"><tr><td colspan="4" style="text-align:center;color:var(--muted);">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Platform stats below -->
+    <div class="section" style="margin-bottom:16px;">
+      <div class="admin-stat-grid" id="adminStats">
+        <div class="admin-stat"><div class="admin-stat-num" id="adminTotalUsers">—</div><div class="admin-stat-label">Total Users</div><div class="admin-stat-sub" id="adminUsersToday">—</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="adminJournalTotal">—</div><div class="admin-stat-label">Journal Entries</div><div class="admin-stat-sub" id="adminJournalToday">—</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="adminDreamsTotal">—</div><div class="admin-stat-label">Dreams</div><div class="admin-stat-sub" id="adminDreamsToday">—</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="adminVisionsTotal">—</div><div class="admin-stat-label">Visions</div><div class="admin-stat-sub" id="adminVisionsToday">—</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="adminPrayerTotal">—</div><div class="admin-stat-label">Prayer Notes</div><div class="admin-stat-sub" id="adminPrayerToday">—</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="adminPropheticTotal">—</div><div class="admin-stat-label">Prophetic Words</div><div class="admin-stat-sub" id="adminPropheticToday">—</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="adminStirredTotal">—</div><div class="admin-stat-label">Stirred</div><div class="admin-stat-sub" id="adminStirredToday">—</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="adminTotalEntries">—</div><div class="admin-stat-label">AI Requests</div><div class="admin-stat-sub" id="adminTodayRequests">—</div></div>
+        <div class="admin-stat"><div class="admin-stat-num admin-cost" id="adminTotalCost">—</div><div class="admin-stat-label">Total AI Cost</div><div class="admin-stat-sub" id="adminTodayCost">—</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="admin-section-title">👥 Users</div>
+      <div style="overflow-x:auto;">
+        <table class="admin-table" id="adminUsersTable">
+          <thead><tr><th>User</th><th>Role</th><th>Joined</th></tr></thead>
+          <tbody id="adminUsersBody"><tr><td colspan="3" style="text-align:center;color:var(--muted);">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="section" style="margin-top:16px;">
+      <div class="admin-section-title">🤖 AI Usage Breakdown</div>
+      <div style="overflow-x:auto;">
+        <table class="admin-table" id="adminAiTable">
+          <thead><tr><th>Feature</th><th>Requests</th><th>Tokens In</th><th>Tokens Out</th><th>Cost</th></tr></thead>
+          <tbody id="adminAiBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="section" style="margin-top:16px;">
+      <div class="admin-section-title">📊 Recent AI Activity</div>
+      <div style="overflow-x:auto;">
+        <table class="admin-table" id="adminRecentTable">
+          <thead><tr><th>User</th><th>Feature</th><th>Cost</th><th>When</th></tr></thead>
+          <tbody id="adminRecentBody"><tr><td colspan="4" style="text-align:center;color:var(--muted);">Loading...</td></tr></tbody>
         </table>
       </div>
     </div>
