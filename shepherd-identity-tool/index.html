@@ -908,6 +908,10 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .devadmin-row-actions button{background:transparent;border:1px solid var(--border);color:var(--text-secondary);width:34px;height:34px;padding:0;border-radius:8px;font-size:1rem;line-height:1;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);display:inline-flex;align-items:center;justify-content:center;}
 .devadmin-row-actions button:hover{border-color:var(--sage);color:var(--sage);}
 .devadmin-row-actions button.danger:hover{border-color:var(--red);color:var(--red);}
+.devadmin-test{display:flex;align-items:center;gap:14px;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;margin-top:16px;flex-wrap:wrap;}
+.devadmin-test-info{flex:1;min-width:200px;}
+.devadmin-test-label{font-size:0.84rem;color:var(--cream);font-weight:500;margin-bottom:3px;}
+.devadmin-test-hint{font-size:0.72rem;color:var(--muted);line-height:1.45;font-weight:300;}
 
 /* Account settings */
 .account-settings{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:20px;}
@@ -1537,6 +1541,15 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
           <tbody id="devAdminTableBody"><tr><td colspan="3" style="text-align:center;color:var(--muted);">Loading…</td></tr></tbody>
         </table>
       </div>
+      <!-- Test send tooling -->
+      <div class="devadmin-test">
+        <div class="devadmin-test-info">
+          <div class="devadmin-test-label">📧 Test the email send</div>
+          <div class="devadmin-test-hint">Fires today's devotional to your inbox only. Doesn't broadcast, doesn't log, doesn't affect anyone else.</div>
+        </div>
+        <button class="devadmin-btn" onclick="sendTestDevotionalEmail()">Send test to me</button>
+      </div>
+      <div class="devadmin-status" id="devTestStatus"></div>
     </div>
     <!-- Platform stats below -->
     <div class="section" style="margin-bottom:16px;">
@@ -6655,6 +6668,43 @@ async function deleteDevotional(id){
     await loadAdminDevotionals();
     loadTodayDevotional();
   }catch(e){console.warn('delete devotional:',e);alert('Delete failed: '+(e.message||e));}
+}
+
+async function sendTestDevotionalEmail(){
+  const status=document.getElementById('devTestStatus');
+  if(!status)return;
+  if(!supa||!currentUser){
+    status.textContent='Sign in required.';status.className='devadmin-status error';return;
+  }
+  const email=currentUser.email;
+  if(!email){
+    status.textContent='Your account has no email on file.';status.className='devadmin-status error';return;
+  }
+  status.textContent='Sending test email to '+email+'…';status.className='devadmin-status';
+  try{
+    const{data,error}=await supa.functions.invoke('send-devotional-email',{
+      body:{test_email:email}
+    });
+    if(error)throw error;
+    if(data&&data.ok){
+      if(data.sent>0){
+        status.textContent='✓ Sent to '+email+'. Check your inbox (and spam folder just in case).';
+        status.className='devadmin-status success';
+      }else if(data.message){
+        status.textContent='⚠ '+data.message;status.className='devadmin-status error';
+      }else if(data.failed>0){
+        status.textContent='⚠ Send failed: '+(data.failures?.[0]?.error||'unknown');
+        status.className='devadmin-status error';
+      }
+    }else{
+      status.textContent='⚠ '+(data?.error||'Unknown response');
+      status.className='devadmin-status error';
+    }
+  }catch(e){
+    console.warn('test send:',e);
+    status.textContent='⚠ '+(e.message||String(e));
+    status.className='devadmin-status error';
+  }
 }
 
 function showLegal(type){
