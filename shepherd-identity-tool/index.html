@@ -908,6 +908,26 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .devadmin-row-actions button{background:transparent;border:1px solid var(--border);color:var(--text-secondary);width:34px;height:34px;padding:0;border-radius:8px;font-size:1rem;line-height:1;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);display:inline-flex;align-items:center;justify-content:center;}
 .devadmin-row-actions button:hover{border-color:var(--sage);color:var(--sage);}
 .devadmin-row-actions button.danger:hover{border-color:var(--red);color:var(--red);}
+
+/* Account settings */
+.account-settings{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:20px;}
+.account-settings-title{font-size:0.78rem;font-weight:600;color:var(--cream);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:14px;}
+.account-settings-row{display:flex;align-items:center;justify-content:space-between;gap:18px;}
+.account-settings-info{flex:1;min-width:0;}
+.account-settings-label{font-size:0.92rem;color:var(--cream);font-weight:500;margin-bottom:3px;}
+.account-settings-hint{font-size:0.74rem;color:var(--muted);line-height:1.45;font-weight:300;}
+.account-settings-status{font-size:0.7rem;color:var(--muted);margin-top:10px;min-height:14px;}
+.account-settings-status.success{color:var(--sage);}
+.account-settings-status.error{color:var(--red);}
+
+/* Toggle switch */
+.settings-toggle{position:relative;display:inline-block;width:46px;height:26px;flex-shrink:0;}
+.settings-toggle input{opacity:0;width:0;height:0;}
+.settings-toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--surface2);border:1px solid var(--border);border-radius:26px;transition:0.25s ease;}
+.settings-toggle-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:var(--text-secondary);border-radius:50%;transition:0.25s ease;}
+.settings-toggle input:checked + .settings-toggle-slider{background:var(--sage-dim);border-color:var(--sage);}
+.settings-toggle input:checked + .settings-toggle-slider::before{transform:translateX(20px);background:var(--sage);}
+.settings-toggle input:disabled + .settings-toggle-slider{opacity:0.5;cursor:not-allowed;}
 </style>
 </head>
 <body>
@@ -1390,6 +1410,21 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 
   <!-- PROFILE (IDENTITY CARD) -->
   <div class="tab-content" id="tab-profile">
+    <!-- Account preferences -->
+    <div class="account-settings">
+      <div class="account-settings-title">Email Preferences</div>
+      <div class="account-settings-row">
+        <div class="account-settings-info">
+          <div class="account-settings-label">Daily Devotional Email</div>
+          <div class="account-settings-hint">Get each morning's devotional in your inbox at 6 AM Eastern.</div>
+        </div>
+        <label class="settings-toggle">
+          <input type="checkbox" id="devEmailOptInToggle" onchange="setDevotionalEmailOptIn(this.checked)">
+          <span class="settings-toggle-slider"></span>
+        </label>
+      </div>
+      <div class="account-settings-status" id="devEmailOptInStatus"></div>
+    </div>
     <div id="idCardPreview" style="display:none;margin-bottom:20px;">
       <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px;" id="idCardActions">
         <button class="id-card-btn" onclick="downloadIdCardPDF()" style="font-size:0.8rem;padding:10px 20px;">📄 Download as PDF</button>
@@ -4917,7 +4952,7 @@ function globalSearchHandler(q){const results=[];if(q.length<2){document.getElem
 function formatDate(d){if(!d)return'—';const [y,m,day]=d.split('-');return`${m}/${day}/${y}`;}
 function getTotalEntries(s){return s.prophetic.length+s.prayer.length+s.dreams.length+(s.visions?.length||0)+(s.stirred?.length||0)+s.skills.length;}
 function updateCounts(){const s=id=>{const el=document.getElementById(id);return el||{set textContent(v){}}};s('countP').textContent=state.prophetic.length;s('countPr').textContent=state.prayer.length;s('countD').textContent=state.dreams.length+(state.visions?.length||0);s('countG').textContent=state.gifts.length;s('countS').textContent=state.skills.length;s('countBD').textContent=state.brainDumps?.length||0;s('totalEntries').textContent=getTotalEntries(state);s('totalGifts').textContent=state.gifts.length;s('totalSkills').textContent=state.skills.length;const d=state.startDate?formatDate(state.startDate):'—';s('activeDate').textContent=d;}
-function switchTab(t,el){const old=document.querySelector('.tab-content.active');const cont=document.getElementById('tab-'+t);if(old)old.classList.remove('active');cont.classList.add('active');document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(t==='journey')updateJourney();if(t==='profile')compileProfile();if(t==='aichat')setTimeout(()=>{const inp=document.getElementById('aiInput');if(inp)inp.focus();},100);}
+function switchTab(t,el){const old=document.querySelector('.tab-content.active');const cont=document.getElementById('tab-'+t);if(old)old.classList.remove('active');cont.classList.add('active');document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(t==='journey')updateJourney();if(t==='profile'){compileProfile();loadDevotionalEmailPref();}if(t==='aichat')setTimeout(()=>{const inp=document.getElementById('aiInput');if(inp)inp.focus();},100);}
 function checkMilestones(){const m=getTotalEntries(state);const fulfilled=state.prophetic.filter(p=>p.status==='fulfilled').length;if(m===5)toast('Milestone','5 entries recorded!');if(m===20)toast('Milestone','20 entries! God is speaking!');if(fulfilled===1)toast('Fulfilled','Your first prophetic word is coming true!');}
 function toast(title,desc){const el=document.createElement('div');el.className='milestone-toast';el.innerHTML=`<div class="mt-icon">⭐</div><div class="mt-title">${title}</div><div class="mt-desc">${desc}</div>`;document.body.appendChild(el);setTimeout(()=>el.remove(),4000);}
 function showOnboarding(){document.getElementById('onboardingOverlay').style.display='flex';}
@@ -6288,6 +6323,41 @@ async function trackDevotionalView(devotionalId){
       {onConflict:'user_id,devotional_id',ignoreDuplicates:true}
     );
   }catch(e){console.warn('view track:',e);}
+}
+
+// ── Account email preference ──
+async function loadDevotionalEmailPref(){
+  const toggle=document.getElementById('devEmailOptInToggle');
+  if(!toggle||!supa||!currentUser)return;
+  try{
+    const{data,error}=await supa.from('profiles')
+      .select('devotional_email_opt_in')
+      .eq('id',currentUser.id)
+      .single();
+    if(error)throw error;
+    toggle.checked=data?.devotional_email_opt_in!==false;
+  }catch(e){console.warn('email pref load:',e);}
+}
+
+async function setDevotionalEmailOptIn(enabled){
+  const status=document.getElementById('devEmailOptInStatus');
+  const toggle=document.getElementById('devEmailOptInToggle');
+  if(!supa||!currentUser){toggle.checked=!enabled;return;}
+  if(status){status.textContent='Saving…';status.className='account-settings-status';}
+  toggle.disabled=true;
+  try{
+    const{error}=await supa.from('profiles')
+      .update({devotional_email_opt_in:enabled})
+      .eq('id',currentUser.id);
+    if(error)throw error;
+    if(status){status.textContent=enabled?'You’ll get the daily devotional by email.':'Email opt-out saved. You can re-enable here anytime.';status.className='account-settings-status success';}
+  }catch(e){
+    console.warn('email pref save:',e);
+    toggle.checked=!enabled; // revert
+    if(status){status.textContent='Couldn’t save: '+(e.message||e);status.className='account-settings-status error';}
+  }finally{
+    toggle.disabled=false;
+  }
 }
 
 async function openTodayDevotional(){
