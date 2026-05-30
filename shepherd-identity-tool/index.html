@@ -821,6 +821,8 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .dev-teaser-label{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .dev-teaser-pill{font-size:0.6rem;color:var(--sage);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;padding:3px 9px;background:var(--sage-dim);border-radius:10px;}
 .dev-teaser-date{font-size:0.7rem;color:var(--muted);font-weight:400;}
+.dev-teaser-count{display:inline-flex;align-items:center;gap:4px;font-size:0.68rem;color:var(--muted);margin-left:auto;font-weight:400;letter-spacing:0.02em;opacity:0.85;}
+.dev-teaser-count svg{opacity:0.7;}
 .dev-teaser-title{font-family:var(--font-serif);font-size:1.15rem;color:var(--cream);font-weight:400;line-height:1.25;margin-bottom:6px;}
 .dev-teaser-snippet{font-size:0.78rem;color:var(--text-secondary);line-height:1.55;font-weight:300;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .dev-teaser-cta{font-size:0.72rem;color:var(--sage);font-weight:500;display:flex;align-items:center;gap:5px;}
@@ -1048,6 +1050,10 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       <div class="dev-teaser-label">
         <span class="dev-teaser-pill">Today's Devotional</span>
         <span class="dev-teaser-date" id="devTeaserDate">—</span>
+        <span class="dev-teaser-count" id="devTeaserCount" style="display:none;" title="people who opened this today">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span id="devTeaserCountNum">—</span>
+        </span>
       </div>
       <div class="dev-teaser-title" id="devTeaserTitle">—</div>
       <div class="dev-teaser-snippet" id="devTeaserSnippet">—</div>
@@ -6261,7 +6267,33 @@ async function loadTodayDevotional(){
     card.style.display='';
     card.dataset.devId=data.id;
     _devSession[data.id]=data;
+    // Fire-and-forget: pull the social-proof view count for this devotional.
+    // Hidden when count < 2 so the chip never feels lonely at 0/1.
+    refreshDevotionalViewCount(data.id);
   }catch(e){console.warn('loadTodayDevotional:',e);card.style.display='none';}
+}
+
+async function refreshDevotionalViewCount(devotionalId){
+  const chip=document.getElementById('devTeaserCount');
+  const num=document.getElementById('devTeaserCountNum');
+  if(!chip||!num||!supa)return;
+  try{
+    const{data,error}=await supa.rpc('devotional_view_count',{p_devotional_id:devotionalId});
+    if(error)throw error;
+    const n=typeof data==='number'?data:parseInt(data,10)||0;
+    if(n>=2){num.textContent=n;chip.style.display='';}
+    else{chip.style.display='none';}
+  }catch(e){console.warn('view count:',e);chip.style.display='none';}
+}
+
+async function trackDevotionalView(devotionalId){
+  if(!supa||!currentUser||!devotionalId)return;
+  try{
+    await supa.from('devotional_views').upsert(
+      {user_id:currentUser.id,devotional_id:devotionalId},
+      {onConflict:'user_id,devotional_id',ignoreDuplicates:true}
+    );
+  }catch(e){console.warn('view track:',e);}
 }
 
 async function openTodayDevotional(){
@@ -6314,6 +6346,9 @@ function openDevotionalModal(d){
   // Show overlay
   document.getElementById('devModalOverlay').classList.add('active');
   document.body.style.overflow='hidden';
+  // Track this view for the social-proof counter (fire-and-forget).
+  // De-duplicated server-side via UNIQUE(user_id, devotional_id).
+  trackDevotionalView(d.id);
 }
 
 function closeDevotionalModal(){
