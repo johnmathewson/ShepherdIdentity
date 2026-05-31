@@ -866,6 +866,10 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .devmodal-notes textarea{width:100%;min-height:120px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;line-height:1.6;resize:vertical;}
 .devmodal-notes textarea:focus{outline:none;border-color:var(--sage);}
 .devmodal-author{font-size:0.74rem;color:var(--muted);font-style:italic;text-align:right;margin-top:24px;}
+.devmodal-memory{background:var(--surface2);border:1px solid var(--wheat);border-radius:10px;padding:16px 18px;margin-bottom:24px;}
+.devmodal-memory-label{font-size:0.68rem;font-weight:600;color:var(--wheat);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;}
+.devmodal-memory-text{font-size:0.95rem;color:var(--cream);line-height:1.7;font-style:italic;font-weight:300;margin-bottom:6px;}
+.devmodal-memory-ref{font-size:0.74rem;color:var(--wheat);font-weight:500;letter-spacing:0.04em;}
 
 .dev-archive-header{display:flex;justify-content:space-between;align-items:center;margin:24px 0 16px;}
 .dev-archive-heading{font-family:var(--font-serif);font-size:1.4rem;color:var(--cream);font-weight:400;}
@@ -1529,6 +1533,17 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
             <div class="devadmin-help">Same — YouTube or Vimeo watch URL.</div>
           </div>
         </div>
+        <div class="devadmin-form-row two">
+          <div class="field">
+            <label>Weekly Memory Verse Reference</label>
+            <input type="text" id="devAdminMemoryRef" placeholder="2 Corinthians 5:17">
+            <div class="devadmin-help">Set on any one day this week — it shows on all days that week.</div>
+          </div>
+          <div class="field">
+            <label>Weekly Memory Verse Text</label>
+            <textarea id="devAdminMemoryText" placeholder="Therefore, if anyone is in Christ, he is a new creation…"></textarea>
+          </div>
+        </div>
         <div class="devadmin-actions">
           <button class="devadmin-btn" onclick="clearDevotionalForm()">Clear</button>
           <button class="devadmin-btn primary" onclick="saveDevotionalForm()">Save</button>
@@ -1673,6 +1688,11 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       <div class="devmodal-video" id="devModalSermonWrap" style="display:none;">
         <div class="devmodal-video-label">▶ Sermon Clip</div>
         <div id="devModalSermonSlot"></div>
+      </div>
+      <div class="devmodal-memory" id="devModalMemoryWrap" style="display:none;">
+        <div class="devmodal-memory-label">📖 This Week's Memory Verse</div>
+        <div class="devmodal-memory-text" id="devModalMemoryText"></div>
+        <div class="devmodal-memory-ref" id="devModalMemoryRef"></div>
       </div>
       <div class="devmodal-notes-section">
         <div class="devmodal-notes-label">
@@ -6383,7 +6403,7 @@ async function openTodayDevotional(){
   if(data)openDevotionalModal(data);
 }
 
-function openDevotionalModal(d){
+async function openDevotionalModal(d){
   _devCurrent=d;
   _devSession[d.id]=d;
   // Switch to single view, hide archive view
@@ -6418,6 +6438,33 @@ function openDevotionalModal(d){
   }
   // Author
   document.getElementById('devModalAuthor').textContent=d.author?'— '+d.author:'';
+  // Weekly memory verse — set on any one day this week, shown on all days
+  const memWrap=document.getElementById('devModalMemoryWrap');
+  const mvRef=d.memory_verse_ref||'';
+  const mvText=d.memory_verse_text||'';
+  if(mvRef){
+    document.getElementById('devModalMemoryText').textContent=mvText;
+    document.getElementById('devModalMemoryRef').textContent=mvRef;
+    memWrap.style.display='';
+  }else{
+    // Look for a memory verse set on any other devotional this same week
+    try{
+      const dp=new Date(d.publish_date+'T12:00:00');
+      const dow=dp.getDay();
+      const mon=new Date(dp);mon.setDate(dp.getDate()-(dow===0?6:dow-1));
+      const sun=new Date(mon);sun.setDate(mon.getDate()+6);
+      const monIso=mon.toISOString().split('T')[0];
+      const sunIso=sun.toISOString().split('T')[0];
+      const{data:mv}=await supa.from('devotionals').select('memory_verse_ref,memory_verse_text')
+        .not('memory_verse_ref','is',null).gte('publish_date',monIso).lte('publish_date',sunIso)
+        .limit(1).maybeSingle();
+      if(mv&&mv.memory_verse_ref){
+        document.getElementById('devModalMemoryText').textContent=mv.memory_verse_text||'';
+        document.getElementById('devModalMemoryRef').textContent=mv.memory_verse_ref;
+        memWrap.style.display='';
+      }else{memWrap.style.display='none';}
+    }catch(e){memWrap.style.display='none';}
+  }
   // Notes
   loadDevotionalNotes(d.id);
   // Show overlay
@@ -6437,6 +6484,7 @@ function closeDevotionalModal(){
   // Stop any video iframes from playing in background
   document.getElementById('devModalWorshipSlot').innerHTML='';
   document.getElementById('devModalSermonSlot').innerHTML='';
+  document.getElementById('devModalMemoryWrap').style.display='none';
 }
 
 async function loadDevotionalNotes(devotionalId){
@@ -6596,6 +6644,8 @@ function clearDevotionalForm(){
   document.getElementById('devAdminBody').value='';
   document.getElementById('devAdminWorshipUrl').value='';
   document.getElementById('devAdminSermonUrl').value='';
+  document.getElementById('devAdminMemoryRef').value='';
+  document.getElementById('devAdminMemoryText').value='';
   const status=document.getElementById('devAdminStatus');
   status.textContent='';status.className='devadmin-status';
 }
@@ -6614,6 +6664,8 @@ async function editDevotional(id){
     document.getElementById('devAdminBody').value=data.body||'';
     document.getElementById('devAdminWorshipUrl').value=data.worship_video_url||'';
     document.getElementById('devAdminSermonUrl').value=data.sermon_video_url||'';
+    document.getElementById('devAdminMemoryRef').value=data.memory_verse_ref||'';
+    document.getElementById('devAdminMemoryText').value=data.memory_verse_text||'';
     document.querySelector('.devadmin-composer').scrollIntoView({behavior:'smooth',block:'start'});
     const status=document.getElementById('devAdminStatus');
     status.textContent='Editing — save to overwrite.';status.className='devadmin-status';
@@ -6632,6 +6684,8 @@ async function saveDevotionalForm(){
     body:document.getElementById('devAdminBody').value.trim()||null,
     worship_video_url:document.getElementById('devAdminWorshipUrl').value.trim()||null,
     sermon_video_url:document.getElementById('devAdminSermonUrl').value.trim()||null,
+    memory_verse_ref:document.getElementById('devAdminMemoryRef').value.trim()||null,
+    memory_verse_text:document.getElementById('devAdminMemoryText').value.trim()||null,
     author:document.getElementById('devAdminAuthor').value.trim()||null,
     // Always published on its publish_date — admins decide visibility via the date itself
     published:true
