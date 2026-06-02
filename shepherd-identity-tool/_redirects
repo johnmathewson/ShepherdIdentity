@@ -1,0 +1,5 @@
+# SPA fallback — serve index.html for every path so Supabase magic-link
+# redirects survive any URL mangling (in-app browsers, email scanners,
+# Apple Mail Privacy Protection, etc.). The hash fragment with auth
+# tokens reaches index.html and supabase-js processes it on load.
+/*    /index.html   200
