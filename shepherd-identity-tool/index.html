@@ -950,24 +950,36 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
     <div class="auth-title">Shepherd Formation</div>
     <div class="auth-subtitle">Your identity journey starts here.</div>
     <div id="authFormLogin">
-      <!-- Magic-link sign-in — primary path for everyone (no password to remember). -->
+      <!-- Email-based sign-in — dual mode: 6-digit code OR magic link.
+           The Supabase email contains both, so the user picks whichever
+           survives their inbox / browser combo. -->
       <div id="authMagicLinkStep">
         <input class="auth-input" id="authEmail" type="email" placeholder="Your email address" autocomplete="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false">
-        <button class="auth-btn" id="authSubmitBtn" onclick="sendMagicLink()">Send me a sign-in link</button>
-        <div style="font-size:0.7rem;color:var(--muted);margin:8px 0 0;font-weight:300;text-align:center;">We'll email you a one-tap link — no password needed.</div>
+        <button class="auth-btn" id="authSubmitBtn" onclick="sendMagicLink()">Email me a sign-in code</button>
+        <div style="font-size:0.7rem;color:var(--muted);margin:8px 0 0;font-weight:300;text-align:center;">We'll email you a 6-digit code and a one-tap link. Use whichever is easier.</div>
         <div class="auth-error" id="authError"></div>
       </div>
 
-      <!-- "Check your email" confirmation state (revealed after a link is sent). -->
+      <!-- "Check your email" state — shows after the email is sent.
+           User can EITHER tap the link in the email OR type the 6-digit
+           code below. The code path bypasses in-app browsers, link
+           pre-fetching, and URL-mangling entirely. -->
       <div id="authMagicLinkSent" style="display:none;text-align:center;padding:8px 0;">
         <div style="font-size:2rem;margin-bottom:6px;">📩</div>
         <div style="font-size:0.95rem;color:var(--cream);font-weight:500;margin-bottom:8px;">Check your email</div>
         <div style="font-size:0.78rem;color:var(--muted);line-height:1.55;margin-bottom:16px;">
-          We sent a sign-in link to <span id="authSentToEmail" style="color:var(--cream);"></span>.<br>
-          Tap the link to come back here and you're in.<br>
-          <span style="opacity:0.85;">(Check your spam folder if you don't see it.)</span>
+          We sent a sign-in code to <span id="authSentToEmail" style="color:var(--cream);"></span>.<br>
+          Enter the 6-digit code below, or tap the link in the email.<br>
+          <span style="opacity:0.85;">(If you don't see it, check your spam folder.)</span>
         </div>
-        <a style="font-size:0.78rem;color:var(--muted);cursor:pointer;" onclick="resetAuthForm()">← Use a different email</a>
+        <input class="auth-input" id="authOtpCode" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="10" placeholder="123456" style="text-align:center;letter-spacing:0.3em;font-size:1.15rem;font-weight:500;">
+        <button class="auth-btn" id="authVerifyBtn" onclick="verifyOtpCode()">Verify code</button>
+        <div class="auth-error" id="authOtpError"></div>
+        <div style="margin-top:14px;display:flex;gap:12px;justify-content:center;font-size:0.78rem;color:var(--muted);">
+          <a style="cursor:pointer;" onclick="resetAuthForm()">← Different email</a>
+          <span style="opacity:0.4;">·</span>
+          <a style="cursor:pointer;" onclick="sendMagicLink()">Resend</a>
+        </div>
       </div>
 
       <!-- Divider -->
@@ -1980,9 +1992,11 @@ try{
   }
 }catch(e){console.warn('Supabase init failed, running offline',e);isOfflineMode=true;}
 
-// Magic-link sign-in. PCO sign-in is handled separately by the pco-signin edge function.
-// signInWithOtp works for any email — new users get a row created automatically (handle_new_user trigger),
-// and existing password-era users land on their same auth.users row by email match.
+// Dual-mode email sign-in. signInWithOtp triggers an email that
+// contains BOTH a magic link AND a 6-digit code (project email template
+// is configured to include {{ .Token }}). The user picks whichever
+// survives their inbox / browser combo. New users are auto-created on
+// first verify via the handle_new_user trigger.
 async function sendMagicLink(){
   const email=document.getElementById('authEmail').value.trim();
   const errEl=document.getElementById('authError');
@@ -2004,9 +2018,46 @@ async function sendMagicLink(){
     document.getElementById('authMagicLinkStep').style.display='none';
     document.getElementById('authSentToEmail').textContent=email;
     document.getElementById('authMagicLinkSent').style.display='block';
+    // Reset the OTP input + focus it so the user can type the code immediately
+    const otpInput=document.getElementById('authOtpCode');
+    if(otpInput){otpInput.value='';setTimeout(()=>otpInput.focus(),50);}
+    const otpErr=document.getElementById('authOtpError');
+    if(otpErr)otpErr.textContent='';
+    const verifyBtn=document.getElementById('authVerifyBtn');
+    if(verifyBtn){verifyBtn.disabled=false;verifyBtn.textContent='Verify code';}
   }catch(e){
-    errEl.textContent=e.message||'Could not send sign-in link. Please try again.';
-    btn.disabled=false;btn.textContent='Send me a sign-in link';
+    errEl.textContent=e.message||'Could not send sign-in code. Please try again.';
+    btn.disabled=false;btn.textContent='Email me a sign-in code';
+  }
+}
+
+// Verify the 6-digit code the user typed. Bypasses every URL-related
+// failure mode (in-app browsers, link pre-fetching, mangled redirects).
+async function verifyOtpCode(){
+  const email=document.getElementById('authEmail').value.trim();
+  const raw=document.getElementById('authOtpCode').value||'';
+  const token=raw.replace(/\s+/g,'');
+  const errEl=document.getElementById('authOtpError');
+  const btn=document.getElementById('authVerifyBtn');
+  errEl.textContent='';errEl.style.color='';
+  if(!token){errEl.textContent='Enter the code from your email.';return;}
+  if(!/^\d{6,10}$/.test(token)){errEl.textContent='Code should be 6 digits, numbers only.';return;}
+  if(!supa){errEl.textContent='Sign-in is unavailable right now.';return;}
+  btn.disabled=true;btn.textContent='Verifying...';
+  try{
+    const{data,error}=await supa.auth.verifyOtp({email,token,type:'email'});
+    if(error)throw error;
+    if(!data?.user)throw new Error('Sign-in did not complete. Try again.');
+    // Same success path as the magic-link callback.
+    await onAuthSuccess(data.user);
+  }catch(e){
+    const msg=e?.message||'';
+    if(/expired|invalid|not found/i.test(msg)){
+      errEl.textContent='Code is invalid or expired. Tap "Resend" to get a fresh one.';
+    }else{
+      errEl.textContent=msg||'Could not verify the code. Try again.';
+    }
+    btn.disabled=false;btn.textContent='Verify code';
   }
 }
 
@@ -2014,8 +2065,10 @@ function resetAuthForm(){
   document.getElementById('authMagicLinkStep').style.display='block';
   document.getElementById('authMagicLinkSent').style.display='none';
   const btn=document.getElementById('authSubmitBtn');
-  btn.disabled=false;btn.textContent='Send me a sign-in link';
+  btn.disabled=false;btn.textContent='Email me a sign-in code';
   document.getElementById('authError').textContent='';
+  const otpInput=document.getElementById('authOtpCode');if(otpInput)otpInput.value='';
+  const otpErr=document.getElementById('authOtpError');if(otpErr)otpErr.textContent='';
 }
 
 function continueOffline(){
@@ -2266,6 +2319,10 @@ async function checkExistingSession(){
 // Pressing Enter in the email field sends the magic link.
 document.getElementById('authEmail')?.addEventListener('keydown',function(e){
   if(e.key==='Enter')sendMagicLink();
+});
+// Pressing Enter in the OTP code field verifies it.
+document.getElementById('authOtpCode')?.addEventListener('keydown',function(e){
+  if(e.key==='Enter')verifyOtpCode();
 });
 
 // ═══ KNOWLEDGE BASE ═══
