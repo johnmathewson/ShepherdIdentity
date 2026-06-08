@@ -1708,7 +1708,7 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
           <div class="socialshare-edit-actions">
             <a class="socialshare-reset-link" onclick="resetSocialShareWorkspace()" title="Clear the workspace. Draft stays in the database, won't appear in the library until saved.">↺ Reset workspace</a>
             <button class="devadmin-btn" id="socialShareCopyBtn" onclick="copySocialCaption()">⧉ Copy caption</button>
-            <button class="devadmin-btn" onclick="generateSocialShare(true)" title="Discard images and rebuild with the current prompt. Bills ~$0.42.">↻ Regenerate ($0.42)</button>
+            <button class="devadmin-btn" onclick="generateSocialShare(true)" title="Discard the graphic and rebuild with the current prompt. Bills ~$0.04 (square only, medium quality).">↻ Regenerate ($0.04)</button>
             <button class="devadmin-btn primary" id="socialShareSaveBtn" onclick="saveSocialShareToLibrary()" title="Persist text edits AND add to the Library below. No re-billing.">💾 Save to Library</button>
           </div>
         </div>
@@ -7238,7 +7238,7 @@ async function generateSocialShare(regenerate){
     const isSavedWarning=_socShareCurrent?.is_saved
       ?'\n\n⚠ This entry is currently in your Library. Regenerating will replace it and demote it to a Draft (you\'ll need to Save again afterward).'
       :'';
-    if(!confirm('Regenerate will discard the current graphics and bill OpenAI again (~$0.42).'+isSavedWarning+'\n\nContinue?'))return;
+    if(!confirm('Regenerate will discard the current graphic and bill OpenAI again (~$0.04).'+isSavedWarning+'\n\nContinue?'))return;
   }
   const customPrompt=document.getElementById('socialShareCustomPrompt')?.value?.trim()||'';
   status.textContent='Generating… this takes 30–60s with high-quality images.';
