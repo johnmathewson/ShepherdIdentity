@@ -943,7 +943,14 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .socialshare-edit-row input:focus,.socialshare-edit-row textarea:focus{outline:none;border-color:var(--sage);}
 .socialshare-edit-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
 .socialshare-edit-label-row label{margin-bottom:0;}
-.socialshare-edit-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;}
+.socialshare-edit-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;align-items:center;}
+.socialshare-state{display:flex;align-items:center;gap:10px;margin-top:14px;padding:10px 12px;background:var(--surface2);border-radius:6px;flex-wrap:wrap;}
+.socialshare-state-badge{font-size:0.7rem;font-weight:600;padding:4px 10px;border-radius:12px;letter-spacing:0.04em;text-transform:uppercase;flex-shrink:0;}
+.socialshare-state-badge.draft{background:var(--wheat-dim);color:var(--wheat);}
+.socialshare-state-badge.saved{background:var(--sage-dim);color:var(--sage);}
+.socialshare-state-hint{font-size:0.74rem;color:var(--muted);line-height:1.4;}
+.socialshare-reset-link{font-size:0.74rem;color:var(--muted);cursor:pointer;margin-right:auto;padding:6px 0;text-decoration:underline;text-decoration-color:transparent;transition:text-decoration-color 0.2s;}
+.socialshare-reset-link:hover{color:var(--sage);text-decoration-color:currentColor;}
 .socialshare-mood{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:14px;padding:8px 12px;background:var(--surface2);border-left:2px solid var(--wheat);border-radius:4px;}
 .socialshare-mood-label{color:var(--wheat);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-right:6px;font-style:normal;font-size:0.62rem;}
 .socialshare-empty{text-align:center;padding:32px 20px;color:var(--muted);font-size:0.85rem;background:var(--surface2);border-radius:var(--radius-lg);border:1px dashed var(--border);}
@@ -1694,9 +1701,15 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
             <label>Custom prompt nudge <span class="hint">(used on the next Regenerate — leave blank for default)</span></label>
             <textarea id="socialShareCustomPrompt" rows="2" placeholder="e.g. more abstract, less mountain. focus on water and mist. lean cooler tones."></textarea>
           </div>
+          <div class="socialshare-state" id="socialShareState">
+            <span class="socialshare-state-badge draft" id="socialShareStateBadge">📝 Draft</span>
+            <span class="socialshare-state-hint" id="socialShareStateHint">Not yet in the library. Save when you're happy with it.</span>
+          </div>
           <div class="socialshare-edit-actions">
-            <button class="devadmin-btn" onclick="saveSocialShareText()" title="Persist text edits to the DB. No regeneration, no billing.">💾 Save text changes</button>
-            <button class="devadmin-btn primary" onclick="generateSocialShare(true)" title="Discard images and rebuild with the current prompt. Bills ~$0.42.">↻ Regenerate ($0.42)</button>
+            <a class="socialshare-reset-link" onclick="resetSocialShareWorkspace()" title="Clear the workspace. Draft stays in the database, won't appear in the library until saved.">↺ Reset workspace</a>
+            <button class="devadmin-btn" id="socialShareCopyBtn" onclick="copySocialCaption()">⧉ Copy caption</button>
+            <button class="devadmin-btn" onclick="generateSocialShare(true)" title="Discard images and rebuild with the current prompt. Bills ~$0.42.">↻ Regenerate ($0.42)</button>
+            <button class="devadmin-btn primary" id="socialShareSaveBtn" onclick="saveSocialShareToLibrary()" title="Persist text edits AND add to the Library below. No re-billing.">💾 Save to Library</button>
           </div>
         </div>
 
@@ -7005,7 +7018,7 @@ async function loadSocialShareForSelected(){
   try{
     // Pull cached rows directly — no edge function call (free, fast)
     const{data:rows}=await supa.from('devotional_social_share')
-      .select('variant,candidate_index,caption,hashtags,mood_prompt,pull_quote,custom_prompt,image_url')
+      .select('variant,candidate_index,caption,hashtags,mood_prompt,pull_quote,custom_prompt,image_url,is_saved,saved_at')
       .eq('devotional_id',id)
       .order('candidate_index');
     // Get the devotional itself for title/scripture rendering
@@ -7027,6 +7040,8 @@ async function loadSocialShareForSelected(){
       mood:square?.mood_prompt||story?.mood_prompt||'',
       pull_quote:square?.pull_quote||story?.pull_quote||'',
       custom_prompt:square?.custom_prompt||story?.custom_prompt||'',
+      is_saved:!!(square?.is_saved||story?.is_saved),
+      saved_at:square?.saved_at||story?.saved_at||null,
     };
     renderSocialShareResults();
   }catch(e){
@@ -7063,10 +7078,35 @@ function renderSocialShareResults(){
   }
   document.getElementById('socialShareEmpty').style.display='none';
   document.getElementById('socialShareResults').style.display='';
+  // Draft / saved indicator
+  updateSocialShareStateUI();
   // Mark active card in the library
   document.querySelectorAll('.socialshare-library-card').forEach(el=>{
     el.classList.toggle('active',el.dataset.devId===d.id);
   });
+}
+
+function updateSocialShareStateUI(){
+  const badge=document.getElementById('socialShareStateBadge');
+  const hint=document.getElementById('socialShareStateHint');
+  const saveBtn=document.getElementById('socialShareSaveBtn');
+  if(!badge||!_socShareCurrent)return;
+  if(_socShareCurrent.is_saved){
+    badge.textContent='✓ In Library';
+    badge.className='socialshare-state-badge saved';
+    let when='';
+    if(_socShareCurrent.saved_at){
+      const d=new Date(_socShareCurrent.saved_at);
+      when=' on '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    }
+    hint.textContent='Saved to library'+when+'. Edits below will update the library entry when you tap Save.';
+    saveBtn.textContent='💾 Update in Library';
+  }else{
+    badge.textContent='📝 Draft';
+    badge.className='socialshare-state-badge draft';
+    hint.textContent='Not yet in the Library. Tap Save when you\'re happy with it.';
+    saveBtn.textContent='💾 Save to Library';
+  }
 }
 
 // Live update preview tiles as user types the pull-quote
@@ -7077,9 +7117,9 @@ function onPullQuoteInput(){
   document.getElementById('socialShareStoryQuote').textContent=display;
 }
 
-// Save text edits to DB — no AI calls, no re-billing. Updates all
-// non-image fields across both variant rows for this devotional.
-async function saveSocialShareText(){
+// Save the current workspace → Library. Persists text edits AND flips
+// is_saved=true so the entry shows in the Library grid below. Free, no AI.
+async function saveSocialShareToLibrary(){
   if(!_socShareCurrent?.devotional?.id){return;}
   const id=_socShareCurrent.devotional.id;
   const status=document.getElementById('socialShareStatus');
@@ -7087,25 +7127,52 @@ async function saveSocialShareText(){
   const caption=document.getElementById('socialShareCaption').value.trim()||null;
   const hashtags=document.getElementById('socialShareHashtagsEditable').value.trim()||null;
   const customPrompt=document.getElementById('socialShareCustomPrompt').value.trim()||null;
+  const wasSaved=_socShareCurrent.is_saved;
+  const nowIso=new Date().toISOString();
   status.textContent='Saving…';status.className='devadmin-status';
   try{
     const{error}=await supa.from('devotional_social_share')
-      .update({pull_quote:pullQuote,caption:caption,hashtags:hashtags,custom_prompt:customPrompt})
+      .update({
+        pull_quote:pullQuote,caption:caption,hashtags:hashtags,custom_prompt:customPrompt,
+        is_saved:true,saved_at:nowIso,
+      })
       .eq('devotional_id',id);
     if(error)throw error;
-    // Mirror into in-memory state + previews
     _socShareCurrent.pull_quote=pullQuote||'';
     _socShareCurrent.caption=caption||'';
     _socShareCurrent.hashtags=hashtags||'';
     _socShareCurrent.custom_prompt=customPrompt||'';
+    _socShareCurrent.is_saved=true;
+    _socShareCurrent.saved_at=nowIso;
     onPullQuoteInput();
-    status.textContent='✓ Saved text changes (no re-billing).';status.className='devadmin-status success';
-    setTimeout(()=>{if(status.textContent.startsWith('✓ Saved'))status.textContent='';},3500);
+    updateSocialShareStateUI();
+    status.textContent=wasSaved?'✓ Library entry updated.':'✓ Saved to Library.';
+    status.className='devadmin-status success';
+    setTimeout(()=>{if(status.textContent.startsWith('✓'))status.textContent='';},3500);
     loadSocialShareLibrary();
   }catch(e){
-    console.warn('saveSocialShareText:',e);
+    console.warn('saveSocialShareToLibrary:',e);
     status.textContent='⚠ Save failed: '+(e.message||e);status.className='devadmin-status error';
   }
+}
+
+// Clear the workspace UI so the admin can move on to the next devotional.
+// Doesn't touch the DB — the draft (if any) stays put so it can be revisited.
+function resetSocialShareWorkspace(){
+  _socShareCurrent=null;
+  document.getElementById('socialShareResults').style.display='none';
+  document.getElementById('socialShareEmpty').style.display='block';
+  // Clear inputs
+  ['socialSharePullQuote','socialShareCaption','socialShareHashtagsEditable','socialShareCustomPrompt'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  // Clear status
+  const status=document.getElementById('socialShareStatus');
+  if(status){status.textContent='Workspace cleared. Pick a devotional and Generate to start a new one.';status.className='devadmin-status';}
+  // Reset library highlight
+  document.querySelectorAll('.socialshare-library-card.active').forEach(el=>el.classList.remove('active'));
+  // Scroll to the controls for easy next-step
+  document.querySelector('.socialshare-controls')?.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
 // Library: every generation, most recent first. Click a card to load it.
@@ -7114,10 +7181,13 @@ async function loadSocialShareLibrary(){
   const count=document.getElementById('socialShareLibraryCount');
   if(!grid||!supa||!isAdminUser)return;
   try{
+    // Library only shows entries the admin explicitly saved.
+    // Drafts (is_saved=false) live in the DB but stay hidden until promoted.
     const{data,error}=await supa.from('devotional_social_share')
-      .select('devotional_id,pull_quote,image_url,generated_at,devotionals(title,publish_date)')
+      .select('devotional_id,pull_quote,image_url,saved_at,generated_at,devotionals(title,publish_date)')
       .eq('variant','instagram_square')
-      .order('generated_at',{ascending:false})
+      .eq('is_saved',true)
+      .order('saved_at',{ascending:false,nullsFirst:false})
       .limit(120);
     if(error)throw error;
     if(!data||data.length===0){
@@ -7164,7 +7234,12 @@ async function generateSocialShare(regenerate){
   const genBtn=document.getElementById('socialShareGenBtn');
   const regenBtn=document.getElementById('socialShareRegenBtn');
   if(!id){status.textContent='Pick a devotional first.';status.className='devadmin-status error';return;}
-  if(regenerate&&!confirm('Regenerate will discard the current graphics and bill OpenAI again (~$0.42). Continue?'))return;
+  if(regenerate){
+    const isSavedWarning=_socShareCurrent?.is_saved
+      ?'\n\n⚠ This entry is currently in your Library. Regenerating will replace it and demote it to a Draft (you\'ll need to Save again afterward).'
+      :'';
+    if(!confirm('Regenerate will discard the current graphics and bill OpenAI again (~$0.42).'+isSavedWarning+'\n\nContinue?'))return;
+  }
   const customPrompt=document.getElementById('socialShareCustomPrompt')?.value?.trim()||'';
   status.textContent='Generating… this takes 30–60s with high-quality images.';
   status.className='devadmin-status';
