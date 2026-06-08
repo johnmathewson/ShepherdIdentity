@@ -912,6 +912,38 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .devadmin-row-actions button{background:transparent;border:1px solid var(--border);color:var(--text-secondary);width:34px;height:34px;padding:0;border-radius:8px;font-size:1rem;line-height:1;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);display:inline-flex;align-items:center;justify-content:center;}
 .devadmin-row-actions button:hover{border-color:var(--sage);color:var(--sage);}
 .devadmin-row-actions button.danger:hover{border-color:var(--red);color:var(--red);}
+
+/* ═══ Social Share (admin) ═══ */
+.socialshare-controls{display:flex;align-items:flex-end;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-bottom:14px;flex-wrap:wrap;}
+.socialshare-controls .field{flex:1;min-width:200px;}
+.socialshare-controls label{display:block;font-size:0.68rem;color:var(--wheat);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-bottom:4px;}
+.socialshare-controls select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 11px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;}
+.socialshare-controls select:focus{outline:none;border-color:var(--sage);}
+.socialshare-actions{display:flex;gap:8px;}
+.socialshare-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:14px;}
+@media(min-width:720px){.socialshare-grid{grid-template-columns:1fr 1fr;}}
+.socialshare-variant{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;}
+.socialshare-variant-label{font-size:0.7rem;color:var(--sage);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:10px;}
+.socialshare-preview{position:relative;width:100%;border-radius:8px;overflow:hidden;background:#1c1f26;margin-bottom:12px;}
+.socialshare-preview.square{aspect-ratio:1/1;}
+.socialshare-preview.story{aspect-ratio:9/16;max-width:280px;margin-left:auto;margin-right:auto;}
+.socialshare-preview img{width:100%;height:100%;object-fit:cover;display:block;}
+.socialshare-preview-overlay{position:absolute;left:0;right:0;bottom:0;padding:6% 7% 8%;background:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.4) 35%,rgba(0,0,0,0.85) 100%);color:#fff;}
+.socialshare-preview-overlay .ssop-hdr{font-size:0.55rem;color:#cfd2cd;text-transform:uppercase;letter-spacing:0.18em;font-weight:600;margin-bottom:6%;opacity:0.9;}
+.socialshare-preview-overlay .ssop-title{font-family:Georgia,'Times New Roman',serif;font-size:1.3rem;line-height:1.15;font-weight:400;margin-bottom:5%;color:#fff;}
+.socialshare-preview-overlay .ssop-verse{font-style:italic;font-size:0.72rem;line-height:1.45;color:#e6e0d6;margin-bottom:3%;}
+.socialshare-preview-overlay .ssop-ref{font-size:0.66rem;color:#d4b878;font-weight:500;letter-spacing:0.04em;}
+.socialshare-preview.story .socialshare-preview-overlay{padding:6% 7% 10%;}
+.socialshare-preview.story .ssop-title{font-size:1.15rem;}
+.socialshare-caption-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-top:14px;}
+.socialshare-caption-label{display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--cream);font-weight:500;margin-bottom:10px;}
+.socialshare-caption-wrap textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;line-height:1.65;resize:vertical;min-height:140px;}
+.socialshare-caption-wrap textarea:focus{outline:none;border-color:var(--sage);}
+.socialshare-hashtags{margin-top:10px;font-size:0.78rem;color:var(--sage);background:var(--surface2);border-radius:6px;padding:10px 12px;line-height:1.55;word-break:break-word;}
+.socialshare-mood{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:14px;padding:8px 12px;background:var(--surface2);border-left:2px solid var(--wheat);border-radius:4px;}
+.socialshare-mood-label{color:var(--wheat);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-right:6px;font-style:normal;font-size:0.62rem;}
+.socialshare-empty{text-align:center;padding:32px 20px;color:var(--muted);font-size:0.85rem;background:var(--surface2);border-radius:var(--radius-lg);border:1px dashed var(--border);}
+.socialshare-cost{font-size:0.7rem;color:var(--muted);margin-top:8px;text-align:right;font-style:italic;}
 .devadmin-test{display:flex;align-items:center;gap:14px;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;margin-top:16px;flex-wrap:wrap;}
 .devadmin-test-info{flex:1;min-width:200px;}
 .devadmin-test-label{font-size:0.84rem;color:var(--cream);font-weight:500;margin-bottom:3px;}
@@ -1577,6 +1609,73 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
         <button class="devadmin-btn" onclick="sendTestDevotionalEmail()">Send test to me</button>
       </div>
       <div class="devadmin-status" id="devTestStatus"></div>
+    </div>
+    <!-- Social Share — generate IG-ready graphics + caption from any devotional -->
+    <div class="section" style="margin-bottom:16px;">
+      <div class="admin-section-title">📱 Social Share</div>
+      <div class="socialshare-controls">
+        <div class="field">
+          <label>Devotional</label>
+          <select id="socialShareDevotional" onchange="loadSocialShareForSelected()"></select>
+        </div>
+        <div class="socialshare-actions">
+          <button class="devadmin-btn primary" id="socialShareGenBtn" onclick="generateSocialShare(false)">Generate</button>
+          <button class="devadmin-btn" id="socialShareRegenBtn" onclick="generateSocialShare(true)" title="Discards current graphics and bills again">Regenerate</button>
+        </div>
+      </div>
+      <div class="devadmin-status" id="socialShareStatus"></div>
+
+      <div id="socialShareEmpty" class="socialshare-empty">
+        Pick a devotional and tap <strong>Generate</strong>. Claude writes the caption, OpenAI's gpt-image-1 paints the background, your scripture overlays on top. Takes 30–60s.
+      </div>
+
+      <div id="socialShareResults" style="display:none;">
+        <div class="socialshare-grid">
+          <div class="socialshare-variant">
+            <div class="socialshare-variant-label">Instagram Square · 1080×1080</div>
+            <div class="socialshare-preview square">
+              <img id="socialShareSquareImg" crossorigin="anonymous" alt="Square background" loading="lazy">
+              <div class="socialshare-preview-overlay">
+                <div class="ssop-hdr">Shepherd Daily Devotional</div>
+                <div class="ssop-title" id="socialShareSquareTitle">—</div>
+                <div class="ssop-verse" id="socialShareSquareVerse">—</div>
+                <div class="ssop-ref" id="socialShareSquareRef">—</div>
+              </div>
+            </div>
+            <button class="devadmin-btn primary" style="width:100%;" onclick="downloadSocialGraphic('instagram_square')">⬇ Download Square PNG</button>
+          </div>
+          <div class="socialshare-variant">
+            <div class="socialshare-variant-label">Instagram Story · 1080×1920</div>
+            <div class="socialshare-preview story">
+              <img id="socialShareStoryImg" crossorigin="anonymous" alt="Story background" loading="lazy">
+              <div class="socialshare-preview-overlay">
+                <div class="ssop-hdr">Shepherd Daily Devotional</div>
+                <div class="ssop-title" id="socialShareStoryTitle">—</div>
+                <div class="ssop-verse" id="socialShareStoryVerse">—</div>
+                <div class="ssop-ref" id="socialShareStoryRef">—</div>
+              </div>
+            </div>
+            <button class="devadmin-btn primary" style="width:100%;" onclick="downloadSocialGraphic('instagram_story')">⬇ Download Story PNG</button>
+          </div>
+        </div>
+
+        <div class="socialshare-caption-wrap">
+          <div class="socialshare-caption-label">
+            <span>📝 Caption</span>
+            <button class="devadmin-btn" onclick="copySocialCaption()">⧉ Copy caption</button>
+          </div>
+          <textarea id="socialShareCaption" placeholder="Generated caption appears here…"></textarea>
+          <div class="socialshare-hashtags" id="socialShareHashtags"></div>
+        </div>
+
+        <div class="socialshare-mood" id="socialShareMoodWrap" style="display:none;">
+          <span class="socialshare-mood-label">Mood</span><span id="socialShareMood"></span>
+        </div>
+        <div class="socialshare-cost">High-quality regeneration costs ~$0.42 in OpenAI usage</div>
+      </div>
+
+      <!-- Offscreen render target for html2canvas — sized at full 1080-wide resolution so downloads are crisp -->
+      <div id="socialRenderTarget" style="position:fixed;left:-99999px;top:0;width:1080px;height:1080px;pointer-events:none;overflow:hidden;"></div>
     </div>
     <!-- Platform stats below -->
     <div class="section" style="margin-bottom:16px;">
@@ -2277,6 +2376,8 @@ async function loadAdminDashboard(){
     const dateEl=document.getElementById('devAdminDate');
     if(dateEl&&!dateEl.value)dateEl.value=_devTodayLocalIso();
     loadAdminDevotionals();
+    // Social Share admin: populate dropdown + load any cached results
+    loadSocialShareDevotionals();
   }catch(e){
     console.error('Admin dashboard error:',e);
   }
@@ -6815,6 +6916,213 @@ async function sendTestDevotionalEmail(){
     console.warn('test send:',e);
     status.textContent='⚠ '+(e.message||String(e));
     status.className='devadmin-status error';
+  }
+}
+
+// ═══════════════════════════════════════════
+// SOCIAL SHARE (admin) — IG caption + AI background generator
+// ═══════════════════════════════════════════
+let _socShareCurrent=null; // { devotional, square_url, story_url, caption, hashtags, mood }
+
+async function loadSocialShareDevotionals(){
+  const sel=document.getElementById('socialShareDevotional');
+  if(!sel||!supa||!isAdminUser)return;
+  try{
+    const today=_devTodayLocalIso();
+    const past=new Date();past.setDate(past.getDate()-14);
+    const pastIso=past.getFullYear()+'-'+String(past.getMonth()+1).padStart(2,'0')+'-'+String(past.getDate()).padStart(2,'0');
+    const{data,error}=await supa.from('devotionals')
+      .select('id,publish_date,title,scripture_ref,scripture_text')
+      .gte('publish_date',pastIso)
+      .order('publish_date',{ascending:false});
+    if(error)throw error;
+    const prev=sel.value;
+    sel.innerHTML=(data||[]).map(d=>{
+      const dateLabel=_devFormatDate(d.publish_date,{weekday:'short',month:'short',day:'numeric'});
+      const isToday=d.publish_date===today;
+      return '<option value="'+d.id+'">'+_devEscapeHtml(dateLabel)+(isToday?' · TODAY':'')+' — '+_devEscapeHtml(d.title||'(untitled)')+'</option>';
+    }).join('')||'<option value="">No devotionals yet</option>';
+    // Default to today's, or restore previous selection
+    let nextVal=prev;
+    if(!nextVal||![...sel.options].some(o=>o.value===nextVal)){
+      const todayOpt=(data||[]).find(d=>d.publish_date===today);
+      nextVal=todayOpt?todayOpt.id:((data||[])[0]?.id||'');
+    }
+    if(nextVal){sel.value=nextVal;loadSocialShareForSelected();}
+  }catch(e){console.warn('loadSocialShareDevotionals:',e);}
+}
+
+async function loadSocialShareForSelected(){
+  const sel=document.getElementById('socialShareDevotional');
+  const id=sel?.value;
+  const empty=document.getElementById('socialShareEmpty');
+  const results=document.getElementById('socialShareResults');
+  const status=document.getElementById('socialShareStatus');
+  if(!id){empty.style.display='block';results.style.display='none';return;}
+  status.textContent='';status.className='devadmin-status';
+  try{
+    // Pull cached rows directly — no edge function call (free, fast)
+    const{data:rows}=await supa.from('devotional_social_share')
+      .select('variant,candidate_index,caption,hashtags,mood_prompt,image_url')
+      .eq('devotional_id',id)
+      .order('candidate_index');
+    // Get the devotional itself for title/scripture rendering
+    const{data:dev}=await supa.from('devotionals').select('*').eq('id',id).maybeSingle();
+    if(!dev){empty.style.display='block';results.style.display='none';return;}
+    if(!rows||rows.length===0){
+      empty.style.display='block';results.style.display='none';
+      _socShareCurrent={devotional:dev};
+      return;
+    }
+    const square=rows.find(r=>r.variant==='instagram_square');
+    const story=rows.find(r=>r.variant==='instagram_story');
+    _socShareCurrent={
+      devotional:dev,
+      square_url:square?.image_url||null,
+      story_url:story?.image_url||null,
+      caption:square?.caption||story?.caption||'',
+      hashtags:square?.hashtags||story?.hashtags||'',
+      mood:square?.mood_prompt||story?.mood_prompt||'',
+    };
+    renderSocialShareResults();
+  }catch(e){
+    console.warn('loadSocialShareForSelected:',e);
+    status.textContent='⚠ Could not load: '+(e.message||e);status.className='devadmin-status error';
+  }
+}
+
+function renderSocialShareResults(){
+  if(!_socShareCurrent||!_socShareCurrent.square_url){return;}
+  const{devotional:d,square_url,story_url,caption,hashtags,mood}=_socShareCurrent;
+  const t=d.title||'';
+  const sv=d.scripture_text||'';
+  const sr=d.scripture_ref||'';
+  // Square preview
+  document.getElementById('socialShareSquareImg').src=square_url;
+  document.getElementById('socialShareSquareTitle').textContent=t;
+  document.getElementById('socialShareSquareVerse').textContent=sv?'"'+sv+'"':'';
+  document.getElementById('socialShareSquareRef').textContent=sr;
+  // Story preview
+  document.getElementById('socialShareStoryImg').src=story_url||square_url;
+  document.getElementById('socialShareStoryTitle').textContent=t;
+  document.getElementById('socialShareStoryVerse').textContent=sv?'"'+sv+'"':'';
+  document.getElementById('socialShareStoryRef').textContent=sr;
+  // Caption + hashtags
+  document.getElementById('socialShareCaption').value=caption||'';
+  const hEl=document.getElementById('socialShareHashtags');
+  if(hashtags){hEl.textContent=hashtags;hEl.style.display='';}else{hEl.style.display='none';}
+  // Mood
+  if(mood){
+    document.getElementById('socialShareMood').textContent=mood;
+    document.getElementById('socialShareMoodWrap').style.display='';
+  }else{
+    document.getElementById('socialShareMoodWrap').style.display='none';
+  }
+  document.getElementById('socialShareEmpty').style.display='none';
+  document.getElementById('socialShareResults').style.display='';
+}
+
+async function generateSocialShare(regenerate){
+  const sel=document.getElementById('socialShareDevotional');
+  const id=sel?.value;
+  const status=document.getElementById('socialShareStatus');
+  const genBtn=document.getElementById('socialShareGenBtn');
+  const regenBtn=document.getElementById('socialShareRegenBtn');
+  if(!id){status.textContent='Pick a devotional first.';status.className='devadmin-status error';return;}
+  if(regenerate&&!confirm('Regenerate will discard the current graphics and bill OpenAI again (~$0.42). Continue?'))return;
+  status.textContent='Generating… this takes 30–60s with high-quality images.';
+  status.className='devadmin-status';
+  genBtn.disabled=true;regenBtn.disabled=true;
+  try{
+    const{data,error}=await supa.functions.invoke('generate-social-share',{
+      body:{devotional_id:id,regenerate:!!regenerate}
+    });
+    if(error)throw error;
+    if(data?.error)throw new Error(data.error);
+    if(!data?.ok)throw new Error('Unexpected response from generator');
+    // Refresh from DB (single source of truth)
+    await loadSocialShareForSelected();
+    status.textContent=data.cached?'✓ Loaded from cache.':'✓ Generated. Tap a Download button to save the PNG.';
+    status.className='devadmin-status success';
+  }catch(e){
+    console.warn('generateSocialShare:',e);
+    status.textContent='⚠ '+(e.message||String(e));status.className='devadmin-status error';
+  }finally{
+    genBtn.disabled=false;regenBtn.disabled=false;
+  }
+}
+
+function copySocialCaption(){
+  const ta=document.getElementById('socialShareCaption');
+  const hashtags=document.getElementById('socialShareHashtags').textContent||'';
+  const text=(ta.value||'').trim()+(hashtags?'\n\n'+hashtags:'');
+  if(!text){return;}
+  navigator.clipboard.writeText(text).then(()=>{
+    const status=document.getElementById('socialShareStatus');
+    status.textContent='✓ Caption + hashtags copied to clipboard.';status.className='devadmin-status success';
+    setTimeout(()=>{if(status.textContent.startsWith('✓ Caption'))status.textContent='';},3000);
+  }).catch(e=>{console.warn(e);alert('Copy failed — select the text and copy manually.');});
+}
+
+async function downloadSocialGraphic(variant){
+  if(!_socShareCurrent){alert('Generate first.');return;}
+  const status=document.getElementById('socialShareStatus');
+  status.textContent='Preparing PNG…';status.className='devadmin-status';
+  const isStory=variant==='instagram_story';
+  const w=1080,h=isStory?1920:1080;
+  const url=isStory?_socShareCurrent.story_url:_socShareCurrent.square_url;
+  if(!url){status.textContent='⚠ No image generated for this variant.';status.className='devadmin-status error';return;}
+  const d=_socShareCurrent.devotional;
+  const target=document.getElementById('socialRenderTarget');
+  target.style.width=w+'px';target.style.height=h+'px';
+  // Build the print-quality HTML mirror of the preview (scaled to 1080)
+  const titleFs=isStory?92:62;
+  const verseFs=isStory?40:30;
+  const refFs=isStory?32:24;
+  const hdrFs=isStory?28:20;
+  const padX=isStory?80:70;
+  const padBottom=isStory?180:90;
+  // Cache-bust to force a CORS-friendly fetch for html2canvas
+  const imgSrc=url+(url.includes('?')?'&':'?')+'h2c='+Date.now();
+  target.innerHTML='<div id="socialRenderInner" style="position:relative;width:'+w+'px;height:'+h+'px;background:#1c1f26;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;">'+
+    '<img id="socialRenderImg" src="'+imgSrc+'" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;display:block;"/>'+
+    '<div style="position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.35) 30%,rgba(0,0,0,0.88) 100%);"></div>'+
+    '<div style="position:absolute;left:'+padX+'px;right:'+padX+'px;bottom:'+padBottom+'px;color:#fff;">'+
+      '<div style="font-size:'+hdrFs+'px;color:#cfd2cd;text-transform:uppercase;letter-spacing:0.2em;font-weight:600;margin-bottom:'+(isStory?32:22)+'px;opacity:0.92;">SHEPHERD DAILY DEVOTIONAL</div>'+
+      '<div style="font-family:Georgia,Times New Roman,serif;font-size:'+titleFs+'px;line-height:1.12;font-weight:400;margin-bottom:'+(isStory?40:28)+'px;color:#fff;">'+_devEscapeHtml(d.title||'')+'</div>'+
+      (d.scripture_text?'<div style="font-style:italic;font-size:'+verseFs+'px;line-height:1.45;color:#e6e0d6;margin-bottom:'+(isStory?20:14)+'px;">&ldquo;'+_devEscapeHtml(d.scripture_text)+'&rdquo;</div>':'')+
+      (d.scripture_ref?'<div style="font-size:'+refFs+'px;color:#d4b878;font-weight:500;letter-spacing:0.04em;">'+_devEscapeHtml(d.scripture_ref)+'</div>':'')+
+    '</div>'+
+  '</div>';
+  // Wait for the image to actually load + fonts to settle, then snapshot
+  const img=document.getElementById('socialRenderImg');
+  await new Promise((resolve,reject)=>{
+    if(img.complete&&img.naturalWidth>0)return resolve();
+    img.onload=()=>resolve();
+    img.onerror=()=>reject(new Error('Background image failed to load (CORS?)'));
+    setTimeout(()=>reject(new Error('Image load timeout')),15000);
+  });
+  if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+  try{
+    const canvas=await html2canvas(document.getElementById('socialRenderInner'),{
+      width:w,height:h,useCORS:true,allowTaint:false,backgroundColor:null,scale:1,logging:false,
+    });
+    await new Promise((resolve)=>{
+      canvas.toBlob((blob)=>{
+        const url2=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url2;
+        const dateSafe=(d.publish_date||'devotional').replace(/[^0-9-]/g,'');
+        a.download='shepherd-devotional-'+dateSafe+'-'+(isStory?'story':'square')+'.png';
+        document.body.appendChild(a);a.click();a.remove();
+        URL.revokeObjectURL(url2);
+        resolve();
+      },'image/png');
+    });
+    status.textContent='✓ Downloaded '+(isStory?'story':'square')+' PNG.';status.className='devadmin-status success';
+  }catch(e){
+    console.warn('html2canvas:',e);
+    status.textContent='⚠ Render failed: '+(e.message||e);status.className='devadmin-status error';
   }
 }
 
