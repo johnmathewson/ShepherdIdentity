@@ -934,15 +934,33 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .socialshare-preview-overlay .ssop-ref{font-size:0.68rem;color:#d4b878;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;}
 .socialshare-preview.story .socialshare-preview-overlay{padding:6% 7% 10%;}
 .socialshare-preview.story .ssop-quote{font-size:1.4rem;}
-.socialshare-caption-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-top:14px;}
-.socialshare-caption-label{display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--cream);font-weight:500;margin-bottom:10px;}
-.socialshare-caption-wrap textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;line-height:1.65;resize:vertical;min-height:140px;}
-.socialshare-caption-wrap textarea:focus{outline:none;border-color:var(--sage);}
-.socialshare-hashtags{margin-top:10px;font-size:0.78rem;color:var(--sage);background:var(--surface2);border-radius:6px;padding:10px 12px;line-height:1.55;word-break:break-word;}
+.socialshare-edit-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-top:14px;}
+.socialshare-edit-row{margin-bottom:12px;}
+.socialshare-edit-row:last-of-type{margin-bottom:0;}
+.socialshare-edit-row label{display:block;font-size:0.7rem;color:var(--wheat);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-bottom:4px;}
+.socialshare-edit-row label .hint{color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;font-style:italic;margin-left:6px;}
+.socialshare-edit-row input[type=text],.socialshare-edit-row input:not([type]),.socialshare-edit-row textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 12px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;line-height:1.55;resize:vertical;}
+.socialshare-edit-row input:focus,.socialshare-edit-row textarea:focus{outline:none;border-color:var(--sage);}
+.socialshare-edit-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.socialshare-edit-label-row label{margin-bottom:0;}
+.socialshare-edit-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;}
 .socialshare-mood{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:14px;padding:8px 12px;background:var(--surface2);border-left:2px solid var(--wheat);border-radius:4px;}
 .socialshare-mood-label{color:var(--wheat);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-right:6px;font-style:normal;font-size:0.62rem;}
 .socialshare-empty{text-align:center;padding:32px 20px;color:var(--muted);font-size:0.85rem;background:var(--surface2);border-radius:var(--radius-lg);border:1px dashed var(--border);}
-.socialshare-cost{font-size:0.7rem;color:var(--muted);margin-top:8px;text-align:right;font-style:italic;}
+
+/* Library */
+.socialshare-library{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-top:18px;}
+.socialshare-library-header{display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:var(--cream);font-weight:500;margin-bottom:12px;}
+.socialshare-library-count{font-size:0.7rem;color:var(--muted);font-weight:400;letter-spacing:0.02em;}
+.socialshare-library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;}
+.socialshare-library-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:all 0.2s ease;}
+.socialshare-library-card:hover{border-color:var(--sage);transform:translateY(-2px);}
+.socialshare-library-card.active{border-color:var(--sage);box-shadow:0 0 0 1px var(--sage),0 4px 12px rgba(113,142,130,0.2);}
+.socialshare-library-card-img{width:100%;aspect-ratio:1/1;background:#1c1f26;}
+.socialshare-library-card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.socialshare-library-card-info{padding:8px 10px 10px;}
+.socialshare-library-card-date{font-size:0.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;}
+.socialshare-library-card-quote{font-size:0.74rem;color:var(--cream);margin-top:4px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--font-serif);font-weight:400;}
 .devadmin-test{display:flex;align-items:center;gap:14px;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;margin-top:16px;flex-wrap:wrap;}
 .devadmin-test-info{flex:1;min-width:200px;}
 .devadmin-test-label{font-size:0.84rem;color:var(--cream);font-weight:500;margin-bottom:3px;}
@@ -1656,19 +1674,45 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
           </div>
         </div>
 
-        <div class="socialshare-caption-wrap">
-          <div class="socialshare-caption-label">
-            <span>📝 Caption</span>
-            <button class="devadmin-btn" onclick="copySocialCaption()">⧉ Copy caption</button>
+        <div class="socialshare-edit-wrap">
+          <div class="socialshare-edit-row">
+            <label>Pull-quote <span class="hint">(text on the graphic, 3–7 words, updates preview live)</span></label>
+            <input id="socialSharePullQuote" maxlength="80" oninput="onPullQuoteInput()" placeholder="I AM EL-SHADDAI">
           </div>
-          <textarea id="socialShareCaption" placeholder="Generated caption appears here…"></textarea>
-          <div class="socialshare-hashtags" id="socialShareHashtags"></div>
+          <div class="socialshare-edit-row">
+            <div class="socialshare-edit-label-row">
+              <label>📝 Caption</label>
+              <button class="devadmin-btn" onclick="copySocialCaption()" style="padding:5px 12px;font-size:0.72rem;">⧉ Copy</button>
+            </div>
+            <textarea id="socialShareCaption" placeholder="Generated caption appears here…" rows="5"></textarea>
+          </div>
+          <div class="socialshare-edit-row">
+            <label>Hashtags</label>
+            <input id="socialShareHashtagsEditable" placeholder="#ShepherdFormation #DailyDevotional …">
+          </div>
+          <div class="socialshare-edit-row">
+            <label>Custom prompt nudge <span class="hint">(used on the next Regenerate — leave blank for default)</span></label>
+            <textarea id="socialShareCustomPrompt" rows="2" placeholder="e.g. more abstract, less mountain. focus on water and mist. lean cooler tones."></textarea>
+          </div>
+          <div class="socialshare-edit-actions">
+            <button class="devadmin-btn" onclick="saveSocialShareText()" title="Persist text edits to the DB. No regeneration, no billing.">💾 Save text changes</button>
+            <button class="devadmin-btn primary" onclick="generateSocialShare(true)" title="Discard images and rebuild with the current prompt. Bills ~$0.42.">↻ Regenerate ($0.42)</button>
+          </div>
         </div>
 
         <div class="socialshare-mood" id="socialShareMoodWrap" style="display:none;">
           <span class="socialshare-mood-label">Mood</span><span id="socialShareMood"></span>
         </div>
-        <div class="socialshare-cost">High-quality regeneration costs ~$0.42 in OpenAI usage</div>
+      </div>
+      <!-- Library: every generation ever, click to load -->
+      <div class="socialshare-library">
+        <div class="socialshare-library-header">
+          <span>📚 Library</span>
+          <span class="socialshare-library-count" id="socialShareLibraryCount">—</span>
+        </div>
+        <div class="socialshare-library-grid" id="socialShareLibraryGrid">
+          <div class="socialshare-empty" style="grid-column:1/-1;">Loading…</div>
+        </div>
       </div>
 
       <!-- Offscreen render target for html2canvas — sized at full 1080-wide resolution so downloads are crisp -->
@@ -2373,8 +2417,9 @@ async function loadAdminDashboard(){
     const dateEl=document.getElementById('devAdminDate');
     if(dateEl&&!dateEl.value)dateEl.value=_devTodayLocalIso();
     loadAdminDevotionals();
-    // Social Share admin: populate dropdown + load any cached results
+    // Social Share admin: populate dropdown + library + load any cached results
     loadSocialShareDevotionals();
+    loadSocialShareLibrary();
   }catch(e){
     console.error('Admin dashboard error:',e);
   }
@@ -6960,7 +7005,7 @@ async function loadSocialShareForSelected(){
   try{
     // Pull cached rows directly — no edge function call (free, fast)
     const{data:rows}=await supa.from('devotional_social_share')
-      .select('variant,candidate_index,caption,hashtags,mood_prompt,pull_quote,image_url')
+      .select('variant,candidate_index,caption,hashtags,mood_prompt,pull_quote,custom_prompt,image_url')
       .eq('devotional_id',id)
       .order('candidate_index');
     // Get the devotional itself for title/scripture rendering
@@ -6981,6 +7026,7 @@ async function loadSocialShareForSelected(){
       hashtags:square?.hashtags||story?.hashtags||'',
       mood:square?.mood_prompt||story?.mood_prompt||'',
       pull_quote:square?.pull_quote||story?.pull_quote||'',
+      custom_prompt:square?.custom_prompt||story?.custom_prompt||'',
     };
     renderSocialShareResults();
   }catch(e){
@@ -6991,7 +7037,7 @@ async function loadSocialShareForSelected(){
 
 function renderSocialShareResults(){
   if(!_socShareCurrent||!_socShareCurrent.square_url){return;}
-  const{devotional:d,square_url,story_url,pull_quote,mood}=_socShareCurrent;
+  const{devotional:d,square_url,story_url,pull_quote,caption,hashtags,custom_prompt,mood}=_socShareCurrent;
   // Fallback: if no pull_quote yet (older cached rows), use the title.
   const quote=pull_quote||d.title||'';
   const sr=d.scripture_ref||'';
@@ -7003,11 +7049,12 @@ function renderSocialShareResults(){
   document.getElementById('socialShareStoryImg').src=story_url||square_url;
   document.getElementById('socialShareStoryQuote').textContent=quote;
   document.getElementById('socialShareStoryRef').textContent=sr;
-  // Caption + hashtags
+  // Editable fields
+  document.getElementById('socialSharePullQuote').value=quote;
   document.getElementById('socialShareCaption').value=caption||'';
-  const hEl=document.getElementById('socialShareHashtags');
-  if(hashtags){hEl.textContent=hashtags;hEl.style.display='';}else{hEl.style.display='none';}
-  // Mood
+  document.getElementById('socialShareHashtagsEditable').value=hashtags||'';
+  document.getElementById('socialShareCustomPrompt').value=custom_prompt||'';
+  // Mood (display only)
   if(mood){
     document.getElementById('socialShareMood').textContent=mood;
     document.getElementById('socialShareMoodWrap').style.display='';
@@ -7016,6 +7063,98 @@ function renderSocialShareResults(){
   }
   document.getElementById('socialShareEmpty').style.display='none';
   document.getElementById('socialShareResults').style.display='';
+  // Mark active card in the library
+  document.querySelectorAll('.socialshare-library-card').forEach(el=>{
+    el.classList.toggle('active',el.dataset.devId===d.id);
+  });
+}
+
+// Live update preview tiles as user types the pull-quote
+function onPullQuoteInput(){
+  const val=document.getElementById('socialSharePullQuote').value.trim();
+  const display=val||(_socShareCurrent?.devotional?.title||'—');
+  document.getElementById('socialShareSquareQuote').textContent=display;
+  document.getElementById('socialShareStoryQuote').textContent=display;
+}
+
+// Save text edits to DB — no AI calls, no re-billing. Updates all
+// non-image fields across both variant rows for this devotional.
+async function saveSocialShareText(){
+  if(!_socShareCurrent?.devotional?.id){return;}
+  const id=_socShareCurrent.devotional.id;
+  const status=document.getElementById('socialShareStatus');
+  const pullQuote=document.getElementById('socialSharePullQuote').value.trim()||null;
+  const caption=document.getElementById('socialShareCaption').value.trim()||null;
+  const hashtags=document.getElementById('socialShareHashtagsEditable').value.trim()||null;
+  const customPrompt=document.getElementById('socialShareCustomPrompt').value.trim()||null;
+  status.textContent='Saving…';status.className='devadmin-status';
+  try{
+    const{error}=await supa.from('devotional_social_share')
+      .update({pull_quote:pullQuote,caption:caption,hashtags:hashtags,custom_prompt:customPrompt})
+      .eq('devotional_id',id);
+    if(error)throw error;
+    // Mirror into in-memory state + previews
+    _socShareCurrent.pull_quote=pullQuote||'';
+    _socShareCurrent.caption=caption||'';
+    _socShareCurrent.hashtags=hashtags||'';
+    _socShareCurrent.custom_prompt=customPrompt||'';
+    onPullQuoteInput();
+    status.textContent='✓ Saved text changes (no re-billing).';status.className='devadmin-status success';
+    setTimeout(()=>{if(status.textContent.startsWith('✓ Saved'))status.textContent='';},3500);
+    loadSocialShareLibrary();
+  }catch(e){
+    console.warn('saveSocialShareText:',e);
+    status.textContent='⚠ Save failed: '+(e.message||e);status.className='devadmin-status error';
+  }
+}
+
+// Library: every generation, most recent first. Click a card to load it.
+async function loadSocialShareLibrary(){
+  const grid=document.getElementById('socialShareLibraryGrid');
+  const count=document.getElementById('socialShareLibraryCount');
+  if(!grid||!supa||!isAdminUser)return;
+  try{
+    const{data,error}=await supa.from('devotional_social_share')
+      .select('devotional_id,pull_quote,image_url,generated_at,devotionals(title,publish_date)')
+      .eq('variant','instagram_square')
+      .order('generated_at',{ascending:false})
+      .limit(120);
+    if(error)throw error;
+    if(!data||data.length===0){
+      grid.innerHTML='<div class="socialshare-empty" style="grid-column:1/-1;">Nothing generated yet. When you generate, items appear here.</div>';
+      count.textContent='0 items';
+      return;
+    }
+    const selectedId=document.getElementById('socialShareDevotional')?.value||'';
+    grid.innerHTML=data.map(row=>{
+      const dev=row.devotionals||{};
+      const dateStr=dev.publish_date?_devFormatDate(dev.publish_date,{month:'short',day:'numeric'}):'—';
+      const quote=row.pull_quote||dev.title||'(untitled)';
+      const isActive=row.devotional_id===selectedId;
+      return '<div class="socialshare-library-card'+(isActive?' active':'')+'" data-dev-id="'+_devEscapeHtml(row.devotional_id)+'" onclick="selectLibraryCard(\''+row.devotional_id+'\')">'+
+        '<div class="socialshare-library-card-img"><img src="'+_devEscapeHtml(row.image_url||'')+'" loading="lazy" alt=""></div>'+
+        '<div class="socialshare-library-card-info">'+
+          '<div class="socialshare-library-card-date">'+_devEscapeHtml(dateStr)+'</div>'+
+          '<div class="socialshare-library-card-quote">'+_devEscapeHtml(quote)+'</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+    count.textContent=data.length+(data.length===120?'+':'')+' item'+(data.length===1?'':'s');
+  }catch(e){console.warn('loadSocialShareLibrary:',e);}
+}
+
+function selectLibraryCard(devotionalId){
+  const sel=document.getElementById('socialShareDevotional');
+  if(!sel)return;
+  // If the devotional isn't in the dropdown (older than 14 days), inject it
+  if(![...sel.options].some(o=>o.value===devotionalId)){
+    const opt=document.createElement('option');
+    opt.value=devotionalId;opt.textContent='Loading…';
+    sel.appendChild(opt);
+  }
+  sel.value=devotionalId;
+  loadSocialShareForSelected();
+  document.querySelector('.socialshare-controls')?.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
 async function generateSocialShare(regenerate){
@@ -7026,18 +7165,20 @@ async function generateSocialShare(regenerate){
   const regenBtn=document.getElementById('socialShareRegenBtn');
   if(!id){status.textContent='Pick a devotional first.';status.className='devadmin-status error';return;}
   if(regenerate&&!confirm('Regenerate will discard the current graphics and bill OpenAI again (~$0.42). Continue?'))return;
+  const customPrompt=document.getElementById('socialShareCustomPrompt')?.value?.trim()||'';
   status.textContent='Generating… this takes 30–60s with high-quality images.';
   status.className='devadmin-status';
   genBtn.disabled=true;regenBtn.disabled=true;
   try{
     const{data,error}=await supa.functions.invoke('generate-social-share',{
-      body:{devotional_id:id,regenerate:!!regenerate}
+      body:{devotional_id:id,regenerate:!!regenerate,custom_prompt:customPrompt||null}
     });
     if(error)throw error;
     if(data?.error)throw new Error(data.error);
     if(!data?.ok)throw new Error('Unexpected response from generator');
     // Refresh from DB (single source of truth)
     await loadSocialShareForSelected();
+    loadSocialShareLibrary();
     status.textContent=data.cached?'✓ Loaded from cache.':'✓ Generated. Tap a Download button to save the PNG.';
     status.className='devadmin-status success';
   }catch(e){
@@ -7050,7 +7191,7 @@ async function generateSocialShare(regenerate){
 
 function copySocialCaption(){
   const ta=document.getElementById('socialShareCaption');
-  const hashtags=document.getElementById('socialShareHashtags').textContent||'';
+  const hashtags=(document.getElementById('socialShareHashtagsEditable')?.value||'').trim();
   const text=(ta.value||'').trim()+(hashtags?'\n\n'+hashtags:'');
   if(!text){return;}
   navigator.clipboard.writeText(text).then(()=>{
