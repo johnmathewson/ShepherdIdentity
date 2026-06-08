@@ -929,12 +929,11 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .socialshare-preview.story{aspect-ratio:9/16;max-width:280px;margin-left:auto;margin-right:auto;}
 .socialshare-preview img{width:100%;height:100%;object-fit:cover;display:block;}
 .socialshare-preview-overlay{position:absolute;left:0;right:0;bottom:0;padding:6% 7% 8%;background:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.4) 35%,rgba(0,0,0,0.85) 100%);color:#fff;}
-.socialshare-preview-overlay .ssop-hdr{font-size:0.55rem;color:#cfd2cd;text-transform:uppercase;letter-spacing:0.18em;font-weight:600;margin-bottom:6%;opacity:0.9;}
-.socialshare-preview-overlay .ssop-title{font-family:Georgia,'Times New Roman',serif;font-size:1.3rem;line-height:1.15;font-weight:400;margin-bottom:5%;color:#fff;}
-.socialshare-preview-overlay .ssop-verse{font-style:italic;font-size:0.72rem;line-height:1.45;color:#e6e0d6;margin-bottom:3%;}
-.socialshare-preview-overlay .ssop-ref{font-size:0.66rem;color:#d4b878;font-weight:500;letter-spacing:0.04em;}
+.socialshare-preview-overlay .ssop-hdr{font-size:0.55rem;color:#cfd2cd;text-transform:uppercase;letter-spacing:0.18em;font-weight:600;margin-bottom:8%;opacity:0.9;}
+.socialshare-preview-overlay .ssop-quote{font-family:Georgia,'Times New Roman',serif;font-size:1.55rem;line-height:1.18;font-weight:400;margin-bottom:6%;color:#fff;letter-spacing:0.005em;}
+.socialshare-preview-overlay .ssop-ref{font-size:0.68rem;color:#d4b878;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;}
 .socialshare-preview.story .socialshare-preview-overlay{padding:6% 7% 10%;}
-.socialshare-preview.story .ssop-title{font-size:1.15rem;}
+.socialshare-preview.story .ssop-quote{font-size:1.4rem;}
 .socialshare-caption-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-top:14px;}
 .socialshare-caption-label{display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--cream);font-weight:500;margin-bottom:10px;}
 .socialshare-caption-wrap textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;line-height:1.65;resize:vertical;min-height:140px;}
@@ -1637,8 +1636,7 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
               <img id="socialShareSquareImg" crossorigin="anonymous" alt="Square background" loading="lazy">
               <div class="socialshare-preview-overlay">
                 <div class="ssop-hdr">Shepherd Daily Devotional</div>
-                <div class="ssop-title" id="socialShareSquareTitle">—</div>
-                <div class="ssop-verse" id="socialShareSquareVerse">—</div>
+                <div class="ssop-quote" id="socialShareSquareQuote">—</div>
                 <div class="ssop-ref" id="socialShareSquareRef">—</div>
               </div>
             </div>
@@ -1650,8 +1648,7 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
               <img id="socialShareStoryImg" crossorigin="anonymous" alt="Story background" loading="lazy">
               <div class="socialshare-preview-overlay">
                 <div class="ssop-hdr">Shepherd Daily Devotional</div>
-                <div class="ssop-title" id="socialShareStoryTitle">—</div>
-                <div class="ssop-verse" id="socialShareStoryVerse">—</div>
+                <div class="ssop-quote" id="socialShareStoryQuote">—</div>
                 <div class="ssop-ref" id="socialShareStoryRef">—</div>
               </div>
             </div>
@@ -6963,7 +6960,7 @@ async function loadSocialShareForSelected(){
   try{
     // Pull cached rows directly — no edge function call (free, fast)
     const{data:rows}=await supa.from('devotional_social_share')
-      .select('variant,candidate_index,caption,hashtags,mood_prompt,image_url')
+      .select('variant,candidate_index,caption,hashtags,mood_prompt,pull_quote,image_url')
       .eq('devotional_id',id)
       .order('candidate_index');
     // Get the devotional itself for title/scripture rendering
@@ -6983,6 +6980,7 @@ async function loadSocialShareForSelected(){
       caption:square?.caption||story?.caption||'',
       hashtags:square?.hashtags||story?.hashtags||'',
       mood:square?.mood_prompt||story?.mood_prompt||'',
+      pull_quote:square?.pull_quote||story?.pull_quote||'',
     };
     renderSocialShareResults();
   }catch(e){
@@ -6993,19 +6991,17 @@ async function loadSocialShareForSelected(){
 
 function renderSocialShareResults(){
   if(!_socShareCurrent||!_socShareCurrent.square_url){return;}
-  const{devotional:d,square_url,story_url,caption,hashtags,mood}=_socShareCurrent;
-  const t=d.title||'';
-  const sv=d.scripture_text||'';
+  const{devotional:d,square_url,story_url,pull_quote,mood}=_socShareCurrent;
+  // Fallback: if no pull_quote yet (older cached rows), use the title.
+  const quote=pull_quote||d.title||'';
   const sr=d.scripture_ref||'';
   // Square preview
   document.getElementById('socialShareSquareImg').src=square_url;
-  document.getElementById('socialShareSquareTitle').textContent=t;
-  document.getElementById('socialShareSquareVerse').textContent=sv?'"'+sv+'"':'';
+  document.getElementById('socialShareSquareQuote').textContent=quote;
   document.getElementById('socialShareSquareRef').textContent=sr;
   // Story preview
   document.getElementById('socialShareStoryImg').src=story_url||square_url;
-  document.getElementById('socialShareStoryTitle').textContent=t;
-  document.getElementById('socialShareStoryVerse').textContent=sv?'"'+sv+'"':'';
+  document.getElementById('socialShareStoryQuote').textContent=quote;
   document.getElementById('socialShareStoryRef').textContent=sr;
   // Caption + hashtags
   document.getElementById('socialShareCaption').value=caption||'';
@@ -7073,12 +7069,14 @@ async function downloadSocialGraphic(variant){
   const url=isStory?_socShareCurrent.story_url:_socShareCurrent.square_url;
   if(!url){status.textContent='⚠ No image generated for this variant.';status.className='devadmin-status error';return;}
   const d=_socShareCurrent.devotional;
+  const quote=_socShareCurrent.pull_quote||d.title||'';
+  const ref=d.scripture_ref||'';
   const target=document.getElementById('socialRenderTarget');
   target.style.width=w+'px';target.style.height=h+'px';
-  // Build the print-quality HTML mirror of the preview (scaled to 1080)
-  const titleFs=isStory?92:62;
-  const verseFs=isStory?40:30;
-  const refFs=isStory?32:24;
+  // Pull-quote is the visual hero; sized accordingly. Brand header tiny;
+  // scripture ref small under the quote.
+  const quoteFs=isStory?112:78;
+  const refFs=isStory?34:24;
   const hdrFs=isStory?28:20;
   const padX=isStory?80:70;
   const padBottom=isStory?180:90;
@@ -7088,10 +7086,9 @@ async function downloadSocialGraphic(variant){
     '<img id="socialRenderImg" src="'+imgSrc+'" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;display:block;"/>'+
     '<div style="position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.35) 30%,rgba(0,0,0,0.88) 100%);"></div>'+
     '<div style="position:absolute;left:'+padX+'px;right:'+padX+'px;bottom:'+padBottom+'px;color:#fff;">'+
-      '<div style="font-size:'+hdrFs+'px;color:#cfd2cd;text-transform:uppercase;letter-spacing:0.2em;font-weight:600;margin-bottom:'+(isStory?32:22)+'px;opacity:0.92;">SHEPHERD DAILY DEVOTIONAL</div>'+
-      '<div style="font-family:Georgia,Times New Roman,serif;font-size:'+titleFs+'px;line-height:1.12;font-weight:400;margin-bottom:'+(isStory?40:28)+'px;color:#fff;">'+_devEscapeHtml(d.title||'')+'</div>'+
-      (d.scripture_text?'<div style="font-style:italic;font-size:'+verseFs+'px;line-height:1.45;color:#e6e0d6;margin-bottom:'+(isStory?20:14)+'px;">&ldquo;'+_devEscapeHtml(d.scripture_text)+'&rdquo;</div>':'')+
-      (d.scripture_ref?'<div style="font-size:'+refFs+'px;color:#d4b878;font-weight:500;letter-spacing:0.04em;">'+_devEscapeHtml(d.scripture_ref)+'</div>':'')+
+      '<div style="font-size:'+hdrFs+'px;color:#cfd2cd;text-transform:uppercase;letter-spacing:0.22em;font-weight:600;margin-bottom:'+(isStory?42:30)+'px;opacity:0.92;">SHEPHERD DAILY DEVOTIONAL</div>'+
+      '<div style="font-family:Georgia,Times New Roman,serif;font-size:'+quoteFs+'px;line-height:1.14;font-weight:400;margin-bottom:'+(isStory?34:24)+'px;color:#fff;letter-spacing:0.005em;">'+_devEscapeHtml(quote)+'</div>'+
+      (ref?'<div style="font-size:'+refFs+'px;color:#d4b878;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;">'+_devEscapeHtml(ref)+'</div>':'')+
     '</div>'+
   '</div>';
   // Wait for the image to actually load + fonts to settle, then snapshot
