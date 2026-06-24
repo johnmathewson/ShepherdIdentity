@@ -968,6 +968,104 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .socialshare-library-card-info{padding:8px 10px 10px;}
 .socialshare-library-card-date{font-size:0.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;}
 .socialshare-library-card-quote{font-size:0.74rem;color:var(--cream);margin-top:4px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--font-serif);font-weight:400;}
+
+/* ═══ Social Share Templates v9 ═══ */
+/* Template selector */
+.ss-template-selector{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.ss-tmpl-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);padding:8px 16px;border-radius:18px;font-size:0.78rem;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);}
+.ss-tmpl-btn:hover{border-color:var(--sage);color:var(--sage);}
+.ss-tmpl-btn.active{background:var(--sage);border-color:var(--sage);color:var(--bg);font-weight:500;}
+
+/* Photo picker (visible when 'photo' template selected) */
+.ss-photo-picker{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-bottom:14px;}
+.ss-photo-picker-label{font-size:0.74rem;color:var(--wheat);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.ss-photo-picker-label .hint{color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;font-style:italic;}
+.ss-photo-picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;max-height:220px;overflow-y:auto;}
+.ss-photo-picker-card{aspect-ratio:1/1;background:var(--surface2);border:2px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:all 0.2s;position:relative;}
+.ss-photo-picker-card:hover{border-color:var(--sage);}
+.ss-photo-picker-card.selected{border-color:var(--sage);box-shadow:0 0 0 1px var(--sage),0 4px 12px rgba(113,142,130,0.25);}
+.ss-photo-picker-card img{width:100%;height:100%;object-fit:cover;display:block;}
+.ss-photo-picker-card .ss-photo-picker-check{position:absolute;top:4px;right:4px;background:var(--sage);color:var(--bg);width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.ss-photo-picker-card.selected .ss-photo-picker-check{display:flex;}
+.ss-photo-picker-empty{grid-column:1/-1;padding:18px;text-align:center;color:var(--muted);font-size:0.78rem;font-style:italic;}
+
+/* Template preview wrapper — square + story.
+   Inner .ss-tmpl is drawn at 1080px and scaled via transform to fit the preview;
+   the same DOM at 1:1 is what html2canvas captures for the PNG download. */
+.ss-preview-wrap{position:relative;overflow:hidden;border-radius:8px;background:#1c1f26;width:100%;margin-bottom:12px;}
+.ss-preview-wrap.square{aspect-ratio:1/1;}
+.ss-preview-wrap.story{aspect-ratio:9/16;max-width:280px;margin-left:auto;margin-right:auto;}
+.ss-preview-wrap > .ss-tmpl{position:absolute;left:0;top:0;transform-origin:top left;}
+
+/* Template: Dark Sage — solid forest-sage with serif quote and gold accents.
+   Designed at 1080×1080 / 1080×1920 with absolute px values; CSS transform
+   scales the preview down. */
+.ss-tmpl{font-family:Georgia,'Times New Roman',serif;box-sizing:border-box;display:flex;flex-direction:column;}
+.ss-tmpl-dark_sage{background:#2D3A36;color:#F4EDD8;padding:80px;justify-content:space-between;}
+.ss-tmpl-dark_sage .ss-tmpl-header{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:22px;letter-spacing:0.22em;text-transform:uppercase;color:#C9B68C;font-weight:600;text-align:center;opacity:0.92;}
+.ss-tmpl-dark_sage .ss-tmpl-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ss-tmpl-dark_sage .ss-tmpl-quote{font-size:74px;line-height:1.18;color:#F4EDD8;text-align:center;font-weight:400;max-width:880px;}
+.ss-tmpl-dark_sage .ss-tmpl-quote.long{font-size:60px;}
+.ss-tmpl-dark_sage .ss-tmpl-quote.xlong{font-size:48px;}
+.ss-tmpl-dark_sage .ss-tmpl-rule{width:60px;height:1px;background:#C9B68C;margin:32px auto 28px;opacity:0.85;}
+.ss-tmpl-dark_sage .ss-tmpl-ref{font-family:Georgia,serif;font-style:italic;font-size:28px;color:#C9B68C;text-align:center;letter-spacing:0.02em;}
+.ss-tmpl-dark_sage .ss-tmpl-footer{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:18px;letter-spacing:0.22em;text-transform:uppercase;color:#C9B68C;text-align:center;opacity:0.7;font-weight:600;}
+
+/* Template: Cream — warm off-white with dark sage type and muted gold accents */
+.ss-tmpl-cream{background:#F0EAD8;color:#2D3A36;padding:80px;justify-content:space-between;}
+.ss-tmpl-cream .ss-tmpl-header{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:22px;letter-spacing:0.22em;text-transform:uppercase;color:#5C6962;font-weight:600;text-align:center;}
+.ss-tmpl-cream .ss-tmpl-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ss-tmpl-cream .ss-tmpl-quote{font-size:74px;line-height:1.18;color:#2D3A36;text-align:center;font-weight:400;max-width:880px;}
+.ss-tmpl-cream .ss-tmpl-quote.long{font-size:60px;}
+.ss-tmpl-cream .ss-tmpl-quote.xlong{font-size:48px;}
+.ss-tmpl-cream .ss-tmpl-rule{width:60px;height:1px;background:#B89A5A;margin:32px auto 28px;}
+.ss-tmpl-cream .ss-tmpl-ref{font-family:Georgia,serif;font-style:italic;font-size:28px;color:#B89A5A;text-align:center;letter-spacing:0.02em;}
+.ss-tmpl-cream .ss-tmpl-footer{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:18px;letter-spacing:0.22em;text-transform:uppercase;color:#5C6962;text-align:center;font-weight:600;opacity:0.7;}
+
+/* Template: Photo — full-bleed church photo with dark gradient overlay */
+.ss-tmpl-photo{padding:0;position:relative;color:#F4EDD8;overflow:hidden;}
+.ss-tmpl-photo .ss-tmpl-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.ss-tmpl-photo .ss-tmpl-bg-fallback{position:absolute;inset:0;background:#2D3A36;display:flex;align-items:center;justify-content:center;color:#9da3a0;font-family:-apple-system,sans-serif;font-size:24px;text-align:center;padding:40px;}
+.ss-tmpl-photo .ss-tmpl-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(45,58,54,0.15) 0%,rgba(45,58,54,0.45) 45%,rgba(45,58,54,0.96) 100%);}
+.ss-tmpl-photo .ss-tmpl-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:80px;z-index:2;}
+.ss-tmpl-photo .ss-tmpl-header{font-family:-apple-system,sans-serif;font-size:22px;letter-spacing:0.22em;text-transform:uppercase;color:#F4EDD8;font-weight:600;text-align:center;opacity:0.92;position:absolute;top:80px;left:80px;right:80px;z-index:2;}
+.ss-tmpl-photo .ss-tmpl-quote{font-size:74px;line-height:1.16;color:#F4EDD8;text-align:center;font-weight:400;max-width:880px;margin:0 auto;}
+.ss-tmpl-photo .ss-tmpl-quote.long{font-size:60px;}
+.ss-tmpl-photo .ss-tmpl-quote.xlong{font-size:48px;}
+.ss-tmpl-photo .ss-tmpl-rule{width:60px;height:1px;background:#C9B68C;margin:28px auto 22px;}
+.ss-tmpl-photo .ss-tmpl-ref{font-family:Georgia,serif;font-style:italic;font-size:28px;color:#C9B68C;text-align:center;letter-spacing:0.02em;margin-bottom:8px;}
+.ss-tmpl-photo .ss-tmpl-footer{font-family:-apple-system,sans-serif;font-size:18px;letter-spacing:0.22em;text-transform:uppercase;color:#F4EDD8;text-align:center;opacity:0.6;font-weight:600;margin-top:28px;}
+
+/* Story variant adjustments — extra vertical breathing room */
+.ss-tmpl.story-variant{padding:90px 80px;}
+.ss-tmpl.story-variant.ss-tmpl-photo{padding:0;}
+.ss-tmpl.story-variant .ss-tmpl-quote{font-size:86px;}
+.ss-tmpl.story-variant .ss-tmpl-quote.long{font-size:68px;}
+.ss-tmpl.story-variant .ss-tmpl-quote.xlong{font-size:56px;}
+
+/* ═══ Photo Library section (separate admin block for managing uploaded photos) ═══ */
+.photolib-uploader{display:flex;align-items:center;gap:12px;padding:14px;background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius-lg);margin-bottom:14px;flex-wrap:wrap;}
+.photolib-uploader.dragging{border-color:var(--sage);background:var(--sage-dim);}
+.photolib-uploader-label{flex:1;min-width:200px;font-size:0.85rem;color:var(--text-secondary);line-height:1.5;font-weight:300;}
+.photolib-uploader-label strong{color:var(--cream);font-weight:500;}
+.photolib-uploader-actions{display:flex;gap:8px;}
+.photolib-uploader input[type=file]{display:none;}
+.photolib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+.photolib-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;}
+.photolib-card-img{width:100%;aspect-ratio:1/1;background:#1c1f26;position:relative;}
+.photolib-card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.photolib-card-info{padding:10px;}
+.photolib-card-title{font-size:0.78rem;color:var(--cream);font-weight:500;line-height:1.3;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.photolib-card-title-input{width:100%;background:transparent;border:1px solid transparent;color:var(--cream);font-size:0.78rem;font-family:var(--font-sans);padding:2px 4px;border-radius:4px;}
+.photolib-card-title-input:focus,.photolib-card-title-input:hover{border-color:var(--border);outline:none;background:var(--surface2);}
+.photolib-card-tags{font-size:0.66rem;color:var(--muted);line-height:1.4;margin-bottom:6px;min-height:1em;}
+.photolib-card-tags-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:0.7rem;font-family:var(--font-sans);padding:4px 6px;border-radius:4px;line-height:1.3;}
+.photolib-card-tags-input:focus{outline:none;border-color:var(--sage);}
+.photolib-card-actions{display:flex;gap:4px;padding:0 10px 10px;}
+.photolib-card-actions button{flex:1;background:transparent;border:1px solid var(--border);color:var(--text-secondary);padding:5px 8px;border-radius:12px;font-size:0.66rem;cursor:pointer;font-family:var(--font-sans);}
+.photolib-card-actions button:hover{border-color:var(--sage);color:var(--sage);}
+.photolib-card-actions button.danger:hover{border-color:var(--red);color:var(--red);}
+.photolib-empty{grid-column:1/-1;padding:32px 20px;text-align:center;color:var(--muted);font-size:0.85rem;background:var(--surface2);border-radius:var(--radius-lg);border:1px dashed var(--border);}
 .devadmin-test{display:flex;align-items:center;gap:14px;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;margin-top:16px;flex-wrap:wrap;}
 .devadmin-test-info{flex:1;min-width:200px;}
 .devadmin-test-label{font-size:0.84rem;color:var(--cream);font-weight:500;margin-bottom:3px;}
@@ -1634,6 +1732,25 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       </div>
       <div class="devadmin-status" id="devTestStatus"></div>
     </div>
+    <!-- Photo Library — curated church photos used as backgrounds for the Photo template in Social Share -->
+    <div class="section" style="margin-bottom:16px;">
+      <div class="admin-section-title">📷 Photo Library <span style="font-size:0.74rem;color:var(--muted);font-weight:400;letter-spacing:0;text-transform:none;margin-left:8px;">— backgrounds for the Photo template</span></div>
+      <div class="photolib-uploader" id="photolib-uploader" ondragover="photoLibDragOver(event)" ondragleave="photoLibDragLeave(event)" ondrop="photoLibDrop(event)">
+        <div class="photolib-uploader-label">
+          <strong>Drop photos here, or click to choose files.</strong><br>
+          JPG / PNG / WebP up to 10 MB each. After upload, click a title to rename and tag (worship, prayer, baptism, stage, hands, etc.) so Claude can match the right photo to each devotional.
+        </div>
+        <div class="photolib-uploader-actions">
+          <input type="file" id="photolib-file-input" accept="image/jpeg,image/png,image/webp" multiple onchange="photoLibHandleFiles(this.files)">
+          <button class="devadmin-btn primary" onclick="document.getElementById('photolib-file-input').click()">Choose files</button>
+        </div>
+      </div>
+      <div class="devadmin-status" id="photolib-status"></div>
+      <div class="photolib-grid" id="photolib-grid">
+        <div class="photolib-empty">Loading…</div>
+      </div>
+    </div>
+
     <!-- Social Share — generate IG-ready graphics + caption from any devotional -->
     <div class="section" style="margin-bottom:16px;">
       <div class="admin-section-title">📱 Social Share</div>
@@ -1650,33 +1767,38 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       <div class="devadmin-status" id="socialShareStatus"></div>
 
       <div id="socialShareEmpty" class="socialshare-empty">
-        Pick a devotional and tap <strong>Generate</strong>. Claude writes the caption, OpenAI's gpt-image-1 paints the background, your scripture overlays on top. Takes 30–60s.
+        Pick a devotional and tap <strong>Generate</strong>. Claude writes the pull-quote and caption; you pick a template (and a background photo if you want one). The graphic renders instantly in your browser — no AI image generation, no wait.
       </div>
 
       <div id="socialShareResults" style="display:none;">
+        <!-- Template selector: pick one of three branded designs -->
+        <div class="ss-template-selector">
+          <button class="ss-tmpl-btn active" data-template="dark_sage" onclick="setSocialTemplate('dark_sage')">Dark Sage</button>
+          <button class="ss-tmpl-btn" data-template="cream" onclick="setSocialTemplate('cream')">Cream</button>
+          <button class="ss-tmpl-btn" data-template="photo" onclick="setSocialTemplate('photo')">Photo</button>
+        </div>
+
+        <!-- Photo picker — visible only when Photo template is selected -->
+        <div class="ss-photo-picker" id="ss-photo-picker" style="display:none;">
+          <div class="ss-photo-picker-label">
+            <span>📷 Background photo</span>
+            <span class="hint">Click to use. AI suggests one based on the devotional.</span>
+          </div>
+          <div class="ss-photo-picker-grid" id="ss-photo-picker-grid">
+            <div class="ss-photo-picker-empty">No photos in the library yet. Scroll up to the Photo Library section to upload some.</div>
+          </div>
+        </div>
+
+        <!-- Preview grid: Square + Story, both rendering the selected template -->
         <div class="socialshare-grid">
           <div class="socialshare-variant">
             <div class="socialshare-variant-label">Instagram Square · 1080×1080</div>
-            <div class="socialshare-preview square">
-              <img id="socialShareSquareImg" crossorigin="anonymous" alt="Square background" loading="lazy">
-              <div class="socialshare-preview-overlay">
-                <div class="ssop-hdr">Shepherd Daily Devotional</div>
-                <div class="ssop-quote" id="socialShareSquareQuote">—</div>
-                <div class="ssop-ref" id="socialShareSquareRef">—</div>
-              </div>
-            </div>
+            <div class="ss-preview-wrap square" id="ss-preview-square"></div>
             <button class="devadmin-btn primary" style="width:100%;" onclick="downloadSocialGraphic('instagram_square')">⬇ Download Square PNG</button>
           </div>
           <div class="socialshare-variant">
             <div class="socialshare-variant-label">Instagram Story · 1080×1920</div>
-            <div class="socialshare-preview story">
-              <img id="socialShareStoryImg" crossorigin="anonymous" alt="Story background" loading="lazy">
-              <div class="socialshare-preview-overlay">
-                <div class="ssop-hdr">Shepherd Daily Devotional</div>
-                <div class="ssop-quote" id="socialShareStoryQuote">—</div>
-                <div class="ssop-ref" id="socialShareStoryRef">—</div>
-              </div>
-            </div>
+            <div class="ss-preview-wrap story" id="ss-preview-story"></div>
             <button class="devadmin-btn primary" style="width:100%;" onclick="downloadSocialGraphic('instagram_story')">⬇ Download Story PNG</button>
           </div>
         </div>
@@ -1698,8 +1820,8 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
             <input id="socialShareHashtagsEditable" placeholder="#ShepherdFormation #DailyDevotional …">
           </div>
           <div class="socialshare-edit-row">
-            <label>Custom prompt nudge <span class="hint">(used on the next Regenerate — leave blank for default)</span></label>
-            <textarea id="socialShareCustomPrompt" rows="2" placeholder="e.g. more abstract, less mountain. focus on water and mist. lean cooler tones."></textarea>
+            <label>Custom note for Claude <span class="hint">(used on the next Regenerate — nudges the pull-quote and caption. Leave blank for default.)</span></label>
+            <textarea id="socialShareCustomPrompt" rows="2" placeholder="e.g. lead with the scripture phrase, not a paraphrase. keep the caption invitational."></textarea>
           </div>
           <div class="socialshare-state" id="socialShareState">
             <span class="socialshare-state-badge draft" id="socialShareStateBadge">📝 Draft</span>
@@ -1708,13 +1830,9 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
           <div class="socialshare-edit-actions">
             <a class="socialshare-reset-link" onclick="resetSocialShareWorkspace()" title="Clear the workspace. Draft stays in the database, won't appear in the library until saved.">↺ Reset workspace</a>
             <button class="devadmin-btn" id="socialShareCopyBtn" onclick="copySocialCaption()">⧉ Copy caption</button>
-            <button class="devadmin-btn" onclick="generateSocialShare(true)" title="Discard the graphic and rebuild with the current prompt.">↻ Regenerate</button>
-            <button class="devadmin-btn primary" id="socialShareSaveBtn" onclick="saveSocialShareToLibrary()" title="Persist text edits AND add to the Library below. No re-billing.">💾 Save to Library</button>
+            <button class="devadmin-btn" onclick="generateSocialShare(true)" title="Re-run Claude for fresh pull-quote, caption, and photo suggestion.">↻ Regenerate</button>
+            <button class="devadmin-btn primary" id="socialShareSaveBtn" onclick="saveSocialShareToLibrary()" title="Persist text + template + photo choice AND add to the Library below.">💾 Save to Library</button>
           </div>
-        </div>
-
-        <div class="socialshare-mood" id="socialShareMoodWrap" style="display:none;">
-          <span class="socialshare-mood-label">Mood</span><span id="socialShareMood"></span>
         </div>
       </div>
       <!-- Library: every generation ever, click to load -->
@@ -2431,8 +2549,12 @@ async function loadAdminDashboard(){
     if(dateEl&&!dateEl.value)dateEl.value=_devTodayLocalIso();
     loadAdminDevotionals();
     // Social Share admin: populate dropdown + library + load any cached results
-    loadSocialShareDevotionals();
-    loadSocialShareLibrary();
+    // Photo library loads first so the Social Share photo picker + library
+    // thumbnails can reference photo URLs as soon as devotionals render.
+    photoLibLoad().then(()=>{
+      loadSocialShareDevotionals();
+      loadSocialShareLibrary();
+    });
   }catch(e){
     console.error('Admin dashboard error:',e);
   }
@@ -6975,9 +7097,14 @@ async function sendTestDevotionalEmail(){
 }
 
 // ═══════════════════════════════════════════
-// SOCIAL SHARE (admin) — IG caption + AI background generator
+// SOCIAL SHARE (admin) — IG caption + branded template renderer + photo library (v9)
+// Hard-reset from the previous AI-image approach. Claude still writes the
+// pull-quote and caption; three HTML templates render client-side; admins
+// can upload a curated photo library and the AI suggests a match per
+// devotional. No OpenAI image bill, instant render, on-brand output.
 // ═══════════════════════════════════════════
-let _socShareCurrent=null; // { devotional, square_url, story_url, caption, hashtags, mood }
+let _socShareCurrent=null;   // { devotional, pull_quote, caption, hashtags, custom_prompt, template_id, photo_id, is_saved, saved_at }
+let _socShareLibPhotos=[];   // [{id, image_url, image_path, title, tags[]}]
 
 async function loadSocialShareDevotionals(){
   const sel=document.getElementById('socialShareDevotional');
@@ -7016,12 +7143,14 @@ async function loadSocialShareForSelected(){
   if(!id){empty.style.display='block';results.style.display='none';return;}
   status.textContent='';status.className='devadmin-status';
   try{
-    // Pull cached rows directly — no edge function call (free, fast)
+    // Pull cached rows directly — no edge function call (free, fast).
+    // Only one row per devotional now (variant='instagram_square'). The story
+    // variant uses the same content rendered at 9:16 in the browser.
     const{data:rows}=await supa.from('devotional_social_share')
-      .select('variant,candidate_index,caption,hashtags,mood_prompt,pull_quote,custom_prompt,image_url,is_saved,saved_at')
+      .select('caption,hashtags,pull_quote,custom_prompt,template_id,photo_id,is_saved,saved_at')
       .eq('devotional_id',id)
-      .order('candidate_index');
-    // Get the devotional itself for title/scripture rendering
+      .eq('variant','instagram_square')
+      .limit(1);
     const{data:dev}=await supa.from('devotionals').select('*').eq('id',id).maybeSingle();
     if(!dev){empty.style.display='block';results.style.display='none';return;}
     if(!rows||rows.length===0){
@@ -7029,19 +7158,17 @@ async function loadSocialShareForSelected(){
       _socShareCurrent={devotional:dev};
       return;
     }
-    const square=rows.find(r=>r.variant==='instagram_square');
-    const story=rows.find(r=>r.variant==='instagram_story');
+    const row=rows[0];
     _socShareCurrent={
       devotional:dev,
-      square_url:square?.image_url||null,
-      story_url:story?.image_url||null,
-      caption:square?.caption||story?.caption||'',
-      hashtags:square?.hashtags||story?.hashtags||'',
-      mood:square?.mood_prompt||story?.mood_prompt||'',
-      pull_quote:square?.pull_quote||story?.pull_quote||'',
-      custom_prompt:square?.custom_prompt||story?.custom_prompt||'',
-      is_saved:!!(square?.is_saved||story?.is_saved),
-      saved_at:square?.saved_at||story?.saved_at||null,
+      pull_quote:row.pull_quote||'',
+      caption:row.caption||'',
+      hashtags:row.hashtags||'',
+      custom_prompt:row.custom_prompt||'',
+      template_id:row.template_id||'dark_sage',
+      photo_id:row.photo_id||null,
+      is_saved:!!row.is_saved,
+      saved_at:row.saved_at||null,
     };
     renderSocialShareResults();
   }catch(e){
@@ -7051,39 +7178,130 @@ async function loadSocialShareForSelected(){
 }
 
 function renderSocialShareResults(){
-  if(!_socShareCurrent||!_socShareCurrent.square_url){return;}
-  const{devotional:d,square_url,story_url,pull_quote,caption,hashtags,custom_prompt,mood}=_socShareCurrent;
-  // Fallback: if no pull_quote yet (older cached rows), use the title.
+  if(!_socShareCurrent||!_socShareCurrent.devotional){return;}
+  const{devotional:d,caption,hashtags,custom_prompt,template_id,pull_quote}=_socShareCurrent;
   const quote=pull_quote||d.title||'';
-  const sr=d.scripture_ref||'';
-  // Square preview
-  document.getElementById('socialShareSquareImg').src=square_url;
-  document.getElementById('socialShareSquareQuote').textContent=quote;
-  document.getElementById('socialShareSquareRef').textContent=sr;
-  // Story preview
-  document.getElementById('socialShareStoryImg').src=story_url||square_url;
-  document.getElementById('socialShareStoryQuote').textContent=quote;
-  document.getElementById('socialShareStoryRef').textContent=sr;
   // Editable fields
   document.getElementById('socialSharePullQuote').value=quote;
   document.getElementById('socialShareCaption').value=caption||'';
   document.getElementById('socialShareHashtagsEditable').value=hashtags||'';
   document.getElementById('socialShareCustomPrompt').value=custom_prompt||'';
-  // Mood (display only)
-  if(mood){
-    document.getElementById('socialShareMood').textContent=mood;
-    document.getElementById('socialShareMoodWrap').style.display='';
-  }else{
-    document.getElementById('socialShareMoodWrap').style.display='none';
-  }
+  // Template selector buttons reflect current choice
+  document.querySelectorAll('.ss-tmpl-btn').forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.template===template_id);
+  });
+  // Show/hide photo picker depending on template choice
+  document.getElementById('ss-photo-picker').style.display=template_id==='photo'?'':'none';
+  // Render the template into both preview wrappers
+  renderSocialPreviews();
+  // Render the photo picker grid (if we already loaded photos)
+  renderPhotoPicker();
   document.getElementById('socialShareEmpty').style.display='none';
   document.getElementById('socialShareResults').style.display='';
-  // Draft / saved indicator
   updateSocialShareStateUI();
-  // Mark active card in the library
   document.querySelectorAll('.socialshare-library-card').forEach(el=>{
     el.classList.toggle('active',el.dataset.devId===d.id);
   });
+}
+
+// Build the inner HTML of a template at its full 1080-wide design size.
+// Used both for the on-page preview (scaled via CSS transform) and for the
+// 1:1 offscreen render passed to html2canvas.
+function renderTemplateHTML(variant){
+  if(!_socShareCurrent)return '';
+  const state=_socShareCurrent;
+  const d=state.devotional||{};
+  const isStory=variant==='story';
+  const w=1080, h=isStory?1920:1080;
+  const template=state.template_id||'dark_sage';
+  const quote=(state.pull_quote||d.title||'').trim();
+  const ref=(d.scripture_ref||'').trim();
+  const qLen=quote.length;
+  const sizeClass=qLen>60?'xlong':(qLen>30?'long':'');
+  const storyClass=isStory?'story-variant':'';
+  const sizeAttr=`style="width:${w}px;height:${h}px;"`;
+  const eq=_devEscapeHtml(quote);
+  const eref=_devEscapeHtml(ref);
+
+  if(template==='photo'){
+    const photo=state.photo_id?_socShareLibPhotos.find(p=>p.id===state.photo_id):null;
+    const bg=photo
+      ? `<img class="ss-tmpl-bg" src="${_devEscapeHtml(photo.image_url)}" crossorigin="anonymous" alt="">`
+      : `<div class="ss-tmpl-bg-fallback">No photo selected.<br>Pick one above, or upload to the Photo Library.</div>`;
+    return `<div class="ss-tmpl ss-tmpl-photo ${storyClass}" ${sizeAttr}>
+      ${bg}
+      <div class="ss-tmpl-overlay"></div>
+      <div class="ss-tmpl-header">SHEPHERD DAILY DEVOTIONAL</div>
+      <div class="ss-tmpl-content">
+        <div class="ss-tmpl-quote ${sizeClass}">${eq}</div>
+        ${ref?'<div class="ss-tmpl-rule"></div><div class="ss-tmpl-ref">'+eref+'</div>':''}
+        <div class="ss-tmpl-footer">SHEPHERD CHURCH NWI</div>
+      </div>
+    </div>`;
+  }
+
+  // Dark sage or cream — solid background, typographic layout
+  return `<div class="ss-tmpl ss-tmpl-${template} ${storyClass}" ${sizeAttr}>
+    <div class="ss-tmpl-header">SHEPHERD DAILY DEVOTIONAL</div>
+    <div class="ss-tmpl-body">
+      <div class="ss-tmpl-quote ${sizeClass}">${eq}</div>
+      ${ref?'<div class="ss-tmpl-rule"></div><div class="ss-tmpl-ref">'+eref+'</div>':''}
+    </div>
+    <div class="ss-tmpl-footer">SHEPHERD CHURCH NWI</div>
+  </div>`;
+}
+
+// Inject the template into both preview wrappers and scale to fit.
+function renderSocialPreviews(){
+  if(!_socShareCurrent)return;
+  ['square','story'].forEach(variant=>{
+    const wrap=document.getElementById('ss-preview-'+variant);
+    if(!wrap)return;
+    wrap.innerHTML=renderTemplateHTML(variant);
+    const tmpl=wrap.querySelector('.ss-tmpl');
+    if(tmpl){
+      const containerWidth=wrap.clientWidth||wrap.offsetWidth||280;
+      const scale=containerWidth/1080;
+      tmpl.style.transform=`scale(${scale})`;
+    }
+  });
+}
+
+// Render the photo picker grid below the template selector.
+function renderPhotoPicker(){
+  const grid=document.getElementById('ss-photo-picker-grid');
+  if(!grid)return;
+  if(!_socShareLibPhotos.length){
+    grid.innerHTML='<div class="ss-photo-picker-empty">No photos in the library yet. Scroll up to the Photo Library section to upload some.</div>';
+    return;
+  }
+  const selectedId=_socShareCurrent?.photo_id||null;
+  grid.innerHTML=_socShareLibPhotos.map(p=>{
+    const isSel=p.id===selectedId;
+    return `<div class="ss-photo-picker-card ${isSel?'selected':''}" title="${_devEscapeHtml(p.title||'')}" onclick="selectSocialPhoto('${p.id}')">
+      <img src="${_devEscapeHtml(p.image_url)}" loading="lazy" alt="">
+      <span class="ss-photo-picker-check">✓</span>
+    </div>`;
+  }).join('');
+}
+
+// Switch template (dark_sage / cream / photo). Re-renders previews.
+function setSocialTemplate(template){
+  if(!_socShareCurrent)return;
+  _socShareCurrent.template_id=template;
+  document.querySelectorAll('.ss-tmpl-btn').forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.template===template);
+  });
+  document.getElementById('ss-photo-picker').style.display=template==='photo'?'':'none';
+  renderSocialPreviews();
+}
+
+// Toggle photo selection. Clicking the same one twice clears it.
+function selectSocialPhoto(photoId){
+  if(!_socShareCurrent)return;
+  _socShareCurrent.photo_id=_socShareCurrent.photo_id===photoId?null:photoId;
+  renderPhotoPicker();
+  renderSocialPreviews();
 }
 
 function updateSocialShareStateUI(){
@@ -7111,10 +7329,9 @@ function updateSocialShareStateUI(){
 
 // Live update preview tiles as user types the pull-quote
 function onPullQuoteInput(){
-  const val=document.getElementById('socialSharePullQuote').value.trim();
-  const display=val||(_socShareCurrent?.devotional?.title||'—');
-  document.getElementById('socialShareSquareQuote').textContent=display;
-  document.getElementById('socialShareStoryQuote').textContent=display;
+  if(!_socShareCurrent)return;
+  _socShareCurrent.pull_quote=document.getElementById('socialSharePullQuote').value.trim();
+  renderSocialPreviews();
 }
 
 // Save the current workspace → Library. Persists text edits AND flips
@@ -7127,6 +7344,8 @@ async function saveSocialShareToLibrary(){
   const caption=document.getElementById('socialShareCaption').value.trim()||null;
   const hashtags=document.getElementById('socialShareHashtagsEditable').value.trim()||null;
   const customPrompt=document.getElementById('socialShareCustomPrompt').value.trim()||null;
+  const templateId=_socShareCurrent.template_id||'dark_sage';
+  const photoId=_socShareCurrent.photo_id||null;
   const wasSaved=_socShareCurrent.is_saved;
   const nowIso=new Date().toISOString();
   status.textContent='Saving…';status.className='devadmin-status';
@@ -7134,6 +7353,7 @@ async function saveSocialShareToLibrary(){
     const{error}=await supa.from('devotional_social_share')
       .update({
         pull_quote:pullQuote,caption:caption,hashtags:hashtags,custom_prompt:customPrompt,
+        template_id:templateId,photo_id:photoId,
         is_saved:true,saved_at:nowIso,
       })
       .eq('devotional_id',id);
@@ -7144,7 +7364,7 @@ async function saveSocialShareToLibrary(){
     _socShareCurrent.custom_prompt=customPrompt||'';
     _socShareCurrent.is_saved=true;
     _socShareCurrent.saved_at=nowIso;
-    onPullQuoteInput();
+    renderSocialPreviews();
     updateSocialShareStateUI();
     status.textContent=wasSaved?'✓ Library entry updated.':'✓ Saved to Library.';
     status.className='devadmin-status success';
@@ -7175,23 +7395,23 @@ function resetSocialShareWorkspace(){
   document.querySelector('.socialshare-controls')?.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-// Library: every generation, most recent first. Click a card to load it.
+// Library: saved entries, most recent first. Card thumbs are rendered
+// from template + photo + pull-quote so they look like the final graphic
+// even though no image is stored.
 async function loadSocialShareLibrary(){
   const grid=document.getElementById('socialShareLibraryGrid');
   const count=document.getElementById('socialShareLibraryCount');
   if(!grid||!supa||!isAdminUser)return;
   try{
-    // Library only shows entries the admin explicitly saved.
-    // Drafts (is_saved=false) live in the DB but stay hidden until promoted.
     const{data,error}=await supa.from('devotional_social_share')
-      .select('devotional_id,pull_quote,image_url,saved_at,generated_at,devotionals(title,publish_date)')
+      .select('devotional_id,pull_quote,template_id,photo_id,saved_at,generated_at,devotionals(title,publish_date,scripture_ref)')
       .eq('variant','instagram_square')
       .eq('is_saved',true)
       .order('saved_at',{ascending:false,nullsFirst:false})
       .limit(120);
     if(error)throw error;
     if(!data||data.length===0){
-      grid.innerHTML='<div class="socialshare-empty" style="grid-column:1/-1;">Nothing generated yet. When you generate, items appear here.</div>';
+      grid.innerHTML='<div class="socialshare-empty" style="grid-column:1/-1;">Nothing saved yet. Generate something, like it, tap Save to Library and it lands here.</div>';
       count.textContent='0 items';
       return;
     }
@@ -7200,11 +7420,29 @@ async function loadSocialShareLibrary(){
       const dev=row.devotionals||{};
       const dateStr=dev.publish_date?_devFormatDate(dev.publish_date,{month:'short',day:'numeric'}):'—';
       const quote=row.pull_quote||dev.title||'(untitled)';
+      const tmpl=row.template_id||'dark_sage';
       const isActive=row.devotional_id===selectedId;
+      // Pick thumbnail bg style. Photo template: use the photo if we have
+      // it in our cache. Otherwise fall back to sage card.
+      let thumbStyle='background:#2D3A36;color:#F4EDD8;';
+      let thumbExtra='';
+      if(tmpl==='cream'){thumbStyle='background:#F0EAD8;color:#2D3A36;';}
+      if(tmpl==='photo'){
+        const photo=row.photo_id?_socShareLibPhotos.find(p=>p.id===row.photo_id):null;
+        if(photo){
+          thumbStyle=`background:#2D3A36;color:#F4EDD8;background-image:url('${_devEscapeHtml(photo.image_url)}');background-size:cover;background-position:center;`;
+          thumbExtra=`<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(45,58,54,0.15) 0%,rgba(45,58,54,0.5) 50%,rgba(45,58,54,0.95) 100%);"></div>`;
+        }
+      }
       return '<div class="socialshare-library-card'+(isActive?' active':'')+'" data-dev-id="'+_devEscapeHtml(row.devotional_id)+'" onclick="selectLibraryCard(\''+row.devotional_id+'\')">'+
-        '<div class="socialshare-library-card-img"><img src="'+_devEscapeHtml(row.image_url||'')+'" loading="lazy" alt=""></div>'+
+        '<div class="socialshare-library-card-img" style="position:relative;'+thumbStyle+'">'+
+          thumbExtra+
+          '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:14px;text-align:center;z-index:1;">'+
+            '<div style="font-family:Georgia,serif;font-size:0.92rem;line-height:1.18;font-weight:400;">'+_devEscapeHtml(quote)+'</div>'+
+          '</div>'+
+        '</div>'+
         '<div class="socialshare-library-card-info">'+
-          '<div class="socialshare-library-card-date">'+_devEscapeHtml(dateStr)+'</div>'+
+          '<div class="socialshare-library-card-date">'+_devEscapeHtml(dateStr)+' · '+tmpl.replace('_',' ')+'</div>'+
           '<div class="socialshare-library-card-quote">'+_devEscapeHtml(quote)+'</div>'+
         '</div>'+
       '</div>';
@@ -7241,7 +7479,7 @@ async function generateSocialShare(regenerate){
     if(!confirm('Regenerate will discard the current graphic and rebuild it.'+isSavedWarning+'\n\nContinue?'))return;
   }
   const customPrompt=document.getElementById('socialShareCustomPrompt')?.value?.trim()||'';
-  status.textContent='Generating… this takes 30–60s with high-quality images.';
+  status.textContent='Generating… Claude is writing the pull-quote and caption (~5s).';
   status.className='devadmin-status';
   genBtn.disabled=true;regenBtn.disabled=true;
   try{
@@ -7279,56 +7517,48 @@ function copySocialCaption(){
 async function downloadSocialGraphic(variant){
   if(!_socShareCurrent){alert('Generate first.');return;}
   const status=document.getElementById('socialShareStatus');
-  status.textContent='Preparing PNG…';status.className='devadmin-status';
+  status.textContent='Rendering PNG…';status.className='devadmin-status';
   const isStory=variant==='instagram_story';
   const w=1080,h=isStory?1920:1080;
-  const url=isStory?_socShareCurrent.story_url:_socShareCurrent.square_url;
-  if(!url){status.textContent='⚠ No image generated for this variant.';status.className='devadmin-status error';return;}
-  const d=_socShareCurrent.devotional;
-  const quote=_socShareCurrent.pull_quote||d.title||'';
-  const ref=d.scripture_ref||'';
   const target=document.getElementById('socialRenderTarget');
   target.style.width=w+'px';target.style.height=h+'px';
-  // Pull-quote is the visual hero; sized accordingly. Brand header tiny;
-  // scripture ref small under the quote.
-  const quoteFs=isStory?112:78;
-  const refFs=isStory?34:24;
-  const hdrFs=isStory?28:20;
-  const padX=isStory?80:70;
-  const padBottom=isStory?180:90;
-  // Cache-bust to force a CORS-friendly fetch for html2canvas
-  const imgSrc=url+(url.includes('?')?'&':'?')+'h2c='+Date.now();
-  target.innerHTML='<div id="socialRenderInner" style="position:relative;width:'+w+'px;height:'+h+'px;background:#1c1f26;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;">'+
-    '<img id="socialRenderImg" src="'+imgSrc+'" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;display:block;"/>'+
-    '<div style="position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.35) 30%,rgba(0,0,0,0.88) 100%);"></div>'+
-    '<div style="position:absolute;left:'+padX+'px;right:'+padX+'px;bottom:'+padBottom+'px;color:#fff;">'+
-      '<div style="font-size:'+hdrFs+'px;color:#cfd2cd;text-transform:uppercase;letter-spacing:0.22em;font-weight:600;margin-bottom:'+(isStory?42:30)+'px;opacity:0.92;">SHEPHERD DAILY DEVOTIONAL</div>'+
-      '<div style="font-family:Georgia,Times New Roman,serif;font-size:'+quoteFs+'px;line-height:1.14;font-weight:400;margin-bottom:'+(isStory?34:24)+'px;color:#fff;letter-spacing:0.005em;">'+_devEscapeHtml(quote)+'</div>'+
-      (ref?'<div style="font-size:'+refFs+'px;color:#d4b878;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;">'+_devEscapeHtml(ref)+'</div>':'')+
-    '</div>'+
-  '</div>';
-  // Wait for the image to actually load + fonts to settle, then snapshot
-  const img=document.getElementById('socialRenderImg');
-  await new Promise((resolve,reject)=>{
-    if(img.complete&&img.naturalWidth>0)return resolve();
-    img.onload=()=>resolve();
-    img.onerror=()=>reject(new Error('Background image failed to load (CORS?)'));
-    setTimeout(()=>reject(new Error('Image load timeout')),15000);
-  });
-  if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+  // Render the same template into the offscreen target at 1:1. No CSS
+  // transform here — the inner is exactly 1080×height so html2canvas
+  // captures it at full resolution.
+  target.innerHTML=renderTemplateHTML(isStory?'story':'square');
+  const inner=target.firstElementChild;
+  if(!inner){status.textContent='⚠ Template did not render.';status.className='devadmin-status error';return;}
+  inner.style.transform='none';
+  // If the photo template, wait for the background image to load first
+  const bgImg=inner.querySelector('img.ss-tmpl-bg');
+  if(bgImg){
+    try{
+      await new Promise((resolve,reject)=>{
+        if(bgImg.complete&&bgImg.naturalWidth>0)return resolve();
+        bgImg.onload=()=>resolve();
+        bgImg.onerror=()=>reject(new Error('Background photo failed to load (CORS?)'));
+        setTimeout(()=>reject(new Error('Photo load timeout')),15000);
+      });
+    }catch(e){
+      status.textContent='⚠ '+(e.message||e);status.className='devadmin-status error';
+      return;
+    }
+  }
+  if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(_){}}
   try{
-    const canvas=await html2canvas(document.getElementById('socialRenderInner'),{
+    const canvas=await html2canvas(inner,{
       width:w,height:h,useCORS:true,allowTaint:false,backgroundColor:null,scale:1,logging:false,
     });
     await new Promise((resolve)=>{
       canvas.toBlob((blob)=>{
-        const url2=URL.createObjectURL(blob);
+        const url=URL.createObjectURL(blob);
         const a=document.createElement('a');
-        a.href=url2;
-        const dateSafe=(d.publish_date||'devotional').replace(/[^0-9-]/g,'');
-        a.download='shepherd-devotional-'+dateSafe+'-'+(isStory?'story':'square')+'.png';
+        a.href=url;
+        const dateSafe=(_socShareCurrent.devotional?.publish_date||'devotional').replace(/[^0-9-]/g,'');
+        const tmpl=_socShareCurrent.template_id||'dark_sage';
+        a.download='shepherd-devotional-'+dateSafe+'-'+tmpl+'-'+(isStory?'story':'square')+'.png';
         document.body.appendChild(a);a.click();a.remove();
-        URL.revokeObjectURL(url2);
+        URL.revokeObjectURL(url);
         resolve();
       },'image/png');
     });
@@ -7336,7 +7566,141 @@ async function downloadSocialGraphic(variant){
   }catch(e){
     console.warn('html2canvas:',e);
     status.textContent='⚠ Render failed: '+(e.message||e);status.className='devadmin-status error';
+  }finally{
+    // Tidy up: revert preview render once download is done
+    setTimeout(()=>{ if(target)target.innerHTML=''; },1000);
   }
+}
+
+// ═══ Photo Library (admin) ═══
+async function photoLibLoad(){
+  if(!supa||!isAdminUser)return;
+  try{
+    const{data,error}=await supa.from('social_photo_assets')
+      .select('id,image_url,image_path,title,tags')
+      .eq('active',true)
+      .order('sort_order')
+      .order('uploaded_at',{ascending:false});
+    if(error)throw error;
+    _socShareLibPhotos=data||[];
+    renderPhotoLibrary();
+    renderPhotoPicker();
+  }catch(e){console.warn('photoLibLoad:',e);}
+}
+
+function renderPhotoLibrary(){
+  const grid=document.getElementById('photolib-grid');
+  if(!grid)return;
+  if(!_socShareLibPhotos.length){
+    grid.innerHTML='<div class="photolib-empty">No photos yet. Drop some files above (or click <strong>Choose files</strong>) to start building your library.</div>';
+    return;
+  }
+  grid.innerHTML=_socShareLibPhotos.map(p=>{
+    const tags=(p.tags||[]).join(', ');
+    return `<div class="photolib-card" data-id="${_devEscapeHtml(p.id)}">
+      <div class="photolib-card-img"><img src="${_devEscapeHtml(p.image_url)}" loading="lazy" alt=""></div>
+      <div class="photolib-card-info">
+        <input class="photolib-card-title-input" value="${_devEscapeHtml(p.title||'')}" placeholder="Title…" onblur="photoLibUpdateTitle('${p.id}',this.value)">
+        <div style="margin-top:6px;font-size:0.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;">Tags</div>
+        <input class="photolib-card-tags-input" value="${_devEscapeHtml(tags)}" placeholder="worship, hands, prayer…" onblur="photoLibUpdateTags('${p.id}',this.value)">
+      </div>
+      <div class="photolib-card-actions">
+        <button class="danger" onclick="photoLibDelete('${p.id}')">🗑 Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function photoLibHandleFiles(fileList){
+  if(!supa||!currentUser){return;}
+  const files=Array.from(fileList||[]);
+  if(!files.length)return;
+  const status=document.getElementById('photolib-status');
+  status.textContent=`Uploading ${files.length} photo${files.length===1?'':'s'}…`;
+  status.className='devadmin-status';
+  let uploaded=0, failed=0;
+  for(const file of files){
+    try{
+      const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
+      const path=`${currentUser.id}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+      const{error:upErr}=await supa.storage.from('social-photo-library').upload(path,file,{contentType:file.type||'image/jpeg',upsert:false});
+      if(upErr)throw upErr;
+      const{data:pub}=supa.storage.from('social-photo-library').getPublicUrl(path);
+      const title=file.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').slice(0,60);
+      const{error:insErr}=await supa.from('social_photo_assets').insert({
+        image_path:path,image_url:pub.publicUrl,title,uploaded_by:currentUser.id,
+      });
+      if(insErr)throw insErr;
+      uploaded++;
+    }catch(e){
+      console.warn('photo upload failed:',e);
+      failed++;
+    }
+  }
+  const fileInput=document.getElementById('photolib-file-input');
+  if(fileInput)fileInput.value='';
+  if(uploaded===0){
+    status.textContent=`⚠ All ${files.length} uploads failed.`;
+    status.className='devadmin-status error';
+  }else if(failed===0){
+    status.textContent=`✓ Uploaded ${uploaded} photo${uploaded===1?'':'s'}. Click a title or tags to label them.`;
+    status.className='devadmin-status success';
+    setTimeout(()=>{if(status.textContent.startsWith('✓ Uploaded'))status.textContent='';},5000);
+  }else{
+    status.textContent=`Uploaded ${uploaded}, ${failed} failed. Check that files are under 10MB and are JPG/PNG/WebP.`;
+    status.className='devadmin-status error';
+  }
+  await photoLibLoad();
+}
+
+async function photoLibUpdateTitle(id,value){
+  if(!supa)return;
+  try{
+    await supa.from('social_photo_assets').update({title:value.trim()||null}).eq('id',id);
+    const p=_socShareLibPhotos.find(x=>x.id===id);
+    if(p)p.title=value.trim();
+  }catch(e){console.warn('photoLibUpdateTitle:',e);}
+}
+
+async function photoLibUpdateTags(id,value){
+  if(!supa)return;
+  try{
+    const tags=value.split(',').map(t=>t.trim().toLowerCase()).filter(Boolean);
+    await supa.from('social_photo_assets').update({tags}).eq('id',id);
+    const p=_socShareLibPhotos.find(x=>x.id===id);
+    if(p)p.tags=tags;
+  }catch(e){console.warn('photoLibUpdateTags:',e);}
+}
+
+async function photoLibDelete(id){
+  if(!confirm('Delete this photo? Removes it from the library and from any devotionals using it. The image file is removed from storage too.'))return;
+  if(!supa)return;
+  const p=_socShareLibPhotos.find(x=>x.id===id);
+  try{
+    if(p?.image_path){
+      try{await supa.storage.from('social-photo-library').remove([p.image_path]);}catch(_){}
+    }
+    await supa.from('social_photo_assets').delete().eq('id',id);
+    if(_socShareCurrent?.photo_id===id){
+      _socShareCurrent.photo_id=null;
+      renderSocialPreviews();
+    }
+    photoLibLoad();
+  }catch(e){alert('Delete failed: '+(e.message||e));}
+}
+
+function photoLibDragOver(e){
+  e.preventDefault();
+  document.getElementById('photolib-uploader')?.classList.add('dragging');
+}
+function photoLibDragLeave(e){
+  e.preventDefault();
+  document.getElementById('photolib-uploader')?.classList.remove('dragging');
+}
+function photoLibDrop(e){
+  e.preventDefault();
+  document.getElementById('photolib-uploader')?.classList.remove('dragging');
+  photoLibHandleFiles(e.dataTransfer.files);
 }
 
 function showLegal(type){
