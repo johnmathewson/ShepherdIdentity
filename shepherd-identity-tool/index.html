@@ -7965,30 +7965,18 @@ async function saveDeclaration(synth, ctx){
   }
 }
 
-// Reachable entry point: generate a declaration from outside the old worksheet.
+// Reachable entry point: build the AI declaration. Routes to the Drawing the
+// Picture synthesis — the current engine that weaves the person's seven answers
+// together with their prophetic words, prayers, dreams, visions, gifts and the
+// thirteen-week teaching. NOT the archived worksheet reveal (which read the
+// empty state.identityWorksheet fields and pulled nothing).
 async function openDeclaration(){
-  const ws=state.identityWorksheet||{};
-  const d=state.drawingPicture||{};
-  const hasSource=Object.keys(ws).some(function(k){return (ws[k]||'').trim();})
-    || (d.iam||'').trim() || (state.prophetic||[]).length || (state.dreams||[]).length
-    || (Array.isArray(window._savedCardsCache)&&window._savedCardsCache.length);
-  if(!hasSource){
-    alert('There isn’t enough saved yet to build a declaration. Add some journal entries or work through Drawing the Picture first.');
-    return;
-  }
-  const ov=document.getElementById('iwOverlay');
-  if(!ov)return;
-  ov.style.display='flex';
-  setTimeout(function(){ov.classList.add('open');},10);
-  document.body.style.overflow='hidden';
-  // Jump straight to the synthesis step of the old worksheet.
-  if(typeof iwShowStep==='function')iwShowStep(iwTotalSteps-1);
-  if(typeof iwPopulateSummary==='function')iwPopulateSummary();
-  const res=document.getElementById('iwAiResult');
-  const btn=document.getElementById('iwAiGenerateBtn');
-  if(res)res.style.display='none';
-  if(btn)btn.style.display='inline-flex';
-  iwAiGenerated=false;
+  if(typeof openDrawingThePicture!=='function')return;
+  openDrawingThePicture();
+  // Jump straight to the capstone step ("Now let Him say it back") and prime it.
+  // dtpShowStep(DTP_SYNTH_STEP) calls dtpSynthPrime(), which shows what it's
+  // drawing from — or tells them to work the steps first if there's nothing yet.
+  if(typeof dtpShowStep==='function'&&typeof DTP_SYNTH_STEP!=='undefined')dtpShowStep(DTP_SYNTH_STEP);
 }
 
 // ═══ PCO EMBED: postMessage API ═══
