@@ -1632,8 +1632,11 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
     </div>
     <div style="text-align:center;padding:20px;background:var(--surface);border-radius:var(--radius-lg);border:1px dashed var(--border);margin-bottom:1.2rem;">
       <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;font-weight:300;">This is who God says you are — every word, every gift, every revelation woven together into one declaration.</p>
-      <p style="font-size:0.74rem;color:var(--muted);margin-bottom:14px;font-weight:300;">The Identity Card is auto-generated from your journal entries, gifts, and skills. For the guided seven-step reflection, use Drawing the Picture instead.</p>
-      <button class="id-card-btn" onclick="generateIdCard()">Generate Identity Card</button>
+      <p style="font-size:0.74rem;color:var(--muted);margin-bottom:14px;font-weight:300;">Build a Spirit-led <strong>AI declaration</strong> from everything you've entered — your prophetic words, journal, dreams, gifts and skills — or auto-generate a quick Identity Card. For the guided seven-step reflection, open Drawing the Picture.</p>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <button class="id-card-btn" onclick="openDeclaration()" style="background:var(--sage);color:var(--dark);border-color:var(--sage);">✦ Build my AI declaration</button>
+        <button class="id-card-btn" onclick="generateIdCard()">Generate Identity Card</button>
+      </div>
     </div>
     <div id="profileOutput"></div>
   </div>
@@ -6231,14 +6234,17 @@ function updateIwProgress(){
     const el=document.getElementById(id);
     if(el)el.textContent=pct+'%';
   });
+  // Name exactly which step is still blank, so no one gets stuck at 86% with
+  // no idea what's missing. Labels are parallel to `marks` above.
+  const dtpStepLabels=['what God has shown you','circling your two','what you’ve called this season','the name so far','where it’s showing up','the name He’s giving you','what He’s asking of you'];
+  const dtpMissing=dtpStepLabels.filter((_,i)=>!marks[i]);
   ['homeIwSub','idIwSub'].forEach(id=>{
     const el=document.getElementById(id);
     if(el){
       if(filled===0)el.textContent='Seven steps to the name He is giving you';
-      else if(filled<3)el.textContent='Started — '+filled+'/7 steps';
-      else if(filled<6)el.textContent='Taking shape — '+filled+'/7 steps';
-      else if(filled<7)el.textContent='Almost there — '+filled+'/7 steps';
-      else el.textContent='Complete — your card is saved';
+      else if(filled>=7||!dtpMissing.length)el.textContent='Complete — your card is saved';
+      else if(dtpMissing.length===1)el.textContent='One step left: '+dtpMissing[0];
+      else el.textContent=dtpMissing.length+' steps left — next: '+dtpMissing[0];
     }
   });
 }
