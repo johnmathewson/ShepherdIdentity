@@ -7024,8 +7024,8 @@ async function dtpGenerateSynthesis(){
     const resp=await fetch(SUPABASE_URL+'/functions/v1/ai-chat',{
       method:'POST',headers:hdrs,
       body:JSON.stringify({
-        messages:[{role:'system',content:systemPrompt},
-                  {role:'user',content:'Speak my identity back to me from everything I just worked through.'}],
+        messages:(window._dtpSynthMessages=[{role:'system',content:systemPrompt},
+                  {role:'user',content:'Speak my identity back to me from everything I just worked through.'}]),
         userContext:typeof getUserContext==='function'?getUserContext():null,
         feature:'identity_synthesis'
       })
@@ -7033,42 +7033,10 @@ async function dtpGenerateSynthesis(){
     if(!resp.ok)throw new Error('AI request failed');
     const data=await resp.json();
     const reply=data.reply||'';
-    const sect=function(tag){
-      const m=reply.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[\\/'+tag+'\\]','i'));
-      return m?m[1].trim():'';
-    };
-    const declaration=sect('DECLARATION'),scriptures=sect('SCRIPTURES'),
-          connections=sect('CONNECTIONS'),keyVerse=normalizeKeyVerse(sect('KEYVERSE'));
-    if(!declaration)throw new Error('empty declaration');
-    window._iwAiSynthesis={declaration,scriptures,connections,keyVerse,raw:reply};
-    window._dtpSynthDone=true;
-    let html='<span class="ai-section-title">Your Identity Declaration</span>'+
-             '<div class="ai-declaration">'+dtpEsc(declaration).replace(/\n/g,'<br>')+'</div>';
-    if(scriptures){
-      html+='<span class="ai-section-title">Scripture Foundation</span>';
-      scriptures.split('\n').filter(Boolean).forEach(function(x){html+='<div class="ai-scripture">'+dtpEsc(x.trim())+'</div>';});
-    }
-    if(connections){
-      html+='<span class="ai-section-title">Threads God Is Weaving</span>';
-      connections.split('\n').filter(Boolean).forEach(function(x){html+='<div class="ai-connection">'+dtpEsc(x.trim())+'</div>';});
-    }
-    html+='<div id="dtpSynthNote" style="margin-top:14px;font-size:0.76rem;color:var(--sage);">Saving…</div>'+
-          '<div class="decl-actions" id="dtpSynthActions"></div>';
-    if(content)content.innerHTML=html;
-    if(loading)loading.style.display='none';
-    if(result)result.style.display='block';
-    if(typeof saveDeclaration==='function'){
-      saveDeclaration(window._iwAiSynthesis,ctx).then(function(id){
-        const note=document.getElementById('dtpSynthNote');
-        if(note)note.textContent=id?'✓ Saved to your identity cards — you can come back to this.'
-                                  :'Couldn’t save this to your account. Download it before you close the page.';
-        const acts=document.getElementById('dtpSynthActions');
-        if(acts)acts.innerHTML=(id?'<button onclick="useDeclarationAsCard(\''+id+'\')">Make this my identity card</button>':'')+
-          '<button onclick="downloadDeclarationPDF('+(id?'\''+id+'\'':'null')+')">Download as PDF</button>'+
-          '<button onclick="dtpRegenerateSynthesis()">Try again</button>';
-      });
-    }
-    setTimeout(function(){if(result)result.scrollIntoView({behavior:'smooth',block:'start'});},250);
+    if(!reply)throw new Error('empty declaration');
+    window._dtpSynthMessages.push({role:'assistant',content:reply});
+    window._dtpSynthCtx=ctx;
+    dtpRenderSynth(reply,ctx,true);
   }catch(e){
     console.error('dtp synthesis',e);
     if(loading)loading.style.display='none';
@@ -7077,11 +7045,111 @@ async function dtpGenerateSynthesis(){
 }
 function dtpRegenerateSynthesis(){
   window._dtpSynthDone=false;
+  window._dtpSynthMessages=null;
   const btn=document.getElementById('dtpSynthBtn');
   if(btn){btn.style.display='flex';btn.textContent='Speak it over me';}
   const res=document.getElementById('dtpSynthResult');
   if(res)res.style.display='none';
   dtpGenerateSynthesis();
+}
+
+// Render the declaration + the back-and-forth refine box. doSave=true auto-saves
+// the first generation; refined versions save on demand (dtpSaveCurrentDeclaration)
+// so a running conversation doesn't spawn a saved card per turn.
+function dtpRenderSynth(reply,ctx,doSave){
+  const content=document.getElementById('dtpSynthContent');
+  const loading=document.getElementById('dtpSynthLoading');
+  const result=document.getElementById('dtpSynthResult');
+  const sect=function(tag){const m=reply.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[\\/'+tag+'\\]','i'));return m?m[1].trim():'';};
+  const declaration=sect('DECLARATION')||reply.trim();
+  const scriptures=sect('SCRIPTURES'),connections=sect('CONNECTIONS'),keyVerse=normalizeKeyVerse(sect('KEYVERSE'));
+  window._iwAiSynthesis={declaration:declaration,scriptures:scriptures,connections:connections,keyVerse:keyVerse,raw:reply};
+  window._dtpSynthCtx=ctx||window._dtpSynthCtx||{};
+  window._dtpSynthDone=true;
+  let html='<span class="ai-section-title">Your Identity Declaration</span>'+
+           '<div class="ai-declaration">'+dtpEsc(declaration).replace(/\n/g,'<br>')+'</div>';
+  if(scriptures){
+    html+='<span class="ai-section-title">Scripture Foundation</span>';
+    scriptures.split('\n').filter(Boolean).forEach(function(x){html+='<div class="ai-scripture">'+dtpEsc(x.trim())+'</div>';});
+  }
+  if(connections){
+    html+='<span class="ai-section-title">Threads God Is Weaving</span>';
+    connections.split('\n').filter(Boolean).forEach(function(x){html+='<div class="ai-connection">'+dtpEsc(x.trim())+'</div>';});
+  }
+  // ── the back-and-forth: keep talking to it until it sounds like you ──
+  html+='<div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);">'+
+        '<div style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:8px;">Not quite you yet? Tell Him what to adjust — it keeps the whole conversation.</div>'+
+        '<textarea id="dtpRefineInput" rows="2" placeholder="e.g. “make it shorter,” “that part isn’t me,” “lean into my calling to reconcile”" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--cream);padding:10px 12px;font-size:0.9rem;font-family:inherit;line-height:1.4;resize:vertical;box-sizing:border-box;"></textarea>'+
+        '<button class="iw-ai-generate-btn" style="margin-top:8px;" onclick="dtpRefineSynthesis()">✦ Refine it together</button>'+
+        '</div>';
+  html+='<div id="dtpSynthNote" style="margin-top:14px;font-size:0.76rem;color:var(--sage);"></div>'+
+        '<div class="decl-actions" id="dtpSynthActions"></div>';
+  if(content)content.innerHTML=html;
+  if(loading)loading.style.display='none';
+  if(result)result.style.display='block';
+  const note=document.getElementById('dtpSynthNote');
+  if(doSave&&typeof saveDeclaration==='function'){
+    if(note)note.textContent='Saving…';
+    saveDeclaration(window._iwAiSynthesis,window._dtpSynthCtx).then(function(id){
+      window._dtpLastCardId=id||null;
+      if(note)note.textContent=id?'✓ Saved to your identity cards.':'Couldn’t save to your account — download it before you close.';
+      dtpSynthActionsHtml(id);
+    });
+  }else{
+    if(note)note.textContent='Refined — keep going, or save this version when it sounds like you.';
+    dtpSynthActionsHtml(null);
+  }
+  setTimeout(function(){if(result)result.scrollIntoView({behavior:'smooth',block:'start'});},250);
+}
+function dtpSynthActionsHtml(id){
+  const acts=document.getElementById('dtpSynthActions');if(!acts)return;
+  acts.innerHTML=(id?'<button onclick="useDeclarationAsCard(\''+id+'\')">Make this my identity card</button>'
+                    :'<button onclick="dtpSaveCurrentDeclaration()">Save this version</button>')+
+    '<button onclick="downloadDeclarationPDF('+(id?'\''+id+'\'':'null')+')">Download as PDF</button>'+
+    '<button onclick="dtpRegenerateSynthesis()">Start over</button>';
+}
+function dtpSaveCurrentDeclaration(){
+  if(typeof saveDeclaration!=='function'||!window._iwAiSynthesis)return;
+  const note=document.getElementById('dtpSynthNote');if(note)note.textContent='Saving…';
+  saveDeclaration(window._iwAiSynthesis,window._dtpSynthCtx||{}).then(function(id){
+    window._dtpLastCardId=id||null;
+    if(note)note.textContent=id?'✓ Saved to your identity cards.':'Couldn’t save — download it before you close.';
+    dtpSynthActionsHtml(id);
+  });
+}
+// The back-and-forth: send a refinement request with the full conversation so the
+// model remembers everything it already said and everything the person asked for.
+async function dtpRefineSynthesis(){
+  const inp=document.getElementById('dtpRefineInput');
+  const text=(inp&&inp.value||'').trim();
+  if(!text)return;
+  if(!Array.isArray(window._dtpSynthMessages)||!window._dtpSynthMessages.length){dtpGenerateSynthesis();return;}
+  const loading=document.getElementById('dtpSynthLoading');
+  const result=document.getElementById('dtpSynthResult');
+  window._dtpSynthMessages.push({role:'user',content:text+'\n\nRewrite the whole declaration incorporating this. Keep the exact [DECLARATION]/[SCRIPTURES]/[CONNECTIONS]/[KEYVERSE] format.'});
+  if(result)result.style.display='none';
+  if(loading)loading.style.display='flex';
+  try{
+    const hdrs={'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY};
+    const sess=supa?await supa.auth.getSession():null;
+    const tok=sess&&sess.data&&sess.data.session?sess.data.session.access_token:null;
+    if(!tok){if(loading)loading.style.display='none';if(result)result.style.display='block';alert('Please sign in to refine your declaration.');return;}
+    hdrs['Authorization']='Bearer '+tok;
+    const resp=await fetch(SUPABASE_URL+'/functions/v1/ai-chat',{method:'POST',headers:hdrs,
+      body:JSON.stringify({messages:window._dtpSynthMessages,userContext:typeof getUserContext==='function'?getUserContext():null,feature:'identity_synthesis'})});
+    if(!resp.ok)throw new Error('AI request failed');
+    const data=await resp.json();
+    const reply=data.reply||'';
+    if(!reply)throw new Error('empty');
+    window._dtpSynthMessages.push({role:'assistant',content:reply});
+    dtpRenderSynth(reply,window._dtpSynthCtx,false);
+  }catch(e){
+    console.error('dtp refine',e);
+    if(loading)loading.style.display='none';
+    if(result)result.style.display='block';
+    if(inp)inp.value=text;
+    alert('Couldn’t refine just now — try again in a moment.');
+  }
 }
 
 async function dtpComplete(){
