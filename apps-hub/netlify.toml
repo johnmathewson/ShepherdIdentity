@@ -1,3 +1,48 @@
+# ⚠ RECONSTRUCTED 2026-10-02 — VERIFY BEFORE YOU DEPLOY ⚠
+#
+# The real deployed netlify.toml is 854 bytes. Netlify's API returns metadata
+# for it but not content, and config files are not served over HTTP, so it
+# could not be pulled back. What was in this repo before was the original
+# 67-byte build-only stub (kept as netlify.toml.stale-67b.bak) — deploying that
+# would have silently removed every proxy below and taken Formation, Care and
+# Go Find Jesus off apps.shepherdchurch.co.
+#
+# The rules below were derived by probing production and confirming each path
+# returns a byte-identical response to the app's own origin. They are correct
+# in behaviour; the real file may differ in form and may contain headers or
+# rules that produce no visible difference from outside.
+#
+# Before the next hub deploy: open the Netlify dashboard for shepherd-apps-hub,
+# copy the actual netlify.toml out of the published deploy, and replace this
+# file with it. Then delete this comment and the .bak.
+
 [build]
   publish = "."
   command = "echo 'static site, no build'"
+
+# Each sub-app is served from its own Netlify site and mounted here under a
+# path, so the member stays on one origin and inside one installed PWA.
+# Verified 2026-10-02: each of these returns bytes identical to the origin.
+
+[[redirects]]
+  from = "/formation/*"
+  to = "https://shepherd-identity-tool.netlify.app/formation/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/care/*"
+  to = "https://shepherd-care.netlify.app/care/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/gfj/*"
+  to = "https://gfj-prayer-app.netlify.app/gfj/:splat"
+  status = 200
+  force = true
+
+# NOTE: /prayer currently 308-redirects to itself on production — an infinite
+# loop. The Prayer Wall mount (HUB.md step 4) is half-finished. No rule is
+# written here for it on purpose; add one only once the Prayer Wall actually
+# serves itself under /prayer/ the way the others do.

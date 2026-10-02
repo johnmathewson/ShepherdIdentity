@@ -1,271 +1,286 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1B2027"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Shepherd">
 <title>Shepherd Apps</title>
-<meta name="theme-color" content="#1c1f26" />
-<meta name="description" content="The digital tools of Shepherd Church — Northwest Indiana." />
-
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Lato:wght@400;700&display=swap">
 <style>
-  :root {
-    --bg-deep: #1c1f26;
-    --bg-night: #111318;
-    --sage: #6f8d81;
-    --sage-light: #8aaa9e;
-    --sage-glow: rgba(111,141,129,0.45);
-    --wheat: #c2b280;
-    --text-primary: #f0f0ec;
-    --text-secondary: #a0a8b8;
-    --text-muted: #5e6578;
-    --border-soft: rgba(255,255,255,0.08);
-  }
+  :root{--midnight:#1B2027;--m2:#232931;--m3:#2C333C;--line:#343C46;--flame:#FF4018;--flame-dim:#CC3313;--mist:#F6F6FF;--white:#fff;--text:#E6E8EE;--t2:#B4BAC5;--t3:#7F8794;--ok:#4CC38A;--err:#FF6B4A;
+    --display:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;--body:'Lato','Helvetica Neue',Arial,sans-serif}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--midnight);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  :focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+  [hidden]{display:none!important}
+  .screen{max-width:430px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:0 0 32px}
+  .kicker{font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--flame);margin:0 0 6px}
+  h1{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.1;letter-spacing:-.02em;color:var(--white);margin:0 0 8px;text-wrap:balance}
+  h1 .u{position:relative;display:inline-block}
+  h1 .u::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:3px;background:var(--flame);border-radius:2px}
+  h2{font-family:var(--display);font-weight:800;font-size:17px;color:var(--white);margin:0;letter-spacing:-.01em}
+  .sub{margin:0 0 18px;color:var(--t2);font-size:15px}
+  .sub b{color:var(--white)}
+  label{display:block;font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin:0 0 6px}
+  input{width:100%;min-height:52px;background:var(--m2);border:1px solid var(--line);border-radius:4px;color:var(--white);font-family:var(--body);font-size:17px;padding:0 14px}
+  input:focus{outline:none;border-color:var(--white)}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border-radius:4px;background:var(--flame);color:var(--white);font-family:var(--display);font-weight:700;font-size:15px;margin-top:12px}
+  .btn:active{background:var(--flame-dim)}
+  .btn.o{background:transparent;border:1px solid var(--white)}
+  .btn.q{background:transparent;border:1px solid var(--line);color:var(--t2);font-size:14px;min-height:48px}
+  .btn:disabled{opacity:.5}
+  .btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .fine{font-size:12.5px;color:var(--t3);margin:14px 0 0;line-height:1.5}
+  .fine a,.link{color:var(--t2);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+  .err{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--err);margin:10px 0 0}
+  .foot{margin-top:auto;padding:16px 20px 0;font-family:var(--display);font-weight:700;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);display:flex;justify-content:space-between}
 
-  * { box-sizing: border-box; }
+  /* sign-in screens */
+  .auth{padding:8px 22px 0;display:flex;flex-direction:column;flex:1}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:34px;height:34px;display:block}
+  .brand span{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.22em;color:var(--white)}
+  .brand.big{flex-direction:column;align-items:flex-start;gap:14px;margin:36px 0 auto}
+  .brand.big img{width:56px;height:56px}
+  .auth h1{font-size:26px}
+  .found{display:flex;align-items:center;gap:12px;background:var(--m2);border:1px solid var(--line);border-left:3px solid var(--flame);border-radius:0 6px 6px 0;padding:12px 14px;margin:0 0 6px}
+  .av{width:42px;height:42px;border-radius:50%;background:var(--mist);color:var(--midnight);font-family:var(--display);font-weight:800;font-size:14px;display:grid;place-items:center;flex:none}
+  .found b{display:block;font-family:var(--display);font-weight:700;font-size:15px;color:var(--white)}
+  .found span{font-size:12.5px;color:var(--t2)}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 14px}
+  .chips i{font-style:normal;font-family:var(--display);font-weight:700;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--t2);border:1px solid var(--line);border-radius:4px;padding:2px 7px}
+  .code-one{height:60px;text-align:center;font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:.35em;font-variant-numeric:tabular-nums;padding-left:.35em}
+  .code-one::placeholder{letter-spacing:.2em;color:var(--t3);font-weight:400}
+  .resend{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--t3);margin-top:10px}
+  .resend b{font-family:var(--display);font-weight:700;color:var(--t2);font-variant-numeric:tabular-nums}
+  .ok-ring{width:64px;height:64px;border-radius:50%;border:3px solid var(--ok);display:grid;place-items:center;margin:0 0 18px}
+  .ok-ring svg{width:28px;height:28px;stroke:var(--ok);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .ld{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:18px}
+  .ld i{display:block;height:100%;width:40%;background:var(--flame);animation:ld 1.2s ease-in-out infinite}
+  @keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
 
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--bg-deep);
-    color: var(--text-primary);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
+  /* home */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 6px}
+  .me{display:flex;align-items:center;gap:10px;min-height:44px}
+  .me .who{text-align:right;line-height:1.25}
+  .me .who b{display:block;font-family:var(--display);font-weight:700;font-size:13px;color:var(--white)}
+  .me .who small{font-size:11.5px;color:var(--t3)}
+  .avatar{width:38px;height:38px;border-radius:50%;background:var(--mist);color:var(--midnight);font-family:var(--display);font-weight:800;font-size:13px;display:grid;place-items:center}
+  .hero{padding:18px 20px 10px}
+  .hero p{margin:0;color:var(--t2);font-size:15px}
+  section{padding:16px 20px 4px}
+  .sh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+  .sh .count{font-size:12.5px;color:var(--t3)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:14px;background:var(--m2);border:1px solid var(--line);border-radius:6px;padding:14px;min-height:118px;text-align:left;width:100%;transition:transform .12s ease,background .12s ease,opacity .2s ease,border-color .2s ease}
+  .tile:active{background:var(--m3);transform:scale(.985)}
+  .tile[data-busy]{opacity:.6}
+  .tile .ic{width:28px;height:28px;color:var(--white)}
+  .tile .ic svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tile b{display:block;font-family:var(--display);font-weight:700;font-size:15px;color:var(--white);line-height:1.25}
+  .tile span{display:block;font-size:12.5px;color:var(--t2);line-height:1.4;margin-top:2px}
+  .tile .chip{position:absolute;top:12px;right:12px;font-family:var(--display);font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--flame);border:1px solid var(--flame);border-radius:4px;padding:2px 6px;line-height:1.5}
+  .tile .soon{position:absolute;top:12px;right:12px;font-family:var(--display);font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);border:1px solid var(--line);border-radius:4px;padding:2px 6px;line-height:1.5}
+  .grid .tile:last-child:nth-child(odd){grid-column:1/-1;flex-direction:row;align-items:center;min-height:0}
+  .grid .tile:last-child:nth-child(odd) .ic{flex:none}
+  .grid.public .tile{background:transparent}
+  .hl .tile{opacity:.35}.hl .tile.lit{opacity:1;border-color:var(--flame)}
+  .serve{margin:16px 20px 0;border:1px solid var(--line);border-left:3px solid var(--flame);border-radius:0 6px 6px 0;padding:14px 16px}
+  .serve b{display:block;font-family:var(--display);font-weight:700;font-size:15px;color:var(--white);margin-bottom:4px}
+  .serve p{margin:0 0 12px;font-size:13.5px;color:var(--t2)}
+  .row{display:flex;gap:8px}
+  .btn2{flex:1;display:inline-flex;justify-content:center;align-items:center;min-height:44px;border:1px solid var(--white);border-radius:4px;font-family:var(--display);font-weight:700;font-size:13px;color:var(--white);padding:0 10px;text-align:center}
+  .btn2.quiet{border-color:var(--line);color:var(--t2)}
+  .btn2[data-state="done"]{border-color:var(--ok);color:var(--ok)}
+  .cc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .cc a{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border:1px solid var(--line);border-radius:6px;font-family:var(--display);font-weight:700;font-size:12px;color:var(--text);min-height:74px;justify-content:center;text-align:center}
+  .cc a svg{width:22px;height:22px;stroke:var(--t2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .cc a:active{background:var(--m2)}
+  .ext{font-size:12.5px;color:var(--t3);margin:8px 0 0}
+  .access{margin:22px 20px 0;border-top:1px solid var(--line);padding-top:14px}
+  .access summary{list-style:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;min-height:44px;font-family:var(--display);font-weight:700;font-size:13.5px;color:var(--white)}
+  .access summary::-webkit-details-marker{display:none}
+  .access summary small{font-family:var(--body);font-weight:400;font-size:12.5px;color:var(--t3)}
+  .access summary svg{width:18px;height:18px;stroke:var(--t2);fill:none;stroke-width:2;transition:transform .2s}
+  .access[open] summary svg{transform:rotate(180deg)}
+  .hint{font-size:12px;color:var(--t3);margin:0 0 10px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+  .tags code{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:var(--m2);border:1px solid var(--flame);border-radius:4px;padding:3px 8px;color:var(--white);cursor:pointer}
+  .tags code[aria-pressed="true"]{background:var(--flame)}
+  .access p{font-size:13px;color:var(--t2);margin:0 0 10px}
+  .synced{font-size:12px;color:var(--t3);margin:8px 0 0}
+  .install{margin:16px 20px 0;display:grid;grid-template-columns:1fr auto;align-items:center;border:1px solid var(--line);border-radius:6px;padding:4px 4px 4px 12px;font-size:13px;color:var(--t2)}
+  .install .install-main{display:flex;align-items:center;gap:12px;text-align:left;min-height:52px;color:var(--t2);font-size:13px}
+  .install b{display:block;font-family:var(--display);font-weight:700;font-size:13px;color:var(--white)}
+  .install .x{min-width:44px;min-height:44px;display:grid;place-items:center;color:var(--t3)}
+  .install-steps{grid-column:1/-1;margin:4px 0 8px;padding:10px 8px 4px 0;border-top:1px solid var(--line);list-style:none;counter-reset:st}
+  .install-steps li{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:14px;color:var(--t2)}
+  .install-steps li::before{counter-increment:st;content:counter(st);width:22px;height:22px;border-radius:50%;background:var(--flame);color:var(--white);font-family:var(--display);font-weight:800;font-size:11px;display:grid;place-items:center;flex:none}
+  .install-steps li span{flex:1}.install-steps li b{display:inline;color:var(--white)}
+  .install-steps li svg{width:22px;height:22px;stroke:var(--white);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .sunday{margin:0 20px;background:var(--m2);border:1px solid var(--line);border-radius:6px;padding:16px 16px 14px}
+  .sunday .kicker{margin-bottom:4px}
+  .sunday .when{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+  .sunday .when b{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.02em;color:var(--white);line-height:1;font-variant-numeric:tabular-nums}
+  .sunday .when span{font-size:13.5px;color:var(--t2)}
+  .sunday .asg{border-top:1px solid var(--line)}
+  .sunday .asg div{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .sunday .asg .wh b{display:block;font-family:var(--display);font-weight:700;font-size:13.5px;color:var(--white)}
+  .sunday .asg .wh span{color:var(--t2);font-size:12.5px}
+  .sunday .asg .st{font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .sunday .asg .st.ok{color:var(--ok)}.sunday .asg .st.pend{color:var(--flame)}
+  .sunday .act{display:flex;gap:8px;margin-top:12px}.sunday .act[hidden]{display:none}
+  .sunday .btn{margin-top:0;min-height:44px;font-size:13.5px}
+  .todo{display:flex;flex-direction:column;gap:8px}
+  .todo button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--m2);border-left:3px solid var(--flame);border-radius:0 6px 6px 0;padding:12px 14px;min-height:64px;color:var(--text)}
+  .todo button:active{background:var(--m3)}
+  .todo .t{flex:1;min-width:0}
+  .todo .t b{display:block;font-family:var(--display);font-weight:700;font-size:14.5px;color:var(--white);line-height:1.3}
+  .todo .t span{font-size:13px;color:var(--t2)}
+  .todo .go{font-family:var(--display);font-weight:700;font-size:12px;color:var(--white);background:var(--flame);border-radius:4px;padding:8px 12px;white-space:nowrap}
+  .tile .n{position:absolute;top:10px;right:10px;min-width:22px;height:22px;padding:0 7px;border-radius:11px;background:var(--flame);color:var(--white);font-family:var(--display);font-weight:800;font-size:11px;display:grid;place-items:center}
+  .tile .chip + .n{right:auto;left:10px}
+  .hero,.sunday,section,.access{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  section:nth-of-type(2){animation-delay:.06s}section:nth-of-type(3){animation-delay:.12s}.access{animation-delay:.18s}
+  @keyframes rise{from{transform:translateY(10px)}to{transform:none}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
 
-  body {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    /* Atmospheric backdrop: deep night → midnight gradient with a soft sage bloom */
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(111,141,129,0.18) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 60% at 50% 100%, rgba(194,178,128,0.06) 0%, transparent 60%),
-      linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-night) 100%);
-    background-attachment: fixed;
-  }
+<!-- ===== SIGN-IN: returning ===== -->
+<div class="screen" id="s-returning" hidden><div class="auth">
+  <div class="brand big"><img src="mark.png" alt=""><span>SHEPHERD</span></div>
+  <p class="kicker">Welcome back</p>
+  <h1 id="ret-name">You.</h1>
+  <p class="sub" id="ret-sub"></p>
+  <button class="btn" id="ret-continue">Continue</button>
+  <button class="btn q" id="ret-switch">Not you? Use another email</button>
+</div><div class="foot"><span>apps.shepherdchurch.co</span><span>Sundays 10:30a</span></div></div>
 
-  a { color: inherit; text-decoration: none; }
-  ::selection { background-color: rgba(111,141,129,0.4); }
+<!-- ===== SIGN-IN: email ===== -->
+<div class="screen" id="s-email" hidden><div class="auth">
+  <div class="brand big"><img src="mark.png" alt=""><span>SHEPHERD</span></div>
+  <p class="kicker">Shepherd apps</p>
+  <h1>Sign <span class="u">in.</span></h1>
+  <p class="sub">One email. We'll find the right door.</p>
+  <form id="f-email" novalidate>
+    <label for="email">Email</label>
+    <input id="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@…" required>
+    <button class="btn" type="submit" id="email-go">Continue</button>
+  </form>
+  <div class="err" id="email-err" hidden></div>
+  <p class="fine">New here? That's fine — no account to create. We'll email you a code.</p>
+</div><div class="foot"><span>apps.shepherdchurch.co</span><span>Sundays 10:30a</span></div></div>
 
-  /* Layout */
-  .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 64px 24px 48px;
-  }
+<!-- ===== SIGN-IN: found in PCO ===== -->
+<div class="screen" id="s-found" hidden><div class="auth">
+  <div class="brand"><img src="mark.png" alt=""><span>SHEPHERD</span></div>
+  <div style="margin-top:28px">
+  <p class="kicker">Found you</p>
+  <h1>Hey <span class="u" id="found-first">there.</span></h1>
+  <p class="sub" id="found-sub"></p>
+  <div class="found"><span class="av" id="found-av">?</span><div><b id="found-name"></b><span id="found-email"></span></div></div>
+  <div class="chips" id="found-chips"></div>
+  <a class="btn" id="pco-go"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Sign in with Planning Center</a>
+  <p class="fine">Uses your Planning Center password — we never see it. <a id="found-code">Can't sign in? Get a code instead.</a></p>
+  </div>
+</div><div class="foot"><span><a class="link" id="found-back">Not you?</a></span><span>Sundays 10:30a</span></div></div>
 
-  /* Header / brand */
-  .brand {
-    text-align: center;
-    margin-bottom: 56px;
-  }
-  .brand-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: var(--sage);
-    margin-bottom: 14px;
-  }
-  .brand-title {
-    font-family: 'Newsreader', Georgia, serif;
-    font-weight: 500;
-    font-size: 44px;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    margin: 0;
-  }
-  .brand-sub {
-    font-family: 'Newsreader', Georgia, serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 19px;
-    line-height: 1.4;
-    color: var(--text-secondary);
-    margin-top: 14px;
-    max-width: 440px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+<!-- ===== SIGN-IN: code ===== -->
+<div class="screen" id="s-code" hidden><div class="auth">
+  <div class="brand"><img src="mark.png" alt=""><span>SHEPHERD</span></div>
+  <div style="margin-top:28px">
+  <p class="kicker">Check your email</p>
+  <h1>Enter the <span class="u">code.</span></h1>
+  <p class="sub">Sent to <b id="code-email"></b>. Type the code from the email — it's good for 10 minutes.</p>
+  <label for="code">Code from the email</label>
+  <form id="f-code" novalidate>
+    <input id="code" class="code-one" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="8" placeholder="••••••" aria-label="Sign-in code">
+    <div class="resend"><span>Didn't get it?</span><b id="resend">Resend in 0:30</b></div>
+    <button class="btn" type="submit" id="code-go">Sign in</button>
+  </form>
+  <div class="err" id="code-err" hidden></div>
+  <p class="fine">Or tap the link in the email — same thing. <a id="code-back">Wrong email?</a></p>
+  <a class="btn q" id="code-pco" style="margin-top:18px"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Have a Planning Center login? Use it instead</a>
+  </div>
+</div><div class="foot"><span>apps.shepherdchurch.co</span><span>Sundays 10:30a</span></div></div>
 
-  /* Cards */
-  .cards {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  @media (min-width: 720px) {
-    .cards {
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-    }
-  }
+<!-- ===== LANDING ===== -->
+<div class="screen" id="s-landing" hidden><div class="auth">
+  <div class="brand"><img src="mark.png" alt=""><span>SHEPHERD</span></div>
+  <div style="margin:auto 0">
+    <div class="ok-ring"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></div>
+    <p class="kicker">You're in</p>
+    <h1>Setting up your <span class="u">teams.</span></h1>
+    <p class="sub" id="landing-sub">Reading your Planning Center teams…</p>
+    <div class="ld"><i></i></div>
+  </div>
+</div><div class="foot"><span>apps.shepherdchurch.co</span><span>Sundays 10:30a</span></div></div>
 
-  .card {
-    position: relative;
-    background: rgba(255,255,255,0.045);
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    border: 1px solid rgba(255,255,255,0.10);
-    border-radius: 22px;
-    padding: 28px 24px 26px;
-    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.08) inset,
-      0 8px 28px rgba(0,0,0,0.32);
-    display: flex;
-    flex-direction: column;
-    min-height: 240px;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%);
-    pointer-events: none;
-  }
-  .card:hover, .card:focus-visible {
-    background: rgba(255,255,255,0.075);
-    border-color: rgba(255,255,255,0.20);
-    transform: translateY(-2px);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.13) inset,
-      0 14px 36px rgba(0,0,0,0.4),
-      0 0 0 1px var(--sage-glow);
-    outline: none;
-  }
-
-  .card-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(111,141,129,0.18);
-    border: 1px solid rgba(111,141,129,0.3);
-    color: var(--sage-light);
-    margin-bottom: 18px;
-  }
-  .card-icon svg { width: 22px; height: 22px; }
-
-  .card.tan .card-icon {
-    background: rgba(194,178,128,0.16);
-    border-color: rgba(194,178,128,0.32);
-    color: var(--wheat);
-  }
-
-  .card h2 {
-    font-family: 'Newsreader', Georgia, serif;
-    font-weight: 600;
-    font-size: 24px;
-    letter-spacing: -0.01em;
-    color: var(--text-primary);
-    margin: 0 0 8px;
-  }
-  .card .tagline {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    margin: 0;
-    flex: 1;
-  }
-
-  .card .cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 22px;
-    color: var(--sage-light);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-  }
-  .card.tan .cta { color: var(--wheat); }
-
-  /* Footer */
-  .foot {
-    margin-top: 64px;
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-  .foot a { color: var(--text-secondary); }
-  .foot a:hover { color: var(--text-primary); }
-  .foot .sep { opacity: 0.4; padding: 0 8px; }
-
-  /* Subtle fade-in on load */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .anim { animation: fadeUp 0.6s cubic-bezier(0.2,0.7,0.3,1) both; }
-  .d1 { animation-delay: 0s; }
-  .d2 { animation-delay: 0.1s; }
-  .d3 { animation-delay: 0.2s; }
-  .d4 { animation-delay: 0.3s; }
-</style>
-</head>
-<body>
-
-<div class="wrap">
-
-  <header class="brand anim d1">
-    <div class="brand-eyebrow">Shepherd Church · Northwest Indiana</div>
-    <h1 class="brand-title">The tools we&rsquo;ve built.</h1>
-    <p class="brand-sub">Two spaces for the life of the church. Pick the door that fits where you are.</p>
+<!-- ===== HOME ===== -->
+<main class="screen" id="s-home" hidden>
+  <header class="top">
+    <div class="brand"><img src="mark.png" alt="Shepherd"><span>SHEPHERD</span></div>
+    <button class="me" type="button" id="me-btn"><span class="who"><b id="me-name"></b><small id="me-via"></small></span><span class="avatar" id="me-av"></span></button>
   </header>
+  <div class="hero">
+    <p class="kicker" id="home-date"></p>
+    <h1><span id="greet">Hey</span> <span class="u" id="first"></span></h1>
+    <p id="home-sub"></p>
+  </div>
+  <div class="sunday" id="sunday" hidden aria-label="Your next service">
+    <p class="kicker" id="sunday-k"></p>
+    <div class="when"><b id="sunday-time"></b><span id="sunday-sub"></span></div>
+    <div class="asg" id="sunday-rows"></div>
+    <div class="act"><a class="btn" id="sunday-cta" target="_blank" rel="noopener">Confirm in Planning Center</a></div>
+  </div>
+  <section id="sec-needs" hidden aria-labelledby="h-needs">
+    <div class="sh"><h2 id="h-needs">Needs you</h2><span class="count" id="needs-count"></span></div>
+    <div class="todo" id="needs-rows"></div>
+  </section>
+  <section id="sec-team" hidden aria-labelledby="h-team">
+    <div class="sh"><h2 id="h-team">My teams</h2><span class="count" id="team-count"></span></div>
+    <div class="grid" id="team-grid"></div>
+  </section>
+  <section aria-labelledby="h-all">
+    <div class="sh"><h2 id="h-all">For everyone</h2><span class="count">4</span></div>
+    <div class="grid public" id="public-grid"></div>
+  </section>
+  <div class="serve" id="serve" hidden>
+    <b>Want to serve?</b>
+    <p>Join a team and its tools show up here the next time you open this page.</p>
+    <div class="row"><a class="btn2" id="serve-join" href="#">Join a team</a><a class="btn2 quiet" id="serve-pco" href="#">Already on one? Connect Planning Center</a></div>
+  </div>
+  <section aria-labelledby="h-cc">
+    <div class="sh"><h2 id="h-cc">Church Center</h2><span class="count">opens Planning Center</span></div>
+    <div class="cc" id="cc-grid"></div>
+    <p class="ext">These open in the Church Center app if you have it installed.</p>
+  </section>
+  <details class="access">
+    <summary><span>Your access <small id="access-sub"></small></span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <p class="hint" id="access-hint">Tap a tag to see what it unlocks.</p>
+    <div class="tags" id="tags"></div>
+    <p id="access-copy"></p>
+    <div class="row"><button class="btn2" type="button" id="refresh" data-state="idle">Refresh from Planning Center</button><button class="btn2 quiet" type="button" id="signout">Sign out</button></div>
+    <p class="synced" id="synced"></p>
+  </details>
+  <div class="install" id="install" hidden>
+    <button class="install-main" type="button" id="installGo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--white);flex:none"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+      <div><b>Add to Home Screen</b><span id="installSub">Opens straight to this page, no sign-in each time.</span></div>
+    </button>
+    <button class="x" type="button" aria-label="Dismiss" id="installX">✕</button>
+    <ol class="install-steps" id="installSteps" hidden>
+      <li><span>Tap <b>Share</b> in Safari's toolbar</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg></li>
+      <li><span>Scroll down and tap <b>Add to Home Screen</b></span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg></li>
+    </ol>
+  </div>
+  <div class="foot"><span>apps.shepherdchurch.co</span><span>Sundays 10:30a</span></div>
+</main>
 
-  <main class="cards">
-
-    <a class="card anim d2" href="https://nwiprays.com" rel="noopener">
-      <div class="card-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 21s-7-4.5-7-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-7 11-7 11"/>
-          <path d="M9 11h6M12 8v6" opacity="0.6"/>
-        </svg>
-      </div>
-      <h2>NWI Prays</h2>
-      <p class="tagline">Submit a prayer request or take an hour with the prayer team. Anyone can ask. The team prays. You hear back.</p>
-      <span class="cta">
-        Open NWI Prays
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </span>
-    </a>
-
-    <a class="card tan anim d3" href="https://shepherd-identity-tool.netlify.app" rel="noopener">
-      <div class="card-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 19.5V4.5a1.5 1.5 0 0 1 1.5-1.5H20v18H5.5A1.5 1.5 0 0 1 4 19.5z"/>
-          <path d="M8 7h8M8 11h6M8 15h4" opacity="0.7"/>
-        </svg>
-      </div>
-      <h2>Shepherd Formation</h2>
-      <p class="tagline">Your private journal for what God is shaping in you — what stirred, what He&rsquo;s saying, the prayers you&rsquo;re carrying.</p>
-      <span class="cta">
-        Open Formation
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </span>
-    </a>
-
-  </main>
-
-  <footer class="foot anim d4">
-    Shepherd Church
-    <span class="sep">·</span>
-    Merrillville, Indiana
-    <span class="sep">·</span>
-    <a href="https://shepherdchurch.co" rel="noopener">shepherdchurch.co</a>
-  </footer>
-
-</div>
-
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="app.js"></script>
+</body></html>

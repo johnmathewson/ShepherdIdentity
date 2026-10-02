@@ -1,5 +1,8 @@
-# SPA fallback — serve index.html for every path so Supabase magic-link
-# redirects survive any URL mangling (in-app browsers, email scanners,
-# Apple Mail Privacy Protection, etc.). The hash fragment with auth
-# tokens reaches index.html and supabase-js processes it on load.
-/*    /index.html   200
+# Reconstructed 2026-10-02 from the live site's observed routing (the deployed
+# _redirects is config, not a served file, so it cannot be fetched back).
+# Verified against production: / 301s to /formation/, /formation/<file> serves
+# that file, /formation/<unknown> 404s, and any other path falls back to the app
+# so Supabase magic-link redirects survive URL mangling by in-app browsers.
+/formation/*   /:splat        200
+/              /formation/    301
+/*             /index.html    200

@@ -1,65 +1,57 @@
 # Shepherd Static Sites
 
-Single-file static sites that make up the Shepherd Church digital ecosystem.
-Each folder is one Netlify site, deployed manually via the per-folder
-`deploy.sh` (or `netlify deploy --prod`).
+Single-file static sites for the Shepherd Church digital ecosystem. Each folder
+is one Netlify site, deployed with its own `deploy.sh`. There is no build step.
 
-## Sites
+**→ Read [SHEPHERD.md](SHEPHERD.md) first.** It is the full map: what each site
+is, the shared Supabase project, how sign-in works across projects, which
+accounts everything depends on, and what breaks if the project ref changes.
 
-| Folder | Live URL | Netlify site name | Site ID |
+| Folder | Live URL | Netlify site | Site ID |
 |---|---|---|---|
 | `apps-hub/` | https://apps.shepherdchurch.co | `shepherd-apps-hub` | `21a7968b-ea50-424a-9632-36d588401b5c` |
-| `shepherd-identity-tool/` | https://shepherd-identity-tool.netlify.app | `shepherd-identity-tool` | `86cb04da-6929-426e-8b61-dd71d04e41a9` |
-| `identity-discovery-tool/` | https://identity-discovery-tool.netlify.app | `identity-discovery-tool` | `2f989069-b909-4945-b1ef-9ca35c7fbf89` |
+| `shepherd-identity-tool/` | https://shepherd-identity-tool.netlify.app/formation/ | `shepherd-identity-tool` | `86cb04da-6929-426e-8b61-dd71d04e41a9` |
+| `identity-discovery-tool/` | https://formationtool.com | `identity-discovery-tool` | `2f989069-b909-4945-b1ef-9ca35c7fbf89` |
 
-## Architecture context
+```bash
+cd apps-hub && ./deploy.sh      # deploy one site
+./deploy-all.sh                 # all three
+```
+
+## Before you deploy
+
+Production has been edited directly more than once, and deploying a stale
+checkout rolls it backwards. Check first:
+
+```bash
+curl -s https://shepherd-identity-tool.netlify.app/formation/ | diff - shepherd-identity-tool/index.html
+```
+
+Silence means you are current. Anything else means production is ahead of you —
+pull it down before you touch it. `netlify api listSiteFiles --data '{"site_id":"<id>"}'`
+is the authoritative list of what is actually deployed.
+
+Note that `apps.shepherdchurch.co` and `pledge.shepherdchurch.co` sit behind
+Cloudflare, which injects a bot-detection script into every response. A `curl`
+of those will never match the deployed bytes — fetch the `.netlify.app` origin
+instead.
+
+## Which Supabase project
 
 | Site | Audience | Supabase project |
 |---|---|---|
-| Apps Hub | Shepherd members (entry point / dashboard) | `epkuvykamufrrgbacbel` |
-| Shepherd Identity Tool | Shepherd members (formation / journal) | `epkuvykamufrrgbacbel` |
-| Identity Discovery Tool | Public — "Go Find Jesus" | `qtykoynnsyvrdkyeviwg` (isolated) |
+| Apps Hub | Shepherd members — entry point and identity provider | `epkuvykamufrrgbacbel` |
+| Shepherd Identity Tool | Shepherd members — formation and journal | `epkuvykamufrrgbacbel` |
+| Identity Discovery Tool | Public — Go Find Jesus | `qtykoynnsyvrdkyeviwg` (deliberately isolated) |
 
-The **Apps Hub + Shepherd Identity Tool** share an `auth.users` table and a
-`team_members` table with the **prayer wall**
-(`github.com/johnmathewson/shepherdchurch`, deployed at
-`shepherd-prayer-wall.netlify.app`). Magic-link sign-in with the same email
-across all three resolves to the same user.
+`epkuvykamufrrgbacbel` also carries the devotionals and the Making Room pledge
+site, and it issues the signed tokens that the Prayer Wall, Shepherd Care and
+the Go Find Jesus prayer app trust. It is not just the Formation database.
 
-The **Identity Discovery Tool** is the public-facing Go Find Jesus site —
-intentionally on its own Supabase project so anyone signing up there is *not*
-mixed with Shepherd member accounts.
+## Mirrors, not sources
 
-## Deploying a single site
+`supabase/migrations/` and `supabase/functions/` were
+pulled back off the server on 2026-10-02 so they exist somewhere other than
+Supabase. They are deployed through the dashboard or CLI, not from here.
 
-```bash
-cd apps-hub
-./deploy.sh
-```
-
-Each `deploy.sh` is a one-liner that runs:
-
-```bash
-netlify deploy --prod --dir=. --site=<the-site-id>
-```
-
-You must be authenticated to the Netlify CLI (`netlify status` to check, or
-`netlify login` to authenticate) under an account that has access to the
-`Stewardship Squad` team.
-
-## Deploying all sites
-
-```bash
-./deploy-all.sh
-```
-
-This runs each site's deploy script in order. Use sparingly — usually you
-only edit one site at a time.
-
-## Editing
-
-These are single-file static HTML sites. Auth is wired directly to the
-Supabase clients via inline JavaScript modules. There is no build step.
-
-If you change one of these files, **commit and push** before you deploy so
-the GitHub history matches what's on Netlify.
+`.live-snapshot/` is a read-only reference from 2026-05-18 and is stale.

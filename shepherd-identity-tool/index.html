@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<base href="/formation/">
+<script src="/strip.js" data-app="Formation" data-max="720" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
 <title>Shepherd Formation — Know Who You Are</title>
 <meta name="description" content="Shepherd Formation — Discover who God says you are through prophetic words, dreams, gifts, and Scripture.">
 <meta name="theme-color" content="#708d81">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Know Who You Are">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="msapplication-TileColor" content="#141719">
-<meta name="msapplication-TileImage" content="/icon-192.png">
+<meta name="msapplication-TileImage" content="icon-192.png">
 <style>
 :root {
   --dark:#1c1f26;
@@ -499,6 +501,8 @@ textarea{resize:vertical;min-height:88px;line-height:1.7;}
 .hr-text{font-size:0.82rem;color:var(--cream);line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .hr-meta{font-size:0.68rem;color:var(--muted);margin-top:4px;}
 /* Identity progress card */
+.home-ws-card .home-iw-ring{background:none;}
+.home-ws-card .home-iw-ring-inner{color:var(--sage);}
 .home-iw-card{background:var(--surface);border:1px solid var(--sage-mid);border-radius:var(--radius-lg);padding:20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all 0.3s ease;margin-bottom:24px;}
 .home-iw-card:hover{border-color:var(--sage);box-shadow:0 4px 20px rgba(113,142,130,0.1);}
 .home-iw-ring{width:52px;height:52px;border-radius:50%;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1rem;color:var(--sage);flex-shrink:0;position:relative;background:conic-gradient(var(--sage) var(--iw-progress,0%),var(--border) var(--iw-progress,0%));}
@@ -897,6 +901,68 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .devadmin-btn.primary{background:var(--sage);border-color:var(--sage);color:var(--bg);font-weight:500;}
 .devadmin-btn.primary:hover{opacity:0.88;color:var(--bg);}
 .devadmin-btn.danger{color:var(--red);}
+/* ── resources editor (admin) ── */
+.resed-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.resed-stat{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:0.72rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:2px;min-width:92px;}
+.resed-stat b{font-family:var(--font-serif);font-size:1.15rem;color:var(--cream);font-weight:400;line-height:1;}
+.resed-stat.warn b{color:var(--wheat);}
+.resed-try{margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface2);}
+.resed-try summary{padding:10px 14px;font-size:0.78rem;color:var(--sage);cursor:pointer;}
+.resed-try-body{padding:0 14px 14px;}
+.resed-try-body textarea{width:100%;min-height:70px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:9px 11px;color:var(--text);font-family:var(--font-sans);font-size:0.84rem;line-height:1.5;resize:vertical;}
+.resed-try-out{margin-top:10px;display:grid;gap:8px;}
+.resed-try-hit{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-size:0.78rem;}
+.resed-try-hit .n{font-weight:600;color:var(--cream);white-space:nowrap;}
+.resed-try-hit .m{color:var(--text-secondary);line-height:1.45;}
+.resed-try-hit .s{font-size:0.68rem;color:var(--sage);margin-top:2px;}
+.resed-try-none{font-size:0.76rem;color:var(--muted);font-style:italic;}
+.resed-toolbar{display:flex;flex-direction:column;gap:10px;margin-bottom:10px;}
+.resed-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.resed-cats:empty{display:none;}
+.resed-chip{background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);padding:6px 12px;border-radius:16px;font-size:0.74rem;cursor:pointer;font-family:var(--font-sans);}
+.resed-chip.active{background:var(--sage);border-color:var(--sage);color:var(--bg);font-weight:500;}
+.resed-chip small{opacity:0.7;margin-left:4px;font-size:0.66rem;}
+.resed-cats .resed-chip{padding:4px 10px;font-size:0.7rem;}
+.resed-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.resed-tools input[type=search]{flex:1 1 200px;min-width:0;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 11px;color:var(--text);font-family:var(--font-sans);font-size:0.82rem;}
+.resed-tools input[type=search]:focus{outline:none;border-color:var(--sage);}
+.resed-tools select,.resed-bulk select{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:7px 9px;color:var(--text);font-family:var(--font-sans);font-size:0.76rem;}
+.resed-toggle{display:inline-flex;align-items:center;gap:6px;font-size:0.76rem;color:var(--text-secondary);cursor:pointer;white-space:nowrap;}
+.resed-bulk{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 12px;margin-bottom:10px;border:1px solid var(--sage-mid,var(--border));border-radius:8px;background:rgba(113,142,130,0.08);font-size:0.76rem;color:var(--cream);}
+.resed-count{font-size:0.7rem;color:var(--muted);margin-bottom:8px;font-family:var(--font-mono,monospace);}
+.resed-split{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:1100px){.resed-split{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;}.resed-split .devadmin-composer{position:sticky;top:12px;max-height:calc(100vh - 40px);overflow-y:auto;margin:0;}}
+.resed-list{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.resed-row{display:grid;grid-template-columns:22px 10px 60px minmax(110px,1fr) minmax(0,1.5fr) auto;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--border);cursor:pointer;font-size:0.8rem;}
+.resed-row:last-child{border-bottom:0;}
+.resed-row:hover{background:var(--surface2);}
+.resed-row.retired{opacity:0.55;}
+.resed-row.sel{background:rgba(113,142,130,0.12);}
+.resed-row input[type=checkbox]{margin:0;}
+.resed-dot{width:7px;height:7px;border-radius:50%;background:var(--sage);}
+.resed-row.retired .resed-dot{background:var(--muted);}
+.resed-type{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--wheat);font-weight:600;}
+.resed-title{color:var(--cream);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.resed-sub{color:var(--muted);font-size:0.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.resed-badges{display:flex;gap:4px;}
+.resed-b{font-family:var(--font-mono,monospace);font-size:0.58rem;padding:2px 5px;border-radius:4px;border:1px solid var(--border);color:var(--muted);white-space:nowrap;}
+.resed-b.b{color:var(--sage);border-color:var(--sage-line,var(--border));}
+.resed-b.dc{color:var(--wheat);}
+.resed-b.rv{color:var(--red);border-color:var(--red);}
+@media(max-width:700px){.resed-row{grid-template-columns:22px 10px 1fr auto;}.resed-type,.resed-sub{display:none;}}
+.resed-pager{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:10px;font-size:0.74rem;color:var(--muted);font-family:var(--font-mono,monospace);}
+.resed-pager button{background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.72rem;}
+.resed-pager button:disabled{opacity:0.4;cursor:default;}
+.resed-ed-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.resed-ed-title{font-family:var(--font-serif);font-size:1rem;color:var(--cream);}
+.devadmin-form-row select,.devadmin-form-row input[type=number],.devadmin-form-row input[type=search]{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 11px;color:var(--text);font-family:var(--font-sans);font-size:0.85rem;}
+.devadmin-form-row select:focus,.devadmin-form-row input[type=number]:focus{outline:none;border-color:var(--sage);}
+.resed-srcs{display:flex;gap:14px;flex-wrap:wrap;font-size:0.8rem;color:var(--text);}
+.resed-srcs label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;}
+.resed-adv{margin:6px 0 4px;}
+.resed-adv summary{font-size:0.72rem;color:var(--muted);cursor:pointer;margin-bottom:8px;}
+.resed-adv textarea{font-family:var(--font-mono,monospace);font-size:0.74rem;}
+
 .devadmin-btn.danger:hover{border-color:var(--red);color:var(--red);}
 .devadmin-status{font-size:0.74rem;margin-top:10px;text-align:right;color:var(--muted);min-height:18px;}
 .devadmin-status.success{color:var(--sage);}
@@ -1095,6 +1161,54 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .intp-empty{font-size:0.82rem;color:var(--muted);font-style:italic;line-height:1.6;padding:10px 0;}
 .intp-picker-close{margin-top:14px;width:100%;background:transparent;border:1px solid var(--border);color:var(--text-secondary);border-radius:10px;padding:10px;font-size:0.8rem;cursor:pointer;font-family:inherit;}
 
+/* ═══ TALK IT THROUGH — identity conversation ═══ */
+.idc-overlay{display:none;opacity:0;position:fixed;inset:0;z-index:10100;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity 0.3s ease;}
+.idc-overlay.open{opacity:1;}
+.idc-shell{position:absolute;inset:0;margin:0 auto;max-width:720px;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;}
+@media(min-width:760px){.idc-shell{inset:24px auto;left:50%;transform:translateX(-50%);width:720px;height:calc(100% - 48px);border:1px solid var(--border);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,0.45);}}
+.idc-header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px 12px;border-bottom:1px solid var(--border);flex:0 0 auto;}
+.idc-title{font-family:var(--font-serif);font-size:1.1rem;color:var(--cream);letter-spacing:-0.01em;}
+.idc-sub{font-size:0.7rem;color:var(--muted);margin-top:2px;}
+.idc-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--text-secondary);font-size:1.3rem;line-height:1;cursor:pointer;flex:0 0 auto;}
+.idc-close:hover{border-color:var(--sage);color:var(--sage);}
+.idc-decl{flex:0 0 auto;border-bottom:1px solid var(--border);background:rgba(113,142,130,0.05);}
+.idc-decl summary{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 18px;font-size:0.64rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--sage);font-weight:600;cursor:pointer;list-style:none;}
+.idc-decl summary::-webkit-details-marker{display:none;}
+.idc-decl summary::after{content:'▾';font-size:0.8rem;opacity:0.7;}
+.idc-decl:not([open]) summary::after{content:'▸';}
+.idc-decl-meta{font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted);font-size:0.66rem;margin-left:auto;margin-right:8px;}
+.idc-decl-text{padding:0 18px 14px;font-family:var(--font-serif);font-size:0.98rem;line-height:1.6;color:var(--cream);max-height:32vh;overflow-y:auto;white-space:pre-wrap;}
+.idc-messages{flex:1 1 auto;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+.idc-msg{padding:11px 14px;border-radius:12px;font-size:0.86rem;line-height:1.55;max-width:90%;word-wrap:break-word;}
+.idc-msg.user{background:var(--sage-dim);border:1px solid var(--sage-mid);color:var(--cream);align-self:flex-end;border-bottom-right-radius:4px;}
+.idc-msg.assistant{background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);align-self:flex-start;border-bottom-left-radius:4px;}
+.idc-msg.assistant strong{color:var(--cream);}
+.idc-msg.assistant em{color:var(--sage);}
+.idc-msg.system{background:transparent;color:var(--muted);font-size:0.76rem;text-align:center;align-self:center;font-style:italic;max-width:100%;}
+.idc-rev{align-self:stretch;border:1px solid var(--sage);border-radius:14px;background:rgba(113,142,130,0.08);padding:14px 16px;}
+.idc-rev .lbl{font-size:0.62rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--sage);font-weight:600;margin-bottom:8px;display:block;}
+.idc-rev .txt{font-family:var(--font-serif);font-size:0.98rem;line-height:1.6;color:var(--cream);white-space:pre-wrap;}
+.idc-rev .kv{font-size:0.74rem;color:var(--sage);font-style:italic;margin-top:8px;}
+.idc-rev .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.idc-rev .acts button{border-radius:8px;padding:8px 14px;font-size:0.74rem;cursor:pointer;font-family:inherit;border:1px solid var(--sage-mid);background:none;color:var(--sage);}
+.idc-rev .acts button.primary{background:var(--sage);color:var(--dark);border-color:var(--sage);font-weight:600;}
+.idc-rev .acts button:disabled{opacity:0.5;cursor:default;}
+.idc-rev.adopted{border-style:dashed;opacity:0.75;}
+.idc-typing{display:flex;gap:4px;padding:10px 14px;align-self:flex-start;}
+.idc-typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:typing-bounce 1.2s infinite;}
+.idc-typing span:nth-child(2){animation-delay:0.2s;}
+.idc-typing span:nth-child(3){animation-delay:0.4s;}
+.idc-chips{flex:0 0 auto;display:flex;gap:6px;overflow-x:auto;padding:6px 18px 8px;scrollbar-width:none;}
+.idc-chips::-webkit-scrollbar{display:none;}
+.idc-chips:empty{display:none;}
+.idc-chip{flex:0 0 auto;background:var(--surface2);border:1px solid var(--border);color:var(--text-secondary);padding:7px 12px;border-radius:16px;font-size:0.72rem;cursor:pointer;font-family:inherit;white-space:nowrap;}
+.idc-chip:hover{border-color:var(--sage-mid);color:var(--sage);}
+.idc-input-bar{flex:0 0 auto;padding:10px 12px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border);display:flex;gap:8px;align-items:flex-end;background:var(--bg);}
+.idc-input-bar textarea{flex:1;padding:11px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:0.86rem;font-family:var(--font-sans);line-height:1.4;resize:none;max-height:140px;min-height:42px;}
+.idc-input-bar textarea:focus{outline:none;border-color:var(--sage);}
+.idc-input-bar button{padding:11px 18px;border-radius:20px;border:none;background:var(--sage);color:var(--dark);font-weight:600;font-size:0.8rem;cursor:pointer;font-family:inherit;min-height:42px;}
+.idc-input-bar button:disabled{opacity:0.3;cursor:not-allowed;}
+
 /* ═══ SAVED IDENTITY PANEL ═══ */
 .saved-id{border:1px solid var(--sage-mid);border-radius:14px;background:rgba(113,142,130,0.06);padding:16px 18px;margin-bottom:1.2rem;text-align:left;}
 .saved-id-hd{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
@@ -1112,6 +1226,215 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 .saved-id-rows .r .v{font-size:0.84rem;color:var(--text-secondary);line-height:1.5;}
 .saved-id-foot{font-size:0.72rem;color:var(--muted);font-style:italic;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);}
 
+
+/* ═══ CHURCH BOARD ═══ */
+.bd-themes{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:0 0 12px;scrollbar-width:none}.bd-themes::-webkit-scrollbar{display:none}
+.bd-themes span{font-size:0.78rem;color:var(--text-secondary);background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:5px 11px;white-space:nowrap;flex:none}
+.bd-themes span b{color:var(--text);font-weight:500}
+.bd-filters{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.bd-filters button{font-family:var(--font-sans);font-size:0.78rem;padding:5px 11px;border-radius:999px;border:1px solid var(--border);color:var(--text-secondary);background:transparent;cursor:pointer}
+.bd-filters button.active{background:var(--surface3);color:var(--text);border-color:var(--border-light)}
+.bd-type{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600}
+.bd-type.dream{color:var(--purple)}.bd-type.vision{color:var(--blue)}.bd-type.prophetic{color:var(--orange)}.bd-type.prayer{color:var(--sage)}
+.bd-who{font-size:0.82rem;color:var(--text-secondary);margin-top:2px}.bd-who b{color:var(--text);font-weight:500}
+.bd-body{font-size:0.92rem;color:var(--text);line-height:1.6;margin-top:8px;white-space:pre-wrap}
+.bd-interp{margin-top:8px;padding:8px 10px;border-left:2px solid var(--border-light);font-size:0.85rem;color:var(--text-secondary);font-style:italic}
+.bd-resp{display:flex;gap:6px;margin-top:12px}
+.bd-resp button{flex:1;font-family:var(--font-sans);font-size:0.78rem;padding:8px 6px;border-radius:999px;border:1px solid var(--border-light);color:var(--text-secondary);background:transparent;cursor:pointer;white-space:nowrap}
+.bd-resp button.on{background:var(--sage-mid);border-color:var(--sage);color:var(--text)}
+.bd-resp button b{font-weight:600;color:var(--text);margin-left:3px}
+.bd-scr{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.bd-scr span{font-size:0.78rem;color:var(--sage);background:var(--sage-dim);border-radius:6px;padding:3px 8px}
+.bd-conn{margin-top:8px;font-size:0.8rem;color:var(--text-secondary)}.bd-conn div{padding:6px 0;border-top:1px dashed var(--border)}.bd-conn b{color:var(--text);font-weight:500}
+.bd-foot{display:flex;gap:12px;align-items:center;margin-top:10px;font-size:0.74rem;color:var(--muted)}
+.bd-foot button{font-family:var(--font-sans);font-size:0.74rem;color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.bd-foot .danger{color:var(--red)}
+.bd-admin{margin-top:10px;padding-top:8px;border-top:1px dashed var(--border);display:flex;gap:10px;align-items:center;font-size:0.74rem;color:var(--muted)}
+.bd-admin button{font-family:var(--font-sans);font-size:0.74rem;color:var(--red);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.bd-admin .flags{color:var(--orange)}
+.bd-hidden{border-color:var(--red)!important}
+.bd-lock{font-size:0.74rem;color:var(--muted);margin-top:6px}
+.shared-tag{font-size:0.66rem;color:var(--sage);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-left:8px}
+.entry-actions button.share{color:var(--sage);border-color:var(--sage-mid)}
+/* share sheet */
+.sh-q{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:16px 0 8px}
+.sh-seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sh-seg button{font-family:var(--font-sans);border:1px solid var(--border-light);border-radius:var(--radius);padding:10px 12px;font-size:0.9rem;color:var(--text-secondary);background:transparent;cursor:pointer}
+.sh-seg button.on{border-color:var(--sage);background:var(--sage-dim);color:var(--text);font-weight:500}
+.sh-seg button:disabled{opacity:.4;cursor:not-allowed}
+.sh-tog{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--border);font-size:0.9rem;color:var(--text);cursor:pointer}
+.sh-tog small{display:block;color:var(--muted);font-size:0.76rem;font-weight:300}
+.sh-sw{width:38px;height:22px;border-radius:11px;background:var(--border-light);position:relative;flex:none;transition:background .2s}
+.sh-sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--text-secondary);transition:left .2s}
+.sh-sw.on{background:var(--sage)}.sh-sw.on::after{left:19px;background:#fff}
+.sh-preview{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;font-size:0.85rem;color:var(--text-secondary);max-height:110px;overflow:hidden;margin-top:6px}
+.sh-fine{font-size:0.76rem;color:var(--muted);margin:10px 0 0;text-align:center}
+.sh-note{font-size:0.78rem;color:var(--orange);margin-top:6px}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SHEPHERD THEME LAYER — 2026-09-19 (brand guide v3, direction C softened)
+   Additive: re-points the app's own variables and overrides components.
+   Midnight chrome, Mist canvas, white 6px cards, Flame for kicker/underline/
+   primary action only. Montserrat headings, Lato UI, Newsreader for the
+   person's own words. No gradients, no shadows.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#F6F6FF; --surface:#FFFFFF; --surface2:#FFFFFF; --surface3:#EEF0F7; --border:#E3E5EE; --border-light:#D5D8E3;
+  --text:#1B2027; --text-secondary:#4A515C; --muted:#7F8794; --cream:#1B2027; --cream-dim:rgba(27,32,39,0.06); --dark:#FFFFFF;
+  --sage:#1B2027; --sage-dim:rgba(27,32,39,0.06); --sage-mid:rgba(27,32,39,0.12); --wheat:#4A515C; --wheat-dim:rgba(74,81,92,0.08); --wheat-mid:rgba(74,81,92,0.16);
+  --purple:#5F57A6; --blue:#3F6E8F; --orange:#B8670F; --red:#B0433E; --teal:#2F7F7F; --green:#4E7C6C;
+  --midnight:#1B2027; --midnight-2:#232931; --flame:#FF4018; --flame-dim:#CC3313; --mist:#F6F6FF;
+  --radius:6px; --radius-lg:6px;
+  --font-sans:'Lato','Helvetica Neue',Arial,sans-serif; --font-serif:'Montserrat',system-ui,sans-serif; --font-read:'Newsreader',Georgia,serif;
+}
+body{background:var(--bg);color:var(--text);font-weight:400}
+/* kill decoration the brand forbids */
+*,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.section,.entry-item,.tl-item,.modal-card,.profile-header,.growth-stat,.auth-card,.milestone-toast,.search-results,.sr-item{box-shadow:none!important;background-image:none!important}
+/* headings: Montserrat Bold, sentence case */
+h1,h2,h3,.section-title,.modal-title,.mt-title,.ph-name,.gs-val,.topbar-title{font-family:var(--font-serif);font-weight:700;letter-spacing:-.015em;text-transform:none}
+.section-title{font-size:1.15rem;color:var(--text)}
+/* the person's own words */
+.entry-content,.tl-text,.sr-text,.bd-body,.bd-interp,.sh-preview,#tab-braindump .entry-content,textarea{font-family:var(--font-read);font-style:normal;opacity:1;font-size:1rem;line-height:1.55;color:var(--text)}
+.entry-content{quotes:none}
+.bd-interp,.section-sub{font-family:var(--font-read);font-style:italic}
+/* cards */
+.section{background:var(--surface);border:1px solid var(--border);border-radius:6px}
+.entry-item{background:var(--surface);border:1px solid var(--border);border-radius:6px}
+.entry-date{font-family:var(--font-sans);font-size:0.78rem;color:var(--muted);letter-spacing:0;text-transform:none;font-weight:400}
+.entry-actions button{background:var(--surface);border:1px solid var(--border);color:var(--text-secondary);border-radius:4px}
+.entry-actions button.share{color:var(--flame);border-color:rgba(255,64,24,.35)}
+.entry-actions button.delete:hover{color:var(--red)}
+.status-badge{border-radius:4px;font-family:var(--font-serif);font-weight:700;font-size:0.62rem;letter-spacing:.1em}
+/* Midnight header band on every main section: filters become tabs */
+.journal-filters,.id-subtabs,#section-resources .journal-filters{background:var(--midnight);margin:0 -1.2rem 16px;padding:12px 20px 0;gap:0 22px;border-bottom:1px solid #2C333C;flex-wrap:wrap;overflow:visible;row-gap:0}
+.fband-head{background:var(--midnight);margin:0 -1.2rem;padding:18px 20px 0}
+.fband-head .k2{font:700 10.5px var(--font-serif);letter-spacing:.18em;text-transform:uppercase;color:var(--flame);margin:0 0 6px}
+.fband-head h3{font:700 26px/1.05 var(--font-serif);letter-spacing:-.02em;color:#fff;margin:0 0 6px}
+.fband-head h3 u{text-decoration:none;position:relative}.fband-head h3 u::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:3px;background:var(--flame)}
+.fband-head p{margin:0;font:italic 300 15px var(--font-read);color:#B4BAC5}
+.jf-chip,.id-subtab{background:transparent!important;border:0!important;border-radius:0!important;padding:12px 0 10px!important;font:600 13px var(--font-serif)!important;color:#7F8794!important;white-space:nowrap;line-height:1!important;min-height:0!important;flex:none}
+.jf-chip svg,.id-subtab svg{display:none}
+.jf-chip.active,.id-subtab.active{color:#fff!important;border-bottom:3px solid var(--flame)!important;font-weight:600!important;padding-bottom:7px!important}
+@media(max-width:380px){.journal-filters,.id-subtabs{gap:0 16px}.jf-chip,.id-subtab{font-size:12.5px!important}}
+/* primary actions in Flame; everything else Midnight outline */
+.add-btn,.btn-primary,#authSubmitBtn,.auth-btn-primary{background:var(--flame)!important;color:#fff!important;border:0!important;border-radius:4px!important;font-family:var(--font-serif)!important;font-weight:700!important;letter-spacing:0!important}
+.add-btn:active,.btn-primary:active{background:var(--flame-dim)!important}
+.btn-ghost{border:1px solid var(--border-light)!important;background:transparent!important;color:var(--text)!important;border-radius:4px!important;font-family:var(--font-serif)!important;font-weight:700!important}
+.ai-help{color:var(--text-secondary)}
+/* inputs */
+input,select,textarea{background:#fff;border:1px solid var(--border-light);color:var(--text);border-radius:4px}
+input:focus,select:focus,textarea:focus{border-color:var(--midnight);box-shadow:none!important;outline:none}
+.search-bar input{background:#fff}
+/* bottom nav */
+.bottom-nav{background:var(--midnight);border-top:1px solid #2C333C}
+.bn-item{color:#7F8794}.bn-item.active{color:#fff}.bn-label{font-family:var(--font-serif);font-weight:700;font-size:0.6rem;letter-spacing:.08em}
+/* topbar (hidden under the hub strip anyway) */
+.topbar-full{background:var(--midnight);border-bottom:1px solid #2C333C}.topbar-title{color:#fff}.topbar-sub{color:#B4BAC5}
+/* auth */
+.auth-overlay{background:var(--midnight)}.auth-card{background:#fff;border-radius:6px;border:1px solid var(--border)}
+/* profile header: a white card like everything else (only the section band is Midnight) */
+.profile-header{background:#fff;border:1px solid var(--border);border-radius:6px;color:var(--text)}
+.ph-avatar{background:var(--flame);color:#fff;font-family:var(--font-serif);font-weight:800}
+.ph-name-input{color:var(--text);font-weight:700}
+.ph-stage{background:var(--sage-dim);color:var(--text);font-family:var(--font-serif);font-weight:700;border-radius:4px}
+.ph-stat{color:var(--muted)}.ph-stat strong{color:var(--text);font-weight:700}
+.profile-header button{background:transparent!important;border:1px solid var(--border-light)!important;color:var(--text)!important;border-radius:4px!important;font-family:var(--font-serif)!important;font-weight:700!important}
+/* under the hub, the strip is the header — hide Formation's own topbar */
+#shepherd-strip ~ .topbar-full, body:has(#shepherd-strip) .topbar-full{display:none!important}
+/* the strip is sticky at z-index 2147483000, 44px tall — it sits on top of every
+   full-screen layer and hides their close buttons. Start those layers below it. */
+body:has(#shepherd-strip) :is(.idc-overlay,.iw-overlay,.dtp-overlay,.dtph-overlay,.dtph-detail,.rv,.devmodal-overlay,.symbol-dict-overlay,.modal-overlay,.onboarding-overlay,.legal-overlay,.auth-overlay,.transcribe-limit-overlay){top:44px}
+#shepherd-strip ~ .idc-overlay,#shepherd-strip ~ .iw-overlay,#shepherd-strip ~ .dtp-overlay,#shepherd-strip ~ .dtph-overlay,#shepherd-strip ~ .dtph-detail,#shepherd-strip ~ .rv,#shepherd-strip ~ .devmodal-overlay,#shepherd-strip ~ .symbol-dict-overlay,#shepherd-strip ~ .modal-overlay,#shepherd-strip ~ .onboarding-overlay,#shepherd-strip ~ .legal-overlay,#shepherd-strip ~ .auth-overlay,#shepherd-strip ~ .transcribe-limit-overlay{top:44px}
+body:has(#shepherd-strip) .milestone-toast,#shepherd-strip ~ .milestone-toast{top:64px}
+.greeting-text{color:var(--text);font-weight:700}
+.growth-stat{background:var(--surface);border:1px solid var(--border);border-radius:6px}.gs-val{color:var(--text)}
+/* toasts/modals */
+.milestone-toast{background:var(--midnight);border:1px solid #2C333C;color:#fff}.mt-title{color:#fff}.mt-desc{color:#B4BAC5}
+.modal-card{border-radius:6px;border:1px solid var(--border)}
+/* board tweaks for light */
+.bd-type.dream{color:var(--purple)}.bd-type.vision{color:var(--blue)}.bd-type.prophetic{color:var(--orange)}.bd-type.prayer{color:var(--green)}
+.bd-resp button{border-radius:4px;font-family:var(--font-serif);font-weight:600}.bd-resp button.on{background:var(--midnight);border-color:var(--midnight);color:#fff}
+.bd-themes span{background:#fff}.bd-filters button.active{background:var(--midnight);color:#fff;border-color:var(--midnight)}
+.sh-seg button.on{border-color:var(--midnight);background:var(--sage-dim)}.sh-sw.on{background:var(--flame)}
+/* reading view */
+.rv{position:fixed;inset:0;z-index:1600;background:var(--mist);display:none;flex-direction:column}
+.rv.open{display:flex}
+.rv-hd{background:var(--midnight);padding:calc(14px + env(safe-area-inset-top)) 20px 16px;flex:none}
+.rv-back{font:400 13px var(--font-sans);color:#B4BAC5;background:none;border:0;padding:0 0 10px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.rv-k{font:700 10.5px var(--font-serif);letter-spacing:.18em;text-transform:uppercase;color:var(--flame);margin:0 0 6px}
+.rv-t{font:700 22px/1.15 var(--font-serif);letter-spacing:-.015em;color:#fff;margin:0}
+.rv-meta{font:400 12.5px var(--font-sans);color:#7F8794;margin-top:6px}
+.rv-body{flex:1;overflow-y:auto;padding:22px 22px calc(90px + env(safe-area-inset-bottom))}
+.rv-text{font:400 19px/1.6 var(--font-read);color:var(--text);white-space:pre-wrap}
+.rv-sym{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 0}.rv-sym span{font:400 12.5px var(--font-sans);color:var(--text-secondary);background:#fff;border:1px solid var(--border);border-radius:4px;padding:5px 9px}
+.rv-sec{margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.rv-sec .l{font:700 10px var(--font-serif);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.rv-sec .i{font:italic 400 16px/1.5 var(--font-read);color:var(--text-secondary);white-space:pre-wrap}
+.rv-acts{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--border);display:flex;gap:8px;padding:12px 16px calc(14px + env(safe-area-inset-bottom))}
+.rv-acts button{flex:1;font:700 13px var(--font-serif);padding:12px;border-radius:4px;border:1px solid var(--border-light);background:#fff;color:var(--text);cursor:pointer}
+.rv-acts button.p{background:var(--flame);border-color:var(--flame);color:#fff}
+.entry-content[onclick]{cursor:pointer}
+@media(min-width:700px){.rv-body{max-width:680px;margin:0 auto;width:100%}.rv-hd>div{max-width:680px;margin:0 auto}}
+/* ═══ Daily Devotional — reading-view treatment (light canvas, Midnight band) ═══ */
+.devmodal-overlay{background:var(--mist);backdrop-filter:none}
+.devmodal-card{--dvx:max(22px,calc(50% - 318px));max-width:none;margin:0;padding:0 0 calc(60px + env(safe-area-inset-bottom))}
+.devmodal-header{background:var(--midnight);border-bottom:0;padding:calc(12px + env(safe-area-inset-top)) var(--dvx) 10px;position:sticky;top:0;z-index:5}
+.devmodal-archive-link{background:transparent;border:1px solid #3A424D;color:#B4BAC5;font:400 13px var(--font-sans);border-radius:4px;padding:7px 12px}
+.devmodal-archive-link:hover{background:transparent;border-color:#fff;color:#fff}
+.devmodal-close{color:#B4BAC5;font-size:1.3rem;padding:4px 0 4px 10px}
+.devmodal-close:hover{color:#fff}
+#devModalView,#devArchiveView{padding:0 var(--dvx) 22px}
+/* date + title stay on the Midnight band, everything after sits on Mist */
+.devmodal-date{background:var(--midnight);margin:0 calc(-1*var(--dvx));padding:8px var(--dvx) 0;font:700 10.5px var(--font-serif);letter-spacing:.18em;text-transform:uppercase;color:var(--flame)}
+.devmodal-title{background:var(--midnight);margin:0 calc(-1*var(--dvx)) 22px;padding:6px var(--dvx) 22px;font:700 24px/1.15 var(--font-serif);letter-spacing:-.015em;color:#fff}
+.devmodal-scripture{background:#fff;border:1px solid var(--border);border-left:3px solid var(--midnight);border-radius:6px;padding:16px 18px;margin-bottom:22px}
+.devmodal-scripture-text{font:italic 400 17px/1.55 var(--font-read);color:var(--text);margin-bottom:8px}
+.devmodal-scripture-ref{font:400 12.5px var(--font-sans);color:var(--text-secondary);letter-spacing:0}
+.devmodal-video{margin-bottom:22px}
+.devmodal-video-label{font:700 10px var(--font-serif);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.devmodal-video-wrap{border-radius:6px;border:1px solid var(--border)}
+.devmodal-video-fallback{background:#fff;border:1px solid var(--border-light);border-radius:4px;color:var(--text);font:700 13px var(--font-serif)}
+.devmodal-video-fallback:hover{background:#fff;border-color:var(--midnight)}
+.devmodal-body{font:400 18px/1.6 var(--font-read);color:var(--text);margin-bottom:26px}
+.devmodal-body p{margin-bottom:16px}
+.devmodal-body strong{color:var(--text);font-weight:600}
+.devmodal-body em{color:var(--text-secondary);font-style:italic}
+.devmodal-body ul{margin:8px 0 16px 22px}
+.devmodal-body li{margin-bottom:6px}
+.devmodal-memory{background:#fff;border:1px solid var(--border);border-left:3px solid var(--midnight);border-radius:6px;padding:16px 18px;margin-bottom:22px}
+.devmodal-memory-label{font:700 10px var(--font-serif);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.devmodal-memory-text{font:italic 400 17px/1.55 var(--font-read);color:var(--text);margin-bottom:8px}
+.devmodal-memory-ref{font:400 12.5px var(--font-sans);color:var(--text-secondary);letter-spacing:0}
+.devmodal-notes-section{background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px 18px;margin-bottom:18px}
+.devmodal-notes-label{font:700 13px var(--font-serif);color:var(--text);margin-bottom:10px}
+.devmodal-notes-status{font:400 11.5px var(--font-sans);color:var(--muted)}
+.devmodal-notes-status.saving{color:var(--text-secondary)}
+.devmodal-notes-status.saved{color:var(--green)}
+.devmodal-notes textarea{background:#fff;border:1px solid var(--border-light);border-radius:4px;padding:12px 14px;font:400 16px/1.55 var(--font-read);color:var(--text)}
+.devmodal-notes textarea:focus{border-color:var(--midnight)}
+.devmodal-author{font:italic 400 13px var(--font-sans);color:var(--muted);margin-top:0}
+/* archive list */
+.dev-archive-header{background:var(--midnight);margin:0 calc(-1*var(--dvx)) 18px;padding:8px var(--dvx) 20px}
+.dev-archive-heading{font:700 24px/1.15 var(--font-serif);letter-spacing:-.015em;color:#fff}
+.dev-archive-back{background:transparent;border:1px solid #3A424D;color:#B4BAC5;font:400 13px var(--font-sans);border-radius:4px;padding:7px 12px}
+.dev-archive-back:hover{border-color:#fff;color:#fff}
+.dev-archive-list{gap:10px}
+.dev-archive-item{background:#fff;border:1px solid var(--border);border-radius:6px;padding:14px 16px}
+.dev-archive-item:hover{background:#fff;border-color:var(--midnight)}
+.dev-archive-date{font:400 12px var(--font-sans);color:var(--muted);letter-spacing:0;margin-bottom:4px}
+.dev-archive-title{font:700 15px/1.3 var(--font-serif);color:var(--text)}
+.dev-archive-empty{font:400 14px var(--font-sans);color:var(--muted)}
+/* home teaser card */
+.dev-teaser{background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px 18px 14px}
+.dev-teaser:hover{border-color:var(--midnight);transform:none}
+.dev-teaser::before{background:var(--midnight)}
+.dev-teaser-pill{font:700 10px var(--font-serif);letter-spacing:.14em;color:var(--flame);background:rgba(255,64,24,.08);border-radius:4px;padding:4px 8px}
+.dev-teaser-date,.dev-teaser-count{font:400 12px var(--font-sans);color:var(--muted);opacity:1}
+.dev-teaser-title{font:700 19px/1.2 var(--font-serif);letter-spacing:-.015em;color:var(--text)}
+.dev-teaser-snippet{font:400 15px/1.5 var(--font-read);color:var(--text-secondary)}
+.dev-teaser-cta{font:700 13px var(--font-serif);color:var(--flame)}
+.dev-archive-link{font:400 13px var(--font-sans);color:var(--text-secondary)}
+.dev-archive-link:hover{color:var(--midnight)}
 </style>
 </head>
 <body>
@@ -1204,6 +1527,7 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       </div>
       <button class="mobile-menu-item primary" onclick="switchSection('identity',document.querySelector('.bn-item:nth-child(3)'));idSubTab('profile',document.querySelector('.id-subtab:last-child'));setTimeout(generateIdCard,300);closeMobileMenu();">Identity Card</button>
       <button class="mobile-menu-item" onclick="openDrawingThePicture();closeMobileMenu();" style="color:var(--sage);">Drawing the Picture</button>
+      <button class="mobile-menu-item" onclick="openIdentityWorksheet();closeMobileMenu();" style="color:var(--sage);">Identity Worksheet</button>
       <button class="mobile-menu-item" onclick="openCardHistory();closeMobileMenu();">Your identity cards</button>
       <button class="mobile-menu-item" onclick="exportData();closeMobileMenu();">Export Data</button>
       <label class="mobile-menu-item" style="cursor:pointer;">Import Data<input type="file" accept=".json" onchange="importData(event);closeMobileMenu();" style="display:none;"></label>
@@ -1241,7 +1565,7 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
         <span class="ph-stat"><strong id="totalSkills">0</strong> skills</span>
         <span class="ph-stat">Active since <strong id="activeDate">—</strong></span>
       </div>
-      <button onclick="openDrawingThePicture()" style="margin-top:12px;padding:10px 20px;border-radius:20px;border:1px solid var(--sage-mid);background:rgba(113,142,130,0.08);color:var(--sage);font-size:0.78rem;font-weight:500;cursor:pointer;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);letter-spacing:0.03em;width:100%;" onmouseover="this.style.background='rgba(113,142,130,0.15)';this.style.borderColor='var(--sage)'" onmouseout="this.style.background='rgba(113,142,130,0.08)';this.style.borderColor='var(--sage-mid)'">Drawing the Picture</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"><button onclick="openDrawingThePicture()" style="padding:10px 20px;border-radius:20px;border:1px solid var(--sage-mid);background:rgba(113,142,130,0.08);color:var(--sage);font-size:0.78rem;font-weight:500;cursor:pointer;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);letter-spacing:0.03em;flex:1 1 140px;" onmouseover="this.style.background='rgba(113,142,130,0.15)';this.style.borderColor='var(--sage)'" onmouseout="this.style.background='rgba(113,142,130,0.08)';this.style.borderColor='var(--sage-mid)'">Drawing the Picture</button><button onclick="openIdentityWorksheet()" style="padding:10px 20px;border-radius:20px;border:1px solid var(--sage-mid);background:rgba(113,142,130,0.08);color:var(--sage);font-size:0.78rem;font-weight:500;cursor:pointer;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);letter-spacing:0.03em;flex:1 1 140px;" onmouseover="this.style.background='rgba(113,142,130,0.15)';this.style.borderColor='var(--sage)'" onmouseout="this.style.background='rgba(113,142,130,0.08)';this.style.borderColor='var(--sage-mid)'">Identity Worksheet</button></div>
     </div>
   </div>
 
@@ -1325,6 +1649,13 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
         <div class="home-iw-sub" id="homeIwSub">Discover who God says you are</div>
       </div>
     </div>
+    <div class="home-iw-card home-ws-card" onclick="openIdentityWorksheet()">
+      <div class="home-iw-ring home-ws-ring"><div class="home-iw-ring-inner"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="10" r="6"/><circle cx="15" cy="10" r="6"/><circle cx="12" cy="15" r="6"/></svg></div></div>
+      <div class="home-iw-info">
+        <div class="home-iw-title">Identity Worksheet</div>
+        <div class="home-iw-sub">Workshop your callings, gifts, abilities, passion &amp; vocation — then synthesize your identity card</div>
+      </div>
+    </div>
     <!-- Recent activity -->
     <div class="home-section-label">Recent</div>
     <div class="home-recent" id="homeRecentFeed">
@@ -1334,6 +1665,7 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 
   <!-- ═══ JOURNAL SECTION ═══ -->
   <div class="main-section" id="section-journal">
+    <div class="fband-head"><p class="k2" id="fbKick">Journal</p><h3 id="fbTitle"><u>All entries</u></h3><p id="fbSub">What God is saying, in your own words.</p></div>
     <div class="journal-filters">
       <button class="jf-chip active" onclick="journalFilter('all',this)">All</button>
       <button class="jf-chip" onclick="journalFilter('prophetic',this)"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4.97 0-9-2.69-9-6 0-4 4.5-7.5 4.5-12 2.5 4.5 7.5 3 7.5 8 2-1 3-3 3-5 2.08 2.5 3 5.5 3 9 0 3.31-4.03 6-9 6z"/></svg> Prophetic</button>
@@ -1341,10 +1673,29 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       <button class="jf-chip" onclick="journalFilter('dreams',this)"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg> Dreams</button>
       <button class="jf-chip" onclick="journalFilter('visions',this)"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg> Visions</button>
       <button class="jf-chip" onclick="journalFilter('stirred',this)"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Stirred</button>
+      <button class="jf-chip" onclick="journalFilter('board',this)"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>The Church</button>
     </div>
   </div><!-- end section-journal -->
 
-  <!-- PROPHETIC -->
+  
+<!-- CHURCH BOARD -->
+<div class="tab-content" id="tab-board">
+  <div class="section">
+    <div class="section-title">The Church</div>
+    <div class="section-sub" id="bdSub">What the body is seeing and hearing.</div>
+    <div class="bd-themes" id="bdThemes"></div>
+    <div class="bd-filters" id="bdFilters">
+      <button class="active" onclick="bdFilter('all',this)">All</button>
+      <button onclick="bdFilter('dream',this)">Dreams</button>
+      <button onclick="bdFilter('vision',this)">Visions</button>
+      <button onclick="bdFilter('prophetic',this)">Prophetic</button>
+      <button onclick="bdFilter('prayer',this)">Prayer</button>
+      <button onclick="bdFilter('mine',this)">Mine</button>
+    </div>
+    <div id="bdList"><div class="empty-state">Loading…</div></div>
+  </div>
+</div>
+<!-- PROPHETIC -->
   <div class="tab-content active" id="tab-prophetic">
     <div class="section">
       <div class="section-title"><span class="st-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4.97 0-9-2.69-9-6 0-4 4.5-7.5 4.5-12 2.5 4.5 7.5 3 7.5 8 2-1 3-3 3-5 2.08 2.5 3 5.5 3 9 0 3.31-4.03 6-9 6z"/></svg></span> Prophetic Words</div>
@@ -1442,11 +1793,18 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 
   <!-- ═══ IDENTITY SECTION HEADER ═══ -->
   <div class="main-section" id="section-identity">
-    <div class="home-iw-card" onclick="openDrawingThePicture()" style="margin-bottom:16px;">
+    <div class="home-iw-card" onclick="openDrawingThePicture()" style="margin-bottom:10px;">
       <div class="home-iw-ring" id="idIwRing"><div class="home-iw-ring-inner" id="idIwPercent">0%</div></div>
       <div class="home-iw-info">
         <div class="home-iw-title">Drawing the Picture</div>
         <div class="home-iw-sub" id="idIwSub">Discover who God says you are</div>
+      </div>
+    </div>
+    <div class="home-iw-card home-ws-card" onclick="openIdentityWorksheet()" style="margin-bottom:16px;">
+      <div class="home-iw-ring home-ws-ring"><div class="home-iw-ring-inner"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="10" r="6"/><circle cx="15" cy="10" r="6"/><circle cx="12" cy="15" r="6"/></svg></div></div>
+      <div class="home-iw-info">
+        <div class="home-iw-title">Identity Worksheet</div>
+        <div class="home-iw-sub">Workshop your callings, gifts, abilities, passion &amp; vocation — then synthesize your identity card</div>
       </div>
     </div>
     <div class="id-subtabs">
@@ -1632,11 +1990,8 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
     </div>
     <div style="text-align:center;padding:20px;background:var(--surface);border-radius:var(--radius-lg);border:1px dashed var(--border);margin-bottom:1.2rem;">
       <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;font-weight:300;">This is who God says you are — every word, every gift, every revelation woven together into one declaration.</p>
-      <p style="font-size:0.74rem;color:var(--muted);margin-bottom:14px;font-weight:300;">Build a Spirit-led <strong>AI declaration</strong> from everything you've entered — your prophetic words, journal, dreams, gifts and skills — or auto-generate a quick Identity Card. For the guided seven-step reflection, open Drawing the Picture.</p>
-      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-        <button class="id-card-btn" onclick="openDeclaration()" style="background:var(--sage);color:var(--dark);border-color:var(--sage);">✦ Build my AI declaration</button>
-        <button class="id-card-btn" onclick="generateIdCard()">Generate Identity Card</button>
-      </div>
+      <p style="font-size:0.74rem;color:var(--muted);margin-bottom:14px;font-weight:300;">The Identity Card is auto-generated from your journal entries, gifts, and skills. For the guided seven-step reflection, use Drawing the Picture instead.</p>
+      <button class="id-card-btn" onclick="generateIdCard()">Generate Identity Card</button>
     </div>
     <div id="profileOutput"></div>
   </div>
@@ -1759,6 +2114,179 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
       </div>
       <div class="devadmin-status" id="devTestStatus"></div>
     </div>
+    <!-- Resources — what the AI Guide draws from. Every row the Guide reads lives here. -->
+    <div class="section" style="margin-bottom:16px;" id="resedSection">
+      <div class="admin-section-title">📚 Resources <span style="font-weight:400;color:var(--muted);font-size:0.72rem;margin-left:4px;">what the AI Guide draws from</span></div>
+
+      <div class="resed-stats" id="resedStats"></div>
+
+      <details class="resed-try">
+        <summary>Try it — see what the Guide would pull for a dream</summary>
+        <div class="resed-try-body">
+          <textarea id="resedTryText" placeholder="Paste a sentence or a whole dream. This runs the same matcher the Guide uses, against the live library." oninput="resedTryDebounced()"></textarea>
+          <div id="resedTryOut" class="resed-try-out"></div>
+        </div>
+      </details>
+
+      <div class="resed-toolbar">
+        <div class="resed-chips" id="resedChips">
+          <button class="resed-chip active" data-type="all" onclick="resedFilter('all',this)">All</button>
+          <button class="resed-chip" data-type="dream_symbol" onclick="resedFilter('dream_symbol',this)">Dream symbols</button>
+          <button class="resed-chip" data-type="formation_principle" onclick="resedFilter('formation_principle',this)">Principles</button>
+          <button class="resed-chip" data-type="sermon" onclick="resedFilter('sermon',this)">Sermons</button>
+          <button class="resed-chip" data-type="other" onclick="resedFilter('other',this)">Themes &amp; quotes</button>
+        </div>
+        <div class="resed-chips resed-cats" id="resedCatChips"></div>
+        <div class="resed-tools">
+          <input type="search" id="resedSearch" placeholder="Search titles, meanings, keywords…" oninput="resedPage=0;resedRenderList()" autocomplete="off">
+          <label class="resed-toggle"><input type="checkbox" id="resedNeedsReview" onchange="resedPage=0;resedRenderList()"> <span>Needs review</span></label>
+          <label class="resed-toggle"><input type="checkbox" id="resedShowInactive" onchange="resedPage=0;resedRenderList()"> <span>Show retired</span></label>
+          <select id="resedSort" onchange="resedRenderList()" title="Sort">
+            <option value="title">A → Z</option>
+            <option value="updated">Recently changed</option>
+            <option value="category">By category</option>
+          </select>
+          <button class="devadmin-btn" onclick="resedExport()">Export</button>
+          <button class="devadmin-btn" onclick="document.getElementById('resedImportFile').click()">Import</button>
+          <input type="file" id="resedImportFile" accept=".json,application/json" style="display:none" onchange="resedImportPick(this)">
+          <button class="devadmin-btn primary" onclick="resedNew()">+ New</button>
+        </div>
+      </div>
+
+      <div class="resed-bulk" id="resedBulk" style="display:none;">
+        <span id="resedBulkCount">0 selected</span>
+        <button class="devadmin-btn" onclick="resedBulk('approve')">Approve</button>
+        <button class="devadmin-btn" onclick="resedBulk('retire')">Retire</button>
+        <button class="devadmin-btn" onclick="resedBulk('restore')">Restore</button>
+        <select id="resedBulkCat" onchange="if(this.value){resedBulk('category',this.value);this.value='';}">
+          <option value="">Set category…</option>
+          <option>people</option><option>places</option><option>numbers</option><option>colors</option><option>actions</option>
+          <option>body</option><option>animals</option><option>nature</option><option>objects</option><option>other</option>
+        </select>
+        <button class="devadmin-btn" onclick="resedSelectNone()">Clear</button>
+      </div>
+
+      <div class="resed-count" id="resedCount">Loading…</div>
+      <div class="resed-split">
+        <div>
+          <div class="resed-list" id="resedList"></div>
+          <div class="resed-pager" id="resedPager"></div>
+        </div>
+        <div class="devadmin-composer" id="resedEditor" style="display:none;">
+        <div class="resed-ed-head">
+          <div class="resed-ed-title" id="resedEdTitle">Edit</div>
+          <button class="devadmin-btn" onclick="resedClose()">Close</button>
+        </div>
+        <input type="hidden" id="resedId" value="">
+        <div class="devadmin-form-row two">
+          <div class="field"><label for="resedType">Type</label>
+            <select id="resedType" onchange="resedTypeChanged()">
+              <option value="dream_symbol">Dream symbol</option>
+              <option value="formation_principle">Formation principle</option>
+              <option value="sermon">Sermon</option>
+              <option value="other">Theme, quote or pattern</option>
+            </select></div>
+          <div class="field"><label for="resedTitle">Title</label><input type="text" id="resedTitle" placeholder="e.g. Woman, or the sermon title" oninput="resedDupHint()"><div class="devadmin-help" id="resedDup"></div></div>
+        </div>
+
+        <div id="resedF_dream_symbol">
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedCategory">Category</label>
+              <select id="resedCategory">
+                <option value="people">People</option><option value="places">Places</option><option value="numbers">Numbers</option>
+                <option value="colors">Colors</option><option value="actions">Actions</option><option value="body">Body</option>
+                <option value="animals">Animals</option><option value="nature">Nature</option><option value="objects">Objects</option>
+                <option value="other">Other</option>
+              </select></div>
+            <div class="field"><label for="resedIcon">Icon (emoji, optional)</label><input type="text" id="resedIcon" placeholder="🏠" maxlength="4"></div>
+          </div>
+          <div class="devadmin-form-row"><div class="field"><label for="resedMeaning">Meaning</label><textarea id="resedMeaning" placeholder="What this symbol usually means. Give the positive and the negative reading where both exist; the Guide passes this to the model verbatim."></textarea></div></div>
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedScripture">Scripture</label><input type="text" id="resedScripture" placeholder="Prov 9:1-6, Zech 5:9"></div>
+            <div class="field"><label for="resedKeywords">Keywords (comma separated)</label><input type="text" id="resedKeywords" placeholder="woman, lady, female, wife"><div class="devadmin-help">Also used to spot the symbol in a dream's text.</div></div>
+          </div>
+          <div class="devadmin-form-row"><div class="field"><label for="resedIdentity">What it says about who you are (optional)</label><input type="text" id="resedIdentity" placeholder="One line the Guide can turn toward the dreamer"></div></div>
+          <div class="devadmin-form-row two">
+            <div class="field"><label>Source</label>
+              <div class="resed-srcs">
+                <label><input type="checkbox" value="breathitt" class="resedSrc"> Breathitt</label>
+                <label><input type="checkbox" value="divinity_code" class="resedSrc"> Divinity Code</label>
+                <label><input type="checkbox" value="scripture" class="resedSrc"> Scripture</label>
+                <label><input type="checkbox" value="shepherd" class="resedSrc"> Shepherd (our own)</label>
+              </div></div>
+            <div class="field"><label for="resedAliases">Aliases (comma separated)</label><input type="text" id="resedAliases" placeholder="lady, ladies, female"><div class="devadmin-help">Other words that mean this symbol. The matcher treats these like the title itself.</div></div>
+          </div>
+          <div class="devadmin-form-row"><div class="field"><label for="resedAlsoSee">See also (from the book)</label><input type="text" id="resedAlsoSee" placeholder="Cross-references"></div></div>
+        </div>
+
+        <div id="resedF_formation_principle" style="display:none;">
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedPNum">Principle number</label><input type="number" id="resedPNum" min="1" max="99"></div>
+            <div class="field"><label for="resedPDate">Preached on</label><input type="text" id="resedPDate" placeholder="June 14, 2026"></div>
+          </div>
+          <div class="devadmin-form-row"><div class="field"><label for="resedPStatement">Canonical statement</label><textarea id="resedPStatement" placeholder="The one-sentence version people should be able to say back."></textarea></div></div>
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedPPreacher">Preacher</label><input type="text" id="resedPPreacher"></div>
+            <div class="field"><label for="resedPScriptures">Scriptures (comma separated)</label><input type="text" id="resedPScriptures"></div>
+          </div>
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedPQuotes">Key quotes (one per line)</label><textarea id="resedPQuotes"></textarea></div>
+            <div class="field"><label for="resedPIdentity">Identity statements (one per line)</label><textarea id="resedPIdentity" placeholder="I am…"></textarea></div>
+          </div>
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedPDecl">Prophetic declarations (one per line)</label><textarea id="resedPDecl"></textarea></div>
+            <div class="field"><label for="resedPThemes">Themes (one per line)</label><textarea id="resedPThemes"></textarea></div>
+          </div>
+        </div>
+
+        <div id="resedF_sermon" style="display:none;">
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedSDate">Date</label><input type="text" id="resedSDate" placeholder="March 8, 2026"></div>
+            <div class="field"><label for="resedSSeries">Series</label><input type="text" id="resedSSeries"></div>
+          </div>
+          <div class="devadmin-form-row"><div class="field"><label for="resedSTheme">Theme</label><input type="text" id="resedSTheme"></div></div>
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedSVerses">Key verses (comma separated)</label><input type="text" id="resedSVerses"></div>
+            <div class="field"><label for="resedSQuotes">Key quotes (one per line)</label><textarea id="resedSQuotes"></textarea></div>
+          </div>
+          <div class="devadmin-form-row"><div class="field"><label for="resedSIdentity">Identity statements (one per line)</label><textarea id="resedSIdentity"></textarea></div></div>
+        </div>
+
+        <div id="resedF_other" style="display:none;">
+          <div class="devadmin-form-row two">
+            <div class="field"><label for="resedOCat">Kind</label>
+              <select id="resedOCat">
+                <option value="identity_theme">Identity theme</option>
+                <option value="key_quote">Key quote</option>
+                <option value="prophetic_pattern">Prophetic pattern</option>
+              </select></div>
+            <div class="field"><label for="resedOSermon">Sermon / date (optional)</label><input type="text" id="resedOSermon" placeholder="Sermon title — date"></div>
+          </div>
+          <div class="devadmin-form-row"><div class="field"><label for="resedOContext">Context / quote / description</label><textarea id="resedOContext"></textarea></div></div>
+        </div>
+
+        <div class="devadmin-form-row" id="resedTranscriptRow" style="display:none;"><div class="field"><label for="resedTranscript">Transcript <span id="resedTranscriptMeta" style="text-transform:none;letter-spacing:0;color:var(--muted);"></span></label><textarea id="resedTranscript" class="tall" placeholder="Paste the full transcript. The Guide reads this when it needs to quote what was actually said."></textarea></div></div>
+
+        <details class="resed-adv"><summary>Advanced: raw content JSON</summary>
+          <div class="devadmin-form-row"><div class="field"><textarea id="resedRaw" class="tall" spellcheck="false"></textarea><div class="devadmin-help">Everything above is written into this object on save. Edit here only for fields the form doesn't show; the form wins on any field it does show.</div></div></div>
+        </details>
+
+        <div class="devadmin-form-row two" style="margin-top:8px;">
+          <div class="field">
+            <label class="resed-toggle" style="text-transform:none;letter-spacing:0;color:var(--text)"><input type="checkbox" id="resedActive" checked> <span>Active — the Guide can use this</span></label>
+            <label class="resed-toggle" style="text-transform:none;letter-spacing:0;color:var(--text);margin-top:6px;"><input type="checkbox" id="resedReviewed"> <span>Reviewed — I've read this and it's ours</span></label>
+          </div>
+          <div class="field"><label for="resedSort2">Sort order</label><input type="number" id="resedSort2" value="0"></div>
+        </div>
+        <div class="devadmin-status" id="resedStatus"></div>
+        <div class="devadmin-actions">
+          <button class="devadmin-btn danger" id="resedRetireBtn" onclick="resedRetire()" style="margin-right:auto;">Retire</button>
+          <button class="devadmin-btn" onclick="resedClose()">Cancel</button>
+          <button class="devadmin-btn primary" onclick="resedSave()">Save</button>
+        </div>
+        </div>
+      </div>
+    </div>
     <!-- Platform stats below -->
     <div class="section" style="margin-bottom:16px;">
       <div class="admin-stat-grid" id="adminStats">
@@ -1835,6 +2363,55 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
   </button>
 </div>
 
+
+
+<!-- READING VIEW -->
+<div class="rv" id="readView" role="dialog" aria-modal="true">
+  <div class="rv-hd"><div><button class="rv-back" onclick="closeRead()">‹ <span id="rvBackLabel">Back</span></button><p class="rv-k" id="rvKick"></p><h3 class="rv-t" id="rvTitle"></h3><div class="rv-meta" id="rvMeta"></div></div></div>
+  <div class="rv-body"><div class="rv-text" id="rvText"></div><div class="rv-sym" id="rvSym"></div><div id="rvSecs"></div></div>
+  <div class="rv-acts"><button onclick="rvEdit()">Edit</button><button onclick="rvAI()">✦ AI</button><button class="p" onclick="rvShare()">Share ↗</button></div>
+</div>
+<!-- SHARE TO THE CHURCH -->
+<div id="shareModal" class="modal-overlay" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-title" id="shareTitle">Share to The Church</div>
+    <div class="section-sub" style="margin-top:-6px">Everyone signed in at Shepherd can see it. You can withdraw anytime.</div>
+    <div class="sh-preview" id="sharePreview"></div>
+    <div class="sh-q">Share as</div>
+    <div class="sh-seg"><button id="shareNamed" class="on" onclick="shareAs('named')">Me</button><button id="shareAnon" onclick="shareAs('anon')">Anonymous</button></div>
+    <div class="sh-note" id="shareNote" style="display:none">Prophetic words are shared by name.</div>
+    <div class="sh-tog" style="margin-top:14px" id="shareInterpRow" onclick="shareToggle('interp')"><div>Include my interpretation<small>Off means just the entry and its date</small></div><span class="sh-sw" id="swInterp"></span></div>
+    <div class="sh-tog" id="shareSymRow" onclick="shareToggle('sym')"><div>Include symbols<small id="shareSymList"></small></div><span class="sh-sw on" id="swSym"></span></div>
+    <div class="modal-actions"><button class="btn-ghost" onclick="closeShare()">Cancel</button><button class="btn-primary" id="shareGo" onclick="doShare()">Share to The Church</button></div>
+    <div class="sh-fine">Editable for 15 minutes after sharing.</div>
+  </div>
+</div>
+<!-- CONNECT: pick one of my entries -->
+<div id="connectModal" class="modal-overlay" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-title">This connects with…</div>
+    <div class="section-sub" style="margin-top:-6px">Pick one of your entries. It'll be shared to The Church alongside this post.</div>
+    <div id="connectList" style="margin-top:10px;max-height:50vh;overflow-y:auto"></div>
+    <div class="modal-actions"><button class="btn-ghost" onclick="closeConnect()">Cancel</button></div>
+  </div>
+</div>
+<!-- SCRIPTURE RESPONSE -->
+<div id="scriptureModal" class="modal-overlay" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-title">Scripture that came to mind</div>
+    <div class="form-grid" style="margin-top:8px"><input id="scriptureRef" placeholder="e.g. Isaiah 43:19"></div>
+    <div class="modal-actions"><button class="btn-ghost" onclick="closeScripture()">Cancel</button><button class="btn-primary" onclick="doScripture()">Add</button></div>
+  </div>
+</div>
+<!-- EDIT SHARE -->
+<div id="editShareModal" class="modal-overlay" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-title">Edit shared post</div>
+    <div class="form-grid"><textarea id="esContent" style="min-height:120px"></textarea></div>
+    <div class="form-grid"><textarea id="esInterp" style="min-height:60px" placeholder="Interpretation (leave blank to share none)"></textarea></div>
+    <div class="modal-actions"><button class="btn-ghost" onclick="document.getElementById('editShareModal').style.display='none'">Cancel</button><button class="btn-primary" onclick="doEditShare()">Save</button></div>
+  </div>
+</div>
 <!-- EDIT MODAL -->
 <div id="editModal" class="modal-overlay" style="display:none;">
   <div class="modal-card">
@@ -1949,7 +2526,7 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
 <div class="iw-overlay" id="iwOverlay">
   <div class="iw-header">
     <div>
-      <div class="iw-header-title">Drawing the Picture</div>
+      <div class="iw-header-title">Identity Worksheet</div>
       <div class="iw-header-step" id="iwHeaderStep">Step 1 of 3 — Foundation</div>
     </div>
     <button class="iw-close" onclick="closeIdentityWorksheet()">✕</button>
@@ -2298,6 +2875,29 @@ input,textarea,select{font-size:16px!important;} /* prevent iOS zoom on focus */
   </div>
 </div>
 
+<!-- ═══ TALK IT THROUGH — identity conversation ═══ -->
+<div class="idc-overlay" id="idcOverlay" role="dialog" aria-label="Talk your identity through">
+  <div class="idc-shell">
+    <div class="idc-header">
+      <div>
+        <div class="idc-title">Talk it through</div>
+        <div class="idc-sub" id="idcSub">Your declaration, tested with the Guide</div>
+      </div>
+      <button class="idc-close" onclick="closeIdentityTalk()" aria-label="Close">&times;</button>
+    </div>
+    <details class="idc-decl" id="idcDeclBox" open>
+      <summary><span>Your declaration</span><span class="idc-decl-meta" id="idcDeclMeta"></span></summary>
+      <div class="idc-decl-text" id="idcDeclText"></div>
+    </details>
+    <div class="idc-messages" id="idcMessages"></div>
+    <div class="idc-chips" id="idcChips"></div>
+    <div class="idc-input-bar">
+      <textarea id="idcInput" rows="1" placeholder="Ask about it, push back on it, or say what doesn&rsquo;t fit&hellip;" onkeydown="idcKey(event)" oninput="idcGrow(this)"></textarea>
+      <button id="idcSend" onclick="idcSend()">Send</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ SAVED IDENTITY CARDS ═══ -->
 <div class="dtph-overlay" id="dtpHistOverlay">
   <div class="dtp-shell">
@@ -2442,7 +3042,7 @@ function continueOffline(){
 
 let isAdminUser=false;
 async function onAuthSuccess(user){
-  currentUser=user;
+  currentUser=user;bdRefreshMine().then(()=>{try{renderDreams();renderVisions();renderProphetic();renderPrayer();}catch(_e){}}).catch(()=>{})
   document.getElementById('authOverlay').style.display='none';
   document.getElementById('authUserBar').style.display='flex';
   const displayName=user.user_metadata?.display_name||'';
@@ -4955,23 +5555,23 @@ function setStage(s,el){state.stage=s;document.querySelectorAll('.stage-option')
 
 // ═══ PROPHETIC ═══
 function addProphetic(){const c=document.getElementById('propContent').value.trim();if(!c)return;state.prophetic.push({id:Date.now(),content:c,date:document.getElementById('propDate').value||today,source:document.getElementById('propSource').value||'',scripture:document.getElementById('propScripture').value||'',status:'active'});document.getElementById('propContent').value='';document.getElementById('propDate').value='';document.getElementById('propSource').value='';document.getElementById('propScripture').value='';renderProphetic();updateCounts();saveLocal();showSaveToast('Word captured. Keep stewarding what He speaks.');}
-function renderProphetic(){const el=document.getElementById('propList');if(!state.prophetic.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4.97 0-9-2.69-9-6 0-4 4.5-7.5 4.5-12 2.5 4.5 7.5 3 7.5 8 2-1 3-3 3-5 2.08 2.5 3 5.5 3 9 0 3.31-4.03 6-9 6z"/></svg></div>No prophetic words yet.<div class="empty-prompt">When someone speaks over your life, capture it here.</div><div class="empty-scripture">"Surely the Lord God does nothing without revealing His secret to His servants." — Amos 3:7</div></div>';return;}el.innerHTML=state.prophetic.map(p=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(p.date)}</span><span class="status-badge status-${p.status||'active'}" onclick="toggleStatus(this,'prophetic',${p.id})">${(p.status||'active').toUpperCase()}</span><div class="entry-actions"><button onclick="aiInterpret('prophetic',${p.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="editEntry('prophetic',${p.id})" title="Edit">✎</button><button onclick="deleteProp(${p.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content">"${p.content}"</div><div class="entry-meta">${p.source?`<span>${p.source}</span>`:''}${p.scripture?`<span>${p.scripture}</span>`:''}${getConnections(p.id).length?`<span>${getConnections(p.id).length}</span>`:''}</div>${getConnections(p.id).length?`<div class="entry-connections">${getConnections(p.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('prophetic',p)}<div class="conn-add" onclick="openConnModal(${p.id},'prophetic')">+ Add connection</div></div>`).join('');}
+function renderProphetic(){const el=document.getElementById('propList');if(!state.prophetic.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4.97 0-9-2.69-9-6 0-4 4.5-7.5 4.5-12 2.5 4.5 7.5 3 7.5 8 2-1 3-3 3-5 2.08 2.5 3 5.5 3 9 0 3.31-4.03 6-9 6z"/></svg></div>No prophetic words yet.<div class="empty-prompt">When someone speaks over your life, capture it here.</div><div class="empty-scripture">"Surely the Lord God does nothing without revealing His secret to His servants." — Amos 3:7</div></div>';return;}el.innerHTML=state.prophetic.map(p=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(p.date)}</span>${sharedTag('prophetic',p.id)}<span class="status-badge status-${p.status||'active'}" onclick="toggleStatus(this,'prophetic',${p.id})">${(p.status||'active').toUpperCase()}</span><div class="entry-actions"><button onclick="aiInterpret('prophetic',${p.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="openShare('prophetic',${p.id})" class="share" title="Share to The Church">↗</button><button onclick="editEntry('prophetic',${p.id})" title="Edit">✎</button><button onclick="deleteProp(${p.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content" onclick="openRead('prophetic',${p.id})">"${p.content}"</div><div class="entry-meta">${p.source?`<span>${p.source}</span>`:''}${p.scripture?`<span>${p.scripture}</span>`:''}${getConnections(p.id).length?`<span>${getConnections(p.id).length}</span>`:''}</div>${getConnections(p.id).length?`<div class="entry-connections">${getConnections(p.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('prophetic',p)}<div class="conn-add" onclick="openConnModal(${p.id},'prophetic')">+ Add connection</div></div>`).join('');}
 function deleteProp(id){if(!confirm('Delete this prophetic word? This cannot be undone.'))return;state.prophetic=state.prophetic.filter(p=>p.id!==id);if(state.connections)state.connections=state.connections.filter(c=>c.sourceId!==id&&c.targetId!==id);renderProphetic();updateCounts();saveLocal();}
 function toggleStatus(el,t,id){const s=['active','processing','fulfilled'];const item=state[t].find(e=>e.id===id);if(!item)return;const idx=s.indexOf(item.status||'active');item.status=s[(idx+1)%s.length];el.className='status-badge status-'+item.status;el.textContent=item.status.toUpperCase();saveLocal();}
 
 // ═══ PRAYER ═══
 function addPrayer(){const c=document.getElementById('prayerContent').value.trim();if(!c)return;state.prayer.push({id:Date.now(),content:c,date:document.getElementById('prayerDate').value||today,scripture:document.getElementById('prayerScripture').value||'',context:document.getElementById('prayerContext').value||''});document.getElementById('prayerContent').value='';document.getElementById('prayerDate').value='';document.getElementById('prayerScripture').value='';document.getElementById('prayerContext').value='';renderPrayer();updateCounts();saveLocal();showSaveToast('Prayer recorded. He hears you.');}
-function renderPrayer(){const el=document.getElementById('prayerList');if(!state.prayer.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg></div>Your prayer journal is waiting.<div class="empty-prompt">Next time the Spirit speaks in the stillness, write it down here.</div><div class="empty-scripture">"My sheep hear my voice, and I know them, and they follow me." — John 10:27</div></div>';return;}el.innerHTML=state.prayer.map(p=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(p.date)}</span><div class="entry-actions"><button onclick="aiInterpret('prayer',${p.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="editEntry('prayer',${p.id})" title="Edit">✎</button><button onclick="deletePray(${p.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content">"${p.content}"</div><div class="entry-meta">${p.context?`<span>${p.context}</span>`:''}${p.scripture?`<span>${p.scripture}</span>`:''}${getConnections(p.id).length?`<span>${getConnections(p.id).length}</span>`:''}</div>${getConnections(p.id).length?`<div class="entry-connections">${getConnections(p.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('prayer',p)}<div class="conn-add" onclick="openConnModal(${p.id},'prayer')">+ Add connection</div></div>`).join('');}
+function renderPrayer(){const el=document.getElementById('prayerList');if(!state.prayer.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg></div>Your prayer journal is waiting.<div class="empty-prompt">Next time the Spirit speaks in the stillness, write it down here.</div><div class="empty-scripture">"My sheep hear my voice, and I know them, and they follow me." — John 10:27</div></div>';return;}el.innerHTML=state.prayer.map(p=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(p.date)}</span>${sharedTag('prayer',p.id)}<div class="entry-actions"><button onclick="aiInterpret('prayer',${p.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="openShare('prayer',${p.id})" class="share" title="Share to The Church">↗</button><button onclick="editEntry('prayer',${p.id})" title="Edit">✎</button><button onclick="deletePray(${p.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content" onclick="openRead('prayer',${p.id})">"${p.content}"</div><div class="entry-meta">${p.context?`<span>${p.context}</span>`:''}${p.scripture?`<span>${p.scripture}</span>`:''}${getConnections(p.id).length?`<span>${getConnections(p.id).length}</span>`:''}</div>${getConnections(p.id).length?`<div class="entry-connections">${getConnections(p.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('prayer',p)}<div class="conn-add" onclick="openConnModal(${p.id},'prayer')">+ Add connection</div></div>`).join('');}
 function deletePray(id){if(!confirm('Delete this prayer entry? This cannot be undone.'))return;state.prayer=state.prayer.filter(p=>p.id!==id);if(state.connections)state.connections=state.connections.filter(c=>c.sourceId!==id&&c.targetId!==id);renderPrayer();updateCounts();saveLocal();}
 
 // ═══ STIRRED — what God said to you during sermons/teaching ═══
 function addStirred(){const c=document.getElementById('stirredContent').value.trim();if(!c)return;if(!state.stirred)state.stirred=[];state.stirred.push({id:Date.now(),content:c,date:document.getElementById('stirredDate').value||today,scripture:document.getElementById('stirredScripture').value||'',context:document.getElementById('stirredContext').value||''});document.getElementById('stirredContent').value='';document.getElementById('stirredDate').value='';document.getElementById('stirredScripture').value='';document.getElementById('stirredContext').value='';renderStirred();updateCounts();saveLocal();showSaveToast('Captured what stirred you. Keep listening.');}
-function renderStirred(){const el=document.getElementById('stirredList');if(!el)return;if(!state.stirred||!state.stirred.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>No stirrings recorded yet.<div class="empty-prompt">When the teaching ignites something in you, capture what God spoke.</div><div class="empty-scripture">"Did not our hearts burn within us while He talked with us on the road…?" — Luke 24:32</div></div>';return;}el.innerHTML=state.stirred.map(s=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(s.date)}</span><div class="entry-actions"><button onclick="aiInterpret('stirred',${s.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="editEntry('stirred',${s.id})" title="Edit">✎</button><button onclick="deleteStirred(${s.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content">"${s.content}"</div><div class="entry-meta">${s.context?`<span>${s.context}</span>`:''}${s.scripture?`<span>${s.scripture}</span>`:''}${getConnections(s.id).length?`<span>${getConnections(s.id).length}</span>`:''}</div>${getConnections(s.id).length?`<div class="entry-connections">${getConnections(s.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('stirred',s)}<div class="conn-add" onclick="openConnModal(${s.id},'stirred')">+ Add connection</div></div>`).join('');}
+function renderStirred(){const el=document.getElementById('stirredList');if(!el)return;if(!state.stirred||!state.stirred.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>No stirrings recorded yet.<div class="empty-prompt">When the teaching ignites something in you, capture what God spoke.</div><div class="empty-scripture">"Did not our hearts burn within us while He talked with us on the road…?" — Luke 24:32</div></div>';return;}el.innerHTML=state.stirred.map(s=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(s.date)}</span><div class="entry-actions"><button onclick="aiInterpret('stirred',${s.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="editEntry('stirred',${s.id})" title="Edit">✎</button><button onclick="deleteStirred(${s.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content" onclick="openRead('stirred',${s.id})">"${s.content}"</div><div class="entry-meta">${s.context?`<span>${s.context}</span>`:''}${s.scripture?`<span>${s.scripture}</span>`:''}${getConnections(s.id).length?`<span>${getConnections(s.id).length}</span>`:''}</div>${getConnections(s.id).length?`<div class="entry-connections">${getConnections(s.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('stirred',s)}<div class="conn-add" onclick="openConnModal(${s.id},'stirred')">+ Add connection</div></div>`).join('');}
 function deleteStirred(id){if(!confirm('Delete this stirring? This cannot be undone.'))return;state.stirred=(state.stirred||[]).filter(s=>s.id!==id);if(state.connections)state.connections=state.connections.filter(c=>c.sourceId!==id&&c.targetId!==id);renderStirred();updateCounts();saveLocal();}
 
 // ═══ DREAMS ═══
 function addDream(){const c=document.getElementById('dreamContent').value.trim();if(!c)return;const symbols=extractSymbols(c);state.dreams.push({id:Date.now(),content:c,date:document.getElementById('dreamDate').value||today,tone:document.getElementById('dreamTone').value||'',symbols:symbols});document.getElementById('dreamContent').value='';document.getElementById('dreamDate').value='';document.getElementById('dreamTone').value='';document.getElementById('symbolMatches').style.display='none';document.getElementById('dreamInterpretation').style.display='none';renderDreams();updateCounts();saveLocal();showSaveToast('Dream recorded. God speaks in the night season.');showDreamInsights(state.dreams[state.dreams.length-1]);}
-function renderDreams(){const el=document.getElementById('dreamList');if(!state.dreams.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg></div>No dreams recorded yet.<div class="empty-prompt">God speaks in the night season — capture what He shows you.</div><div class="empty-scripture">"In a dream, in a vision of the night, He opens the ears of men." — Job 33:15-16</div></div>';return;}el.innerHTML=state.dreams.map(d=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(d.date)}</span>${d.tone?`<span class="entry-meta"><span>${d.tone}</span></span>`:''}<div class="entry-actions"><button onclick="aiInterpret('dreams',${d.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="editEntry('dreams',${d.id})" title="Edit">✎</button><button onclick="deleteDream(${d.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content">"${d.content.substring(0,120)}${d.content.length>120?'...':''}"</div><div class="entry-meta">${d.symbols?.length?`<span>${d.symbols.length} symbol${d.symbols.length>1?'s':''}</span>`:''}${getConnections(d.id).length?`<span>${getConnections(d.id).length}</span>`:''}</div>${d.symbols?.length?`<div style="margin-top:8px;display:flex;flex-wrap:wrap;align-items:center;gap:4px;">${d.symbols.slice(0,5).map(sym=>{const s=getAllSymbols().find(x=>x.name===sym);return s?`<span style="display:inline-flex;align-items:center;gap:4px;margin-right:6px;"><span>${s.icon}</span><span style="font-size:0.75rem;color:var(--sage);">${sym}</span></span>`:`<span style="font-size:0.75rem;color:var(--sage);margin-right:6px;">${sym}</span>`;}).join('')}<button class="refine-sym-btn" onclick="refineSymbolsAI('dreams',${d.id},this)" title="Re-extract symbols with AI for better accuracy">✦ Refine</button></div>`:`<div style="margin-top:8px;"><button class="refine-sym-btn" onclick="refineSymbolsAI('dreams',${d.id},this)" title="Extract symbols with AI">✦ Find symbols with AI</button></div>`}${getConnections(d.id).length?`<div class="entry-connections">${getConnections(d.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('dreams',d)}<div class="conn-add" onclick="openConnModal(${d.id},'dreams')">+ Add connection</div></div>`).join('');}
+function renderDreams(){const el=document.getElementById('dreamList');if(!state.dreams.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg></div>No dreams recorded yet.<div class="empty-prompt">God speaks in the night season — capture what He shows you.</div><div class="empty-scripture">"In a dream, in a vision of the night, He opens the ears of men." — Job 33:15-16</div></div>';return;}el.innerHTML=state.dreams.map(d=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(d.date)}</span>${sharedTag('dreams',d.id)}${d.tone?`<span class="entry-meta"><span>${d.tone}</span></span>`:''}<div class="entry-actions"><button onclick="aiInterpret('dreams',${d.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="openShare('dreams',${d.id})" class="share" title="Share to The Church">↗</button><button onclick="editEntry('dreams',${d.id})" title="Edit">✎</button><button onclick="deleteDream(${d.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content" onclick="openRead('dreams',${d.id})">"${d.content.substring(0,120)}${d.content.length>120?'...':''}"</div><div class="entry-meta">${d.symbols?.length?`<span>${d.symbols.length} symbol${d.symbols.length>1?'s':''}</span>`:''}${getConnections(d.id).length?`<span>${getConnections(d.id).length}</span>`:''}</div>${d.symbols?.length?`<div style="margin-top:8px;display:flex;flex-wrap:wrap;align-items:center;gap:4px;">${d.symbols.slice(0,5).map(sym=>{const s=getAllSymbols().find(x=>x.name===sym);return s?`<span style="display:inline-flex;align-items:center;gap:4px;margin-right:6px;"><span>${s.icon}</span><span style="font-size:0.75rem;color:var(--sage);">${sym}</span></span>`:`<span style="font-size:0.75rem;color:var(--sage);margin-right:6px;">${sym}</span>`;}).join('')}<button class="refine-sym-btn" onclick="refineSymbolsAI('dreams',${d.id},this)" title="Re-extract symbols with AI for better accuracy">✦ Refine</button></div>`:`<div style="margin-top:8px;"><button class="refine-sym-btn" onclick="refineSymbolsAI('dreams',${d.id},this)" title="Extract symbols with AI">✦ Find symbols with AI</button></div>`}${getConnections(d.id).length?`<div class="entry-connections">${getConnections(d.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('dreams',d)}<div class="conn-add" onclick="openConnModal(${d.id},'dreams')">+ Add connection</div></div>`).join('');}
 function deleteDream(id){if(!confirm('Delete this dream entry? This cannot be undone.'))return;state.dreams=state.dreams.filter(d=>d.id!==id);if(state.connections)state.connections=state.connections.filter(c=>c.sourceId!==id&&c.targetId!==id);renderDreams();updateCounts();saveLocal();}
 function detectSymbols(){const txt=document.getElementById('dreamContent').value;const matches=extractSymbols(txt);const el=document.getElementById('symbolMatches');const list=document.getElementById('symbolMatchList');if(!matches.length){el.style.display='none';return;}el.style.display='block';list.innerHTML=matches.map(sym=>{const s=getAllSymbols().find(x=>x.name===sym);return s?`<div class="symbol-match"><div class="sym-icon">${s.icon}</div><div><div class="sym-name">${s.name}</div><div class="sym-meaning">${s.meaning}</div>${s.scripture?`<div class="sym-scripture">${s.scripture}</div>`:''}</div></div>`:'';}).join('');}
 function extractSymbols(text){
@@ -4997,19 +5597,24 @@ function extractSymbols(text){
   const allSyms=getAllSymbols();
   const scored=[];
   allSyms.forEach(s=>{
-    const nameLC=s.name.toLowerCase();
-    const nameRx=new RegExp('\\b'+esc(nameLC)+'\\b','i');
-    const nameMatch=nameRx.test(text);
-    // Count only "specific" keyword matches — keywords that are concrete synonyms,
-    // not thematic/spiritual concepts that appear in every entry.
+    // Compile once per symbol — with 2,500+ symbols this runs on every keystroke.
+    if(!s._rx){
+      const nameLC=s.name.toLowerCase();
+      // "Ball (Kicking Ball)" → also match "kicking ball" and "ball"; "Angel/s" → "angel" and "angels"
+      const variants=new Set([nameLC]);
+      const paren=nameLC.match(/^(.*?)\s*\((.*?)\)\s*$/);
+      if(paren){variants.add(paren[1].trim());variants.add(paren[2].trim());}
+      nameLC.split('/').forEach(function(v,i,arr){if(arr.length>1&&i>0)variants.add(arr[0]+v);else variants.add(v);});
+      // The book's own cross-references ("Lady: See Woman") are names, not themes.
+      (s.aliases||[]).forEach(function(a){variants.add(String(a).toLowerCase());});
+      const alts=Array.from(variants).filter(v=>v.length>2&&!GENERIC_SKIP.has(v)&&!GENERIC_THEMES.has(v));
+      s._rx=alts.length?new RegExp('\\b(?:'+alts.map(esc).join('|')+')\\b','i'):null;
+      s._kwRx=(s.keywords||[]).map(k=>k.toLowerCase()).filter(kl=>kl.length>2&&!GENERIC_SKIP.has(kl)&&!GENERIC_THEMES.has(kl))
+        .map(kl=>new RegExp('\\b'+esc(kl)+'\\b','i'));
+    }
+    const nameMatch=!!(s._rx&&s._rx.test(text));
     let specificHits=0;
-    (s.keywords||[]).forEach(k=>{
-      const kl=k.toLowerCase();
-      if(GENERIC_SKIP.has(kl))return;
-      if(GENERIC_THEMES.has(kl))return;
-      const kwRx=new RegExp('\\b'+esc(kl)+'\\b','i');
-      if(kwRx.test(text))specificHits++;
-    });
+    s._kwRx.forEach(rx=>{if(rx.test(text))specificHits++;});
     if(nameMatch){
       // Name literally in the text — definitive match. Bonus from any specific keywords.
       scored.push({name:s.name,score:10+specificHits});
@@ -5397,7 +6002,7 @@ function showDreamInsights(dream){const all=getAllSymbols();const matched=dream.
 
 // ═══ VISIONS ═══
 function addVision(){const c=document.getElementById('visionContent').value.trim();if(!c)return;state.visions.push({id:Date.now(),content:c,date:document.getElementById('visionDate').value||today,context:document.getElementById('visionContext').value||'',scripture:document.getElementById('visionScripture').value||'',clarity:document.getElementById('visionClarity').value||'',interpretation:document.getElementById('visionInterpretation').value||''});document.getElementById('visionContent').value='';document.getElementById('visionDate').value='';document.getElementById('visionContext').value='';document.getElementById('visionScripture').value='';document.getElementById('visionClarity').value='';document.getElementById('visionInterpretation').value='';renderVisions();updateCounts();saveLocal();showSaveToast('Vision captured. Keep your eyes open.');}
-function renderVisions(){const el=document.getElementById('visionList');if(!state.visions||!state.visions.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></div>No visions recorded yet.<div class="empty-prompt">When God gives you a picture, an impression, a knowing — write it here.</div><div class="empty-scripture">"Where there is no vision, the people perish." — Proverbs 29:18</div></div>';return;}el.innerHTML=state.visions.map(v=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(v.date)}</span>${v.clarity?`<span style="font-size:0.72rem;padding:2px 8px;border-radius:10px;background:var(--sage-dim);color:var(--sage);">${v.clarity}</span>`:''}<div class="entry-actions"><button onclick="aiInterpret('visions',${v.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="editEntry('visions',${v.id})" title="Edit">✎</button><button onclick="deleteVision(${v.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content">"${v.content.substring(0,150)}${v.content.length>150?'...':''}"</div><div class="entry-meta">${v.context?`<span>${v.context}</span>`:''}${v.scripture?`<span>${v.scripture}</span>`:''}${getConnections(v.id).length?`<span>${getConnections(v.id).length}</span>`:''}</div>${v.interpretation?`<div style="margin-top:8px;padding:8px 12px;background:var(--surface2);border-radius:8px;font-size:0.8rem;color:var(--text-secondary);font-style:italic;">${v.interpretation}</div>`:''} ${getConnections(v.id).length?`<div class="entry-connections">${getConnections(v.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('visions',v)}<div class="conn-add" onclick="openConnModal(${v.id},'visions')">+ Add connection</div></div>`).join('');}
+function renderVisions(){const el=document.getElementById('visionList');if(!state.visions||!state.visions.length){el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></div>No visions recorded yet.<div class="empty-prompt">When God gives you a picture, an impression, a knowing — write it here.</div><div class="empty-scripture">"Where there is no vision, the people perish." — Proverbs 29:18</div></div>';return;}el.innerHTML=state.visions.map(v=>`<div class="entry-item"><div class="entry-top"><span class="entry-date">${formatDate(v.date)}</span>${sharedTag('visions',v.id)}${v.clarity?`<span style="font-size:0.72rem;padding:2px 8px;border-radius:10px;background:var(--sage-dim);color:var(--sage);">${v.clarity}</span>`:''}<div class="entry-actions"><button onclick="aiInterpret('visions',${v.id})" class="ai-help" title="AI Insight">✦ AI</button><button onclick="openShare('visions',${v.id})" class="share" title="Share to The Church">↗</button><button onclick="editEntry('visions',${v.id})" title="Edit">✎</button><button onclick="deleteVision(${v.id})" class="delete" title="Delete">✕</button></div></div><div class="entry-content" onclick="openRead('visions',${v.id})">"${v.content.substring(0,150)}${v.content.length>150?'...':''}"</div><div class="entry-meta">${v.context?`<span>${v.context}</span>`:''}${v.scripture?`<span>${v.scripture}</span>`:''}${getConnections(v.id).length?`<span>${getConnections(v.id).length}</span>`:''}</div>${v.interpretation?`<div style="margin-top:8px;padding:8px 12px;background:var(--surface2);border-radius:8px;font-size:0.8rem;color:var(--text-secondary);font-style:italic;">${v.interpretation}</div>`:''} ${getConnections(v.id).length?`<div class="entry-connections">${getConnections(v.id).map(c=>`<span class="conn-tag" onclick="navigateToEntry(${c.targetId})">${c.targetType} →</span>`).join('')}</div>`:''}${renderSavedInterps('visions',v)}<div class="conn-add" onclick="openConnModal(${v.id},'visions')">+ Add connection</div></div>`).join('');}
 function deleteVision(id){if(!confirm('Delete this vision entry? This cannot be undone.'))return;state.visions=state.visions.filter(v=>v.id!==id);if(state.connections)state.connections=state.connections.filter(c=>c.sourceId!==id&&c.targetId!==id);renderVisions();updateCounts();saveLocal();}
 
 // ═══ SKILLS ═══
@@ -5445,6 +6050,140 @@ function closeOnboarding(){document.getElementById('onboardingOverlay').style.di
 function editEntry(type,id){const item=state[type].find(e=>e.id===id);if(!item)return;const modal=document.getElementById('editModal');document.getElementById('editModalTitle').textContent='Edit '+type.charAt(0).toUpperCase()+type.slice(1)+' Entry';let body='';if(type==='prophetic'){body=`<div class="form-grid"><textarea id="editContent" style="min-height:100px;">${item.content}</textarea></div><div class="form-grid cols-2"><input id="editSource" value="${item.source||''}" placeholder="Source"><input id="editScripture" value="${item.scripture||''}" placeholder="Scripture"></div>`;}else if(type==='prayer'){body=`<div class="form-grid"><textarea id="editContent" style="min-height:100px;">${item.content}</textarea></div><div class="form-grid cols-2"><input id="editScripture" value="${item.scripture||''}" placeholder="Scripture"><input id="editContext" value="${item.context||''}" placeholder="Context"></div>`;}else if(type==='dreams'){body=`<div class="form-grid"><textarea id="editContent" style="min-height:100px;">${item.content}</textarea></div>`;}else if(type==='visions'){body=`<div class="form-grid"><textarea id="editContent" style="min-height:100px;">${item.content}</textarea></div><div class="form-grid cols-2"><select id="editContext"><option value="">Context...</option>${['During Prayer','During Worship','Spontaneous','While Reading Scripture','During Ministry','In a Service','Meditation'].map(c=>`<option${c===(item.context||'')?' selected':''}>${c}</option>`).join('')}</select><select id="editClarity"><option value="">Clarity...</option>${['Very Clear','Impression','Fleeting Image','Detailed Scene','Symbolic'].map(c=>`<option${c===(item.clarity||'')?' selected':''}>${c}</option>`).join('')}</select></div><div class="form-grid"><input id="editScripture" value="${item.scripture||''}" placeholder="Scripture"></div><div class="form-grid"><textarea id="editInterpretation" style="min-height:60px;" placeholder="Interpretation">${item.interpretation||''}</textarea></div>`;}else if(type==='stirred'){body=`<div class="form-grid"><textarea id="editContent" style="min-height:100px;">${item.content}</textarea></div><div class="form-grid cols-2"><input id="editScripture" value="${item.scripture||''}" placeholder="Scripture or theme"><input id="editContext" value="${item.context||''}" placeholder="Context (e.g. Sunday — Pastor Ken)"></div>`;}else if(type==='skills'){body=`<div class="form-grid"><input id="editSkillName" value="${item.name}"></div><div class="form-grid cols-2"><select id="editSkillCat">${['Creative','Technical','Leadership','Communication','Administrative','Pastoral','Musical','Practical'].map(c=>`<option${c===item.category?' selected':''}>${c}</option>`).join('')}</select><select id="editSkillLevel">${['Developing','Competent','Strong','Expert'].map(l=>`<option${l===item.level?' selected':''}>${l}</option>`).join('')}</select></div>`;}document.getElementById('editModalBody').innerHTML=body;document.getElementById('editModalSave').onclick=function(){if(type==='prophetic'){item.content=document.getElementById('editContent').value;item.source=document.getElementById('editSource').value;item.scripture=document.getElementById('editScripture').value;}else if(type==='prayer'){item.content=document.getElementById('editContent').value;item.scripture=document.getElementById('editScripture').value;item.context=document.getElementById('editContext').value;}else if(type==='dreams'){item.content=document.getElementById('editContent').value;}else if(type==='visions'){item.content=document.getElementById('editContent').value;item.context=document.getElementById('editContext').value;item.clarity=document.getElementById('editClarity').value;item.scripture=document.getElementById('editScripture').value;item.interpretation=document.getElementById('editInterpretation').value;}else if(type==='stirred'){item.content=document.getElementById('editContent').value;item.scripture=document.getElementById('editScripture').value;item.context=document.getElementById('editContext').value;}else if(type==='skills'){item.name=document.getElementById('editSkillName').value;item.category=document.getElementById('editSkillCat').value;item.level=document.getElementById('editSkillLevel').value;}closeEditModal();({prophetic:renderProphetic,prayer:renderPrayer,dreams:renderDreams,visions:renderVisions,stirred:renderStirred,skills:renderSkills})[type]();updateCounts();saveLocal();};document.getElementById('editModalSave').style.display='';modal.style.display='flex';}
 function closeEditModal(){document.getElementById('editModal').style.display='none';}
 
+
+
+// ═══ READING VIEW ═══
+// Tap an entry to read it on a full page (fixes the cramped edit-box problem). Edit/AI/Share
+// remain separate, deliberate steps. Purely additive — no existing function changes.
+let rvCtx=null;
+const RV_LABEL={dreams:'Dream',visions:'Vision',prophetic:'Prophetic word',prayer:'Listening prayer',stirred:'Stirred'};
+function rvDate(d){if(!d)return'';const [y,m,day]=d.split('-').map(Number);const dt=new Date(y,m-1,day);return dt.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});}
+function openRead(type,id){const e=(state[type]||[]).find(x=>String(x.id)===String(id));if(!e)return;rvCtx={type,id:String(id)};
+  const label=RV_LABEL[type]||type;const text=e.content||'';
+  document.getElementById('rvBackLabel').textContent=label+'s'.replace('words','words');
+  document.getElementById('rvKick').textContent=`${label} · ${rvDate(e.date)}`;
+  const first=text.split(/[.!?\n]/)[0].trim();document.getElementById('rvTitle').textContent=first.length>0&&first.length<=60?first:label;
+  const meta=[];if(e.tone)meta.push('Tone: '+e.tone);if(e.clarity)meta.push(e.clarity);if(e.context)meta.push(e.context);if(e.source)meta.push('From '+e.source);if(e.status)meta.push(e.status);
+  const sh=bdShared[String(id)];if(sh&&sh.status==='live')meta.push(sh.shared_as==='anon'?'shared anonymously':'shared by name');
+  document.getElementById('rvMeta').textContent=meta.join(' · ');
+  document.getElementById('rvText').textContent=text;
+  document.getElementById('rvSym').innerHTML=(e.symbols||[]).map(x=>`<span>${esc(x)}</span>`).join('');
+  const secs=[];if(e.scripture)secs.push(['Scripture',e.scripture]);
+  const interp=type==='dreams'?(e.interpretations||[]).map(i=>i.text||i.content||i).filter(Boolean).join('\n\n'):(e.interpretation||'');
+  if(interp)secs.push(['My interpretation',interp]);
+  document.getElementById('rvSecs').innerHTML=secs.map(([l,t])=>`<div class="rv-sec"><div class="l">${esc(l)}</div><div class="i">${esc(t)}</div></div>`).join('');
+  document.getElementById('readView').classList.add('open');document.body.style.overflow='hidden';}
+function closeRead(){document.getElementById('readView').classList.remove('open');document.body.style.overflow='';rvCtx=null;}
+function rvEdit(){if(!rvCtx)return;const c=rvCtx;closeRead();editEntry(c.type,isNaN(c.id)?c.id:Number(c.id));}
+function rvAI(){if(!rvCtx)return;const c=rvCtx;closeRead();if(typeof aiInterpret==='function')aiInterpret(c.type,isNaN(c.id)?c.id:Number(c.id));}
+function rvShare(){if(!rvCtx)return;const c=rvCtx;closeRead();if(BD_TYPE[c.type])openShare(c.type,isNaN(c.id)?c.id:Number(c.id));else toast('Not shareable','Only dreams, visions, prophetic words and prayers go to The Church.');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&rvCtx)closeRead();});
+// header band titles follow the journal filter
+const FB_TITLES={all:['Journal','All entries','What God is saying, in your own words.'],prophetic:['Journal','Prophetic words','What has been spoken over you.'],prayer:['Journal','Listening prayer','What you heard in the quiet.'],dreams:['Journal','Dreams','God speaks in the night season.'],visions:['Journal','Visions','What you saw with eyes open.'],stirred:['Journal','Stirred','What moved you.'],board:['Shared','The Church','What the body is seeing and hearing.']};
+function fbSet(type){const t=FB_TITLES[type]||FB_TITLES.all;const k=document.getElementById('fbKick'),h=document.getElementById('fbTitle'),p=document.getElementById('fbSub');if(!k)return;k.textContent=t[0];h.innerHTML=type==='board'?`The <u>Church</u>`:`<u>${esc(t[1])}</u>`;p.textContent=t[2];}
+
+// ═══ CHURCH BOARD ═══
+// Journals stay in profiles.state (private). Sharing snapshots an entry into board_posts via
+// SECURITY DEFINER RPCs (see supabase/migrations/20260919_church_board.sql). Nothing here
+// reads another person's journal.
+const BD_TYPE={dreams:'dream',visions:'vision',prophetic:'prophetic',prayer:'prayer'};
+const BD_LABEL={dream:'Dream',vision:'Vision',prophetic:'Prophetic word',prayer:'Listening prayer'};
+let bdShared={};            // source_entry_id -> {id, shared_as, status}
+let bdFilterType='all', bdIsAdmin=false, bdLoaded=false;
+let shareCtx=null, connectCtx=null, scriptureCtx=null, editShareCtx=null;
+function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function sharedTag(type,id){const k=String(id);const m=bdShared[k];if(!m)return'';if(m.status==='hidden')return'<span class="shared-tag" style="color:var(--red)">Hidden by a pastor</span>';return`<span class="shared-tag">Shared · ${m.shared_as==='anon'?'anonymous':'by name'}</span>`;}
+async function bdRefreshMine(){if(!currentUser)return;const{data}=await supa.rpc('board_feed',{p_scope:'mine',p_limit:100});bdShared={};(data||[]).forEach(p=>{if(p.source_entry_id)bdShared[p.source_entry_id]={id:p.id,shared_as:p.shared_as,status:p.status};});}
+function bdEntry(type,id){return (state[type]||[]).find(e=>String(e.id)===String(id));}
+
+// ---- share sheet ----
+function openShare(type,id){const e=bdEntry(type,id);if(!e)return;if(!currentUser){toast('Sign in','Sign in to share to The Church.');return;}
+  const already=bdShared[String(id)];if(already&&already.status!=='withdrawn'){if(!confirm('This entry is already on the board. Share it again as a new post?'))return;}
+  const t=BD_TYPE[type];const interp=(type==='dreams'?(e.interpretations||[]).map(i=>i.text||i.content||i).filter(Boolean).join('\n\n'):(e.interpretation||''));
+  shareCtx={type:t,srcType:type,id:String(id),entry:e,as:'named',interp:false,sym:!!(e.symbols&&e.symbols.length),interpText:interp};
+  document.getElementById('shareTitle').textContent='Share to The Church';
+  document.getElementById('sharePreview').textContent=(e.content||'').slice(0,400);
+  const anonBtn=document.getElementById('shareAnon');anonBtn.disabled=(t==='prophetic');document.getElementById('shareNote').style.display=t==='prophetic'?'':'none';
+  shareAs('named');
+  document.getElementById('shareInterpRow').style.display=interp?'':'none';document.getElementById('swInterp').classList.remove('on');
+  const hasSym=!!(e.symbols&&e.symbols.length);document.getElementById('shareSymRow').style.display=hasSym?'':'none';
+  document.getElementById('shareSymList').textContent=hasSym?e.symbols.slice(0,6).join(' · '):'';document.getElementById('swSym').classList.toggle('on',hasSym);
+  document.getElementById('shareGo').textContent='Share to The Church';document.getElementById('shareGo').disabled=false;
+  document.getElementById('shareModal').style.display='flex';}
+function shareAs(v){if(!shareCtx)return;if(v==='anon'&&shareCtx.type==='prophetic')return;shareCtx.as=v;document.getElementById('shareNamed').classList.toggle('on',v==='named');document.getElementById('shareAnon').classList.toggle('on',v==='anon');}
+function shareToggle(k){if(!shareCtx)return;if(k==='interp'){shareCtx.interp=!shareCtx.interp;document.getElementById('swInterp').classList.toggle('on',shareCtx.interp);}else{shareCtx.sym=!shareCtx.sym;document.getElementById('swSym').classList.toggle('on',shareCtx.sym);}}
+function closeShare(){document.getElementById('shareModal').style.display='none';shareCtx=null;}
+async function doShare(){if(!shareCtx)return;const e=shareCtx.entry;const btn=document.getElementById('shareGo');btn.disabled=true;btn.textContent='Sharing…';
+  const{data,error}=await supa.rpc('board_share',{p_type:shareCtx.type,p_shared_as:shareCtx.as,p_content:e.content||'',p_entry_date:e.date||null,p_scripture:e.scripture||null,p_tone:e.tone||null,p_clarity:e.clarity||null,p_context:e.context||null,p_source:e.source||null,p_interpretation:shareCtx.interp?shareCtx.interpText:null,p_symbols:shareCtx.sym&&e.symbols?e.symbols:null,p_source_entry_id:shareCtx.id});
+  if(error){btn.disabled=false;btn.textContent='Share to The Church';alert('Could not share: '+error.message);return;}
+  const newId=data;const conn=connectCtx;closeShare();
+  if(conn&&conn.postId){await supa.rpc('board_respond',{p_post:conn.postId,p_kind:'connects',p_ref:newId});connectCtx=null;}
+  await bdRefreshMine();
+  renderDreams();renderVisions();renderProphetic();renderPrayer();
+  toast('Shared','It\'s on The Church board. You can edit for 15 minutes.');
+  if(document.getElementById('tab-board').classList.contains('active'))loadBoard();}
+
+// ---- board ----
+function bdFilter(t,el){bdFilterType=t;document.querySelectorAll('#bdFilters button').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');loadBoard();}
+function relTime(iso){const s=Math.round((Date.now()-new Date(iso).getTime())/1000);if(s<60)return'just now';if(s<3600)return Math.round(s/60)+' min ago';if(s<86400)return Math.round(s/3600)+' h ago';const d=Math.round(s/86400);return d===1?'yesterday':d+' days ago';}
+async function loadBoard(){const list=document.getElementById('bdList');if(!currentUser){list.innerHTML='<div class="empty-state">Sign in to see The Church board.</div>';return;}
+  if(!bdLoaded){const{data:adm}=await supa.rpc('is_board_admin');bdIsAdmin=!!adm;bdLoaded=true;}
+  const scope=bdFilterType==='mine'?'mine':'board';const type=(bdFilterType==='all'||bdFilterType==='mine')?null:bdFilterType;
+  const[{data:posts,error},{data:themes}]=await Promise.all([supa.rpc('board_feed',{p_scope:scope,p_type:type,p_limit:60}),supa.rpc('board_themes')]);
+  if(error){list.innerHTML='<div class="empty-state">Couldn\'t load the board. '+esc(error.message)+'</div>';return;}
+  const th=themes||{};const strip=[];(th.symbols||[]).forEach(x=>strip.push(`<span><b>${esc(x.name)}</b> · ${x.n} shared</span>`));(th.scriptures||[]).forEach(x=>strip.push(`<span>${esc(x.ref)} · ${x.n}</span>`));
+  document.getElementById('bdThemes').innerHTML=strip.join('');document.getElementById('bdThemes').style.display=strip.length?'':'none';
+  document.getElementById('bdSub').textContent=`What the body is seeing and hearing · ${th.month_count||0} this month`;
+  if(!posts||!posts.length){list.innerHTML=`<div class="empty-state">${scope==='mine'?'You haven\'t shared anything yet. Tap ↗ on any journal entry.':'Nothing shared yet. Be the first — tap ↗ on a journal entry.'}</div>`;return;}
+  list.innerHTML=posts.map(p=>bdCard(p,scope)).join('');}
+function bdCard(p,scope){const who=p.author_name?`<b>${esc(p.author_name)}</b>`:'<b>A member of Shepherd</b>';const meta=[p.source,p.context,p.tone,p.clarity].filter(Boolean).map(esc).join(' · ');const sym=(p.symbols||[]).slice(0,5).map(esc).join(' · ');
+  const hidden=p.status==='hidden';
+  return`<div class="entry-item${hidden?' bd-hidden':''}" id="bd-${p.id}">
+    <div class="entry-top"><span class="bd-type ${p.type}">${BD_LABEL[p.type]||p.type}</span><span class="entry-date" style="margin-left:auto">${p.entry_date?formatDate(p.entry_date):relTime(p.created_at)}</span></div>
+    <div class="bd-who">${who}${meta?' · '+meta:''}${sym?' · '+sym:''}</div>
+    <div class="bd-body">${esc(p.content)}</div>
+    ${p.scripture?`<div class="bd-who" style="margin-top:6px">${esc(p.scripture)}</div>`:''}
+    ${p.interpretation?`<div class="bd-interp">${esc(p.interpretation)}</div>`:''}
+    ${hidden?`<div class="bd-lock" style="color:var(--red)">Hidden from the board${p.hidden_reason?' — '+esc(p.hidden_reason):''}.${p.is_mine?' Your journal entry is untouched.':''}</div>`:''}
+    ${!hidden?`<div class="bd-resp">
+      <button class="${p.my_praying?'on':''}" onclick="bdRespond('${p.id}','praying',this)">🙏 Praying${p.praying?`<b>${p.praying}</b>`:''}</button>
+      <button class="${p.my_connects?'on':''}" onclick="openConnect('${p.id}')">Connects${p.connects?`<b>${p.connects}</b>`:''}</button>
+      <button class="${(p.my_scriptures||[]).length?'on':''}" onclick="openScripture('${p.id}')">Scripture${p.scriptures?`<b>${p.scriptures}</b>`:''}</button></div>`:''}
+    ${(p.scripture_refs||[]).length?`<div class="bd-scr">${p.scripture_refs.map(r=>`<span>${esc(r)}</span>`).join('')}</div>`:''}
+    ${(p.connect_posts||[]).length?`<div class="bd-conn">${p.connect_posts.map(c=>`<div><b>${c.author?esc(c.author):'A member of Shepherd'}</b> · ${BD_LABEL[c.type]||c.type} — ${esc(c.excerpt)}…</div>`).join('')}</div>`:''}
+    <div class="bd-foot">
+      ${p.is_mine?`<span>${p.shared_as==='anon'?'Shared anonymously':'Shared by name'} · ${relTime(p.created_at)}${p.edited_at?' · edited':''}</span>`:''}
+      ${p.is_mine&&p.can_edit?`<button onclick="openEditShare('${p.id}')">Edit</button>`:''}
+      ${p.is_mine?`<button class="danger" onclick="bdWithdraw('${p.id}')">Withdraw</button>`:''}
+      ${!p.is_mine&&!hidden?`<button onclick="bdFlag('${p.id}')">Flag for a pastor</button>`:''}
+    </div>
+    ${bdIsAdmin?`<div class="bd-admin">Admin${p.flags?`<span class="flags">· ${p.flags} flag${p.flags===1?'':'s'}</span>`:''}<span style="margin-left:auto"></span>${hidden?`<button onclick="bdModerate('${p.id}','unhide')">Unhide</button>`:`<button onclick="bdModerate('${p.id}','hide')">Hide</button>`}<button onclick="bdModerate('${p.id}','archive')">Archive</button></div>`:''}
+  </div>`;}
+async function bdRespond(id,kind,btn){const{data,error}=await supa.rpc('board_respond',{p_post:id,p_kind:kind});if(error){alert(error.message);return;}loadBoard();}
+async function bdWithdraw(id){if(!confirm('Withdraw this from The Church? Responses to it will be removed. Your journal entry stays.'))return;const{error}=await supa.rpc('board_withdraw',{p_id:id});if(error){alert(error.message);return;}await bdRefreshMine();renderDreams();renderVisions();renderProphetic();renderPrayer();loadBoard();}
+async function bdFlag(id){const note=prompt('Flag this for a pastor. Add a note if you like (optional):');if(note===null)return;const{error}=await supa.rpc('board_flag',{p_post:id,p_note:note||null});if(error){alert(error.message);return;}toast('Flagged','A pastor will take a look.');}
+async function bdModerate(id,action){let reason=null;if(action!=='unhide'){reason=prompt((action==='hide'?'Hide':'Archive')+' this post. Reason shown to the author (optional):');if(reason===null)return;}const{error}=await supa.rpc('board_moderate',{p_id:id,p_action:action,p_reason:reason||null});if(error){alert(error.message);return;}loadBoard();}
+
+// ---- connect: share one of my entries as a response ----
+function openConnect(postId){if(!currentUser)return;const items=[];[['dreams','Dream'],['visions','Vision'],['prophetic','Prophetic word'],['prayer','Listening prayer']].forEach(([t,l])=>{(state[t]||[]).forEach(e=>items.push({t,l,e}));});
+  items.sort((a,b)=>(b.e.date||'').localeCompare(a.e.date||''));
+  document.getElementById('connectList').innerHTML=items.length?items.map(x=>`<div class="sr-item" style="cursor:pointer" onclick="connectPick('${x.t}','${x.e.id}','${postId}')"><div class="sr-type">${x.l}${bdShared[String(x.e.id)]?' · already shared':''}</div><div class="sr-text">${esc((x.e.content||'').substring(0,80))}</div>${x.e.date?`<div class="sr-date">${formatDate(x.e.date)}</div>`:''}</div>`).join(''):'<div class="empty-state">No journal entries yet.</div>';
+  document.getElementById('connectModal').style.display='flex';}
+function closeConnect(){document.getElementById('connectModal').style.display='none';}
+async function connectPick(type,id,postId){closeConnect();const already=bdShared[String(id)];
+  if(already&&already.status==='live'){const{error}=await supa.rpc('board_respond',{p_post:postId,p_kind:'connects',p_ref:already.id});if(error)alert(error.message);loadBoard();return;}
+  connectCtx={postId};openShare(type,id);document.getElementById('shareTitle').textContent='Share & connect';}
+
+// ---- scripture response ----
+function openScripture(postId){scriptureCtx={postId};document.getElementById('scriptureRef').value='';document.getElementById('scriptureModal').style.display='flex';setTimeout(()=>document.getElementById('scriptureRef').focus(),50);}
+function closeScripture(){document.getElementById('scriptureModal').style.display='none';scriptureCtx=null;}
+async function doScripture(){const ref=document.getElementById('scriptureRef').value.trim();if(!ref||!scriptureCtx)return;const{error}=await supa.rpc('board_respond',{p_post:scriptureCtx.postId,p_kind:'scripture',p_ref:ref});closeScripture();if(error){alert(error.message);return;}loadBoard();}
+
+// ---- edit within 15 minutes ----
+async function openEditShare(id){const{data}=await supa.rpc('board_feed',{p_scope:'mine',p_limit:100});const p=(data||[]).find(x=>x.id===id);if(!p||!p.can_edit){toast('Locked','The edit window has passed. Withdraw and re-share instead.');return;}
+  editShareCtx={id};document.getElementById('esContent').value=p.content||'';document.getElementById('esInterp').value=p.interpretation||'';document.getElementById('editShareModal').style.display='flex';}
+async function doEditShare(){if(!editShareCtx)return;const{error}=await supa.rpc('board_edit',{p_id:editShareCtx.id,p_content:document.getElementById('esContent').value,p_interpretation:document.getElementById('esInterp').value});document.getElementById('editShareModal').style.display='none';editShareCtx=null;if(error){alert(error.message);return;}loadBoard();}
+
 // ═══ CONNECTIONS ═══
 function getConnections(id){if(!state.connections)state.connections=[];return state.connections.filter(c=>c.sourceId===id).map(c=>{let targetType='',preview='';for(const t of['prophetic','prayer','dreams','visions','stirred','skills']){const found=(state[t]||[]).find(e=>e.id===c.targetId);if(found){targetType=t.charAt(0).toUpperCase()+t.slice(1);preview=(found.content||found.name||'').substring(0,40);break;}}return{...c,targetType,preview};}).filter(c=>c.targetType);}
 function openConnModal(sourceId,sourceType){const modal=document.getElementById('connModal');const allEntries=[];['prophetic','prayer','dreams','visions','stirred','skills'].forEach(t=>{(state[t]||[]).forEach(e=>{if(e.id!==sourceId)allEntries.push({id:e.id,type:t,text:e.content||e.name||'',date:e.date||''});});});const existing=new Set((state.connections||[]).filter(c=>c.sourceId===sourceId).map(c=>c.targetId));document.getElementById('connModalBody').innerHTML=allEntries.length===0?'<div style="padding:16px;color:var(--muted);">No other entries to link to yet.</div>':allEntries.map(e=>`<div class="sr-item" style="cursor:pointer;${existing.has(e.id)?'opacity:0.4;':'\"'}" onclick="${existing.has(e.id)?'':('addConnection('+sourceId+','+e.id+');closeConnModal()')}"><div class="sr-type">${e.type}${existing.has(e.id)?' (linked)':''}</div><div class="sr-text">${e.text.substring(0,60)}</div>${e.date?`<div class="sr-date">${formatDate(e.date)}</div>`:''}</div>`).join('');modal.style.display='flex';}
@@ -5459,7 +6198,7 @@ function updateJourney(){const total=getTotalEntries(state);const fulfilled=stat
 function compileProfile(){state._compiled=true;document.getElementById('profileOutput').style.display='block';const allText=[...state.prophetic.map(p=>p.content),...state.prayer.map(p=>p.content),...state.dreams.map(d=>d.content),...(state.visions||[]).map(v=>v.content),...(state.stirred||[]).map(s=>s.content)].join(' ');const allScriptures=[...new Set([...state.prophetic,...state.prayer].filter(e=>e.scripture).map(e=>e.scripture))];const dreamSymbols=[...new Set(state.dreams.flatMap(d=>d.symbols||[]))];const wordFreq={};allText.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/).forEach(w=>{if(IDENTITY_WORDS[w])wordFreq[w]=(wordFreq[w]||0)+IDENTITY_WORDS[w];});state.gifts.forEach(g=>{wordFreq[g.toLowerCase()]=(wordFreq[g.toLowerCase()]||0)+3;});state.skills.forEach(s=>{wordFreq[s.name.toLowerCase()]=(wordFreq[s.name.toLowerCase()]||0)+2;});dreamSymbols.forEach(sym=>{const s=getAllSymbols().find(x=>x.name===sym);if(s)wordFreq[sym.toLowerCase()]=(wordFreq[sym.toLowerCase()]||0)+2;});const sorted=Object.entries(wordFreq).sort((a,b)=>b[1]-a[1]);renderAnimatedWordCloud(sorted);renderIdentityStatement(sorted,dreamSymbols,allScriptures);renderGiftProfile();renderPropheticThemes(allText);renderActiveScriptures(allScriptures);renderMinistryMap();renderDeclaration(sorted,dreamSymbols);checkMilestones();}
 
 // ═══ ANIMATED WORD CLOUD (Canvas) ═══
-function renderAnimatedWordCloud(sorted){const canvas=document.getElementById('wordCloudCanvas');const ctx=canvas.getContext('2d');const dpr=window.devicePixelRatio||1;const rect=canvas.parentElement.getBoundingClientRect();canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;canvas.style.width=rect.width+'px';canvas.style.height=rect.height+'px';ctx.scale(dpr,dpr);const W=rect.width,H=rect.height;if(!sorted.length){ctx.fillStyle='#7a8078';ctx.font='16px Inter,sans-serif';ctx.textAlign='center';ctx.fillText('Add entries to see your word cloud',W/2,H/2);return;}const max=sorted[0][1]||1;const colors=[CLR.sage,CLR.wheat,CLR.green,CLR.blue,CLR.purple,CLR.teal,CLR.orange,CLR.cream];const words=sorted.slice(0,35).map(([word,score],i)=>({word,score,x:W/2+(Math.random()-0.5)*W*0.5,y:H/2+(Math.random()-0.5)*H*0.5,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,size:14+(score/max)*28,color:colors[i%colors.length],alpha:0.5+(score/max)*0.5,hovered:false}));let mouseX=-1,mouseY=-1;canvas.onmousemove=e=>{const r=canvas.getBoundingClientRect();mouseX=e.clientX-r.left;mouseY=e.clientY-r.top;};canvas.onmouseleave=()=>{mouseX=-1;mouseY=-1;};function animate(){ctx.clearRect(0,0,W,H);words.forEach(w=>{w.x+=w.vx;w.y+=w.vy;if(w.x<40||w.x>W-40)w.vx*=-1;if(w.y<20||w.y>H-20)w.vy*=-1;w.vx+=(W/2-w.x)*0.0002;w.vy+=(H/2-w.y)*0.0002;w.vx*=0.998;w.vy*=0.998;ctx.font=`${w.hovered?'bold':'600'} ${w.size}px Inter,sans-serif`;const tw=ctx.measureText(w.word).width;w.hovered=mouseX>=0&&mouseX>=w.x-tw/2&&mouseX<=w.x+tw/2&&mouseY>=w.y-w.size/2&&mouseY<=w.y+w.size/2;if(w.hovered){ctx.shadowColor=w.color;ctx.shadowBlur=20;ctx.globalAlpha=1;ctx.font=`bold ${w.size+4}px Inter,sans-serif`;}else{ctx.shadowBlur=0;ctx.globalAlpha=w.alpha;}ctx.fillStyle=w.color;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(w.word,w.x,w.y);ctx.shadowBlur=0;ctx.globalAlpha=1;});requestAnimationFrame(animate);}animate();}
+function renderAnimatedWordCloud(sorted){const canvas=document.getElementById('wordCloudCanvas');if(!canvas)return;const ctx=canvas.getContext('2d');const dpr=window.devicePixelRatio||1;const rect=canvas.parentElement.getBoundingClientRect();canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;canvas.style.width=rect.width+'px';canvas.style.height=rect.height+'px';ctx.scale(dpr,dpr);const W=rect.width,H=rect.height;if(!sorted.length){ctx.fillStyle='#7a8078';ctx.font='16px Inter,sans-serif';ctx.textAlign='center';ctx.fillText('Add entries to see your word cloud',W/2,H/2);return;}const max=sorted[0][1]||1;const colors=[CLR.sage,CLR.wheat,CLR.green,CLR.blue,CLR.purple,CLR.teal,CLR.orange,CLR.cream];const words=sorted.slice(0,35).map(([word,score],i)=>({word,score,x:W/2+(Math.random()-0.5)*W*0.5,y:H/2+(Math.random()-0.5)*H*0.5,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,size:14+(score/max)*28,color:colors[i%colors.length],alpha:0.5+(score/max)*0.5,hovered:false}));let mouseX=-1,mouseY=-1;canvas.onmousemove=e=>{const r=canvas.getBoundingClientRect();mouseX=e.clientX-r.left;mouseY=e.clientY-r.top;};canvas.onmouseleave=()=>{mouseX=-1;mouseY=-1;};function animate(){ctx.clearRect(0,0,W,H);words.forEach(w=>{w.x+=w.vx;w.y+=w.vy;if(w.x<40||w.x>W-40)w.vx*=-1;if(w.y<20||w.y>H-20)w.vy*=-1;w.vx+=(W/2-w.x)*0.0002;w.vy+=(H/2-w.y)*0.0002;w.vx*=0.998;w.vy*=0.998;ctx.font=`${w.hovered?'bold':'600'} ${w.size}px Inter,sans-serif`;const tw=ctx.measureText(w.word).width;w.hovered=mouseX>=0&&mouseX>=w.x-tw/2&&mouseX<=w.x+tw/2&&mouseY>=w.y-w.size/2&&mouseY<=w.y+w.size/2;if(w.hovered){ctx.shadowColor=w.color;ctx.shadowBlur=20;ctx.globalAlpha=1;ctx.font=`bold ${w.size+4}px Inter,sans-serif`;}else{ctx.shadowBlur=0;ctx.globalAlpha=w.alpha;}ctx.fillStyle=w.color;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(w.word,w.x,w.y);ctx.shadowBlur=0;ctx.globalAlpha=1;});requestAnimationFrame(animate);}animate();}
 function renderIdentityStatement(sorted,symbols,scriptures){const el=document.getElementById('identityStatement');const name=state.name||'Child of God';const top=sorted.slice(0,8).map(w=>w[0]);let stmt='';if(!top.length&&!state.gifts.length){stmt='You are known by God, called by name, and deeply loved. As you add more to your profile, your identity statement will become richer and more specific.';}else{const gp=state.gifts.length?`gifted in ${state.gifts.slice(0,3).join(', ')}`:'being equipped for Kingdom work';const t1=top[0]||'faithfulness',t2=top[1]||'purpose',t3=top[2]||'love';const pp=state.prophetic.length?`${state.prophetic.length} prophetic word${state.prophetic.length>1?'s':''} confirm`:'The Lord is confirming';const sp=symbols.length?` Your dreams carry symbols of ${symbols.slice(0,3).join(', ').toLowerCase()} — the Lord is speaking even while you sleep.`:'';const fulfilled=state.prophetic.filter(p=>p.status==='fulfilled').length;const fText=fulfilled?` ${fulfilled} word${fulfilled>1?'s have':' has'} already been fulfilled — God is faithful to what He speaks.`:'';stmt=`You are ${name}, a beloved child of the living God — ${gp}, and marked by themes of ${t1}, ${t2}, and ${t3}. ${pp} that God is at work in your life with intention.${sp}${fText} You are not an accident. You are chosen, called, and being formed for something specific in the Kingdom.`;}el.innerHTML=`<div class="is-label">Identity Declaration</div><div class="is-name">${name}</div><div class="is-text">${stmt}</div><div class="is-scripture">${scriptures[0]||'Jeremiah 1:5'} — "Before I formed you in the womb I knew you, before you were born I set you apart."</div>`;}
 function renderGiftProfile(){const el=document.getElementById('giftProfile');if(!state.gifts.length){el.innerHTML='<div class="empty-state">Select gifts in the Gifts tab.</div>';return;}const all=[...GIFTS.romans12,...GIFTS.cor12,...GIFTS.eph4,...GIFTS.other];const colors=[CLR.sage,CLR.wheat,CLR.green,CLR.blue,CLR.purple,CLR.teal,CLR.orange];el.innerHTML=state.gifts.map((gn,i)=>{const g=all.find(x=>x.name===gn);const c=colors[i%colors.length];return`<div class="gift-bar-container"><div class="gift-bar-label"><span class="gbl-name" style="color:${c}">${gn}</span><span class="gbl-ref">${g?g.ref:''}</span></div><div class="gift-bar"><div class="gift-bar-fill" style="width:${70+Math.random()*30}%;background:${c};"></div></div><div class="gift-bar-desc">${g?g.desc:''}</div></div>`;}).join('');}
 function renderPropheticThemes(text){const el=document.getElementById('propheticThemes');if(!state.prophetic.length){el.innerHTML='<div class="empty-state">Add prophetic words to see themes.</div>';return;}const stop=new Set(['the','a','an','is','are','was','were','be','been','have','has','had','do','does','did','will','would','could','should','may','might','shall','can','i','you','he','she','it','we','they','me','him','her','us','them','my','your','his','its','our','their','this','that','am','in','on','at','to','for','of','with','by','from','and','but','or','not','no','so','if','than','too','very','just','about','up','out','into','over','after','before','between','under','again','then','here','there','when','where','how','all','each','every','both','few','more','most','some','only','own','same','also','even','still','new','now','what','which','who','as','while','because','until','said','say','get','got','like','know','think','come','go','see','look','want','give','use','find','tell','work','god','lord','spirit','jesus','christ','been','one','upon','way','thing','people','time','man','world','life']);const words=text.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/).filter(w=>w.length>3&&!stop.has(w));const freq={};words.forEach(w=>freq[w]=(freq[w]||0)+1);const top=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,12).map(e=>e[0]);const colors=[CLR.sage,CLR.wheat,CLR.green,CLR.blue,CLR.purple,CLR.teal];el.innerHTML=`<p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Across ${state.prophetic.length} word${state.prophetic.length>1?'s':''}, these themes emerge:</p><div style="display:flex;flex-wrap:wrap;gap:6px;">${top.map((t,i)=>`<span style="padding:6px 14px;border-radius:20px;background:${colors[i%colors.length]}15;color:${colors[i%colors.length]};font-size:${1.05-i*0.03}rem;font-weight:600;">${t}</span>`).join('')}</div><p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);font-style:italic;">Do you see patterns? These often point to your calling and identity.</p>`;}
@@ -5470,7 +6209,11 @@ function renderDeclaration(sorted,symbols){const el=document.getElementById('per
 
 // ═══ IDENTITY CARD GENERATOR ═══
 function generateIdCard(){
-  if(!state._compiled)compileProfile();
+  // compileProfile() renders into a profile section this build no longer has
+  // (word cloud, ministry map…) and throws on the first missing element — so
+  // the card silently failed the first time anyone tapped it. The card itself
+  // needs nothing from it.
+  if(!state._compiled){try{compileProfile();}catch(e){console.warn('profile compile skipped:',e.message);state._compiled=true;}}
   const name=state.name||'Child of God';
   const stage=state.stage||'encounter';
   const stageLabel={encounter:'Encounter',surrender:'Surrender',formation:'Formation',sending:'Sending'}[stage]||'Encounter';
@@ -5889,18 +6632,48 @@ function updateGreeting(){
 }
 
 // ═══ DATABASE RESOURCE LOADER ═══
-async function loadResourcesFromDB(){
+async function loadResourcesFromDB(force){
   if(!supa||isOfflineMode)return;
   try{
-    // Fetch all active resources from Supabase
-    const{data:resources,error}=await supa.from('resources').select('*').eq('active',true);
-    if(error||!resources||resources.length===0){console.log('Using hardcoded resources (DB load skipped)');return;}
+    // The library is ~2,600 rows / ~1.4MB. Three things keep that cheap:
+    //  - never fetch `transcript` here (only the editor reads it, one row at a time)
+    //  - page in 1000s — PostgREST caps a single response at 1000 rows, and a
+    //    plain select('*') was silently returning the first thousand symbols only
+    //  - cache in localStorage keyed by (row count, latest updated_at), so a
+    //    normal app open is two tiny HEAD-style queries instead of a 1.4MB pull
+    const CACHE_KEY='shepherd_resources_v2';
+    let stamp='';
+    try{
+      const[{count},{data:latest}]=await Promise.all([
+        supa.from('resources').select('id',{count:'exact',head:true}).eq('active',true),
+        supa.from('resources').select('updated_at').eq('active',true).order('updated_at',{ascending:false}).limit(1)
+      ]);
+      stamp=String(count||0)+'|'+((latest&&latest[0]&&latest[0].updated_at)||'');
+    }catch(e){}
+    let resources=null;
+    if(!force&&stamp){
+      try{const c=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');if(c&&c.stamp===stamp&&Array.isArray(c.rows)&&c.rows.length)resources=c.rows;}catch(e){}
+    }
+    if(!resources){
+      resources=[];let from=0;
+      for(;;){
+        const{data,error}=await supa.from('resources')
+          .select('id,type,title,content,tags,active,sort_order,updated_at')
+          .eq('active',true).order('id').range(from,from+999);
+        if(error)throw error;
+        resources=resources.concat(data||[]);
+        if(!data||data.length<1000)break;
+        from+=1000;
+      }
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({stamp:stamp,rows:resources}));}catch(e){/* quota — fine, we just refetch next time */}
+    }
+    if(!resources||resources.length===0){console.log('Using hardcoded resources (DB load skipped)');return;}
 
     // --- Dream Symbols ---
     const dbSymbols=resources.filter(r=>r.type==='dream_symbol');
     if(dbSymbols.length>0){
-      const animals=[],nature=[],objects=[],places=[],people=[],actions=[],numbers=[],colors=[],other=[];
-      const catMap={animals,nature,objects,places,people,actions,numbers,colors};
+      const animals=[],nature=[],objects=[],places=[],people=[],actions=[],numbers=[],colors=[],body=[],other=[];
+      const catMap={animals,nature,objects,places,people,actions,numbers,colors,body};
       dbSymbols.forEach(r=>{
         const c=r.content||{};
         const sym={
@@ -5912,13 +6685,14 @@ async function loadResourcesFromDB(){
           identity:c.identity||'',
           category:c.category||'other',
           sources:c.source||[],
+          aliases:Array.isArray(c.aliases)?c.aliases:[],
           crossLinks:c.crossLinks||[]
         };
         const bucket=catMap[sym.category]||other;
         bucket.push(sym);
       });
       // Overwrite the KNOWLEDGE_BASE symbols
-      KNOWLEDGE_BASE.symbols={animals,nature,objects,places,people,actions,numbers,colors};
+      KNOWLEDGE_BASE.symbols={animals,nature,objects,places,people,actions,numbers,colors,body};
       if(other.length>0)KNOWLEDGE_BASE.symbols.other=other;
       console.log('Loaded '+dbSymbols.length+' dream symbols from database');
     }
@@ -6095,6 +6869,7 @@ function switchSection(section,btnEl){
     else showTab('braindump');
   } else if(section==='admin'){
     loadAdminDashboard();
+    if(typeof resedLoad==='function')resedLoad();
   }
   // Scroll to top
   window.scrollTo({top:0,behavior:'smooth'});
@@ -6106,7 +6881,7 @@ function showTab(name){
   if(el){el.classList.add('active');el.style.display='block';}
 }
 
-function journalFilter(type,chipEl){
+function journalFilter(type,chipEl){fbSet(type);
   // Update chips
   document.querySelectorAll('#section-journal .jf-chip').forEach(c=>c.classList.remove('active'));
   if(chipEl)chipEl.classList.add('active');
@@ -6137,6 +6912,9 @@ function journalFilter(type,chipEl){
     if(dreamList)dreamList.style.display='none';
     if(visSection)visSection.style.display='';
     if(visList)visList.style.display='';
+  } else if(type==='board'){
+    showTab('board');
+    loadBoard();
   } else {
     showTab(type);
     if(visSection)visSection.style.display='';
@@ -6234,17 +7012,14 @@ function updateIwProgress(){
     const el=document.getElementById(id);
     if(el)el.textContent=pct+'%';
   });
-  // Name exactly which step is still blank, so no one gets stuck at 86% with
-  // no idea what's missing. Labels are parallel to `marks` above.
-  const dtpStepLabels=['what God has shown you','circling your two','what you’ve called this season','the name so far','where it’s showing up','the name He’s giving you','what He’s asking of you'];
-  const dtpMissing=dtpStepLabels.filter((_,i)=>!marks[i]);
   ['homeIwSub','idIwSub'].forEach(id=>{
     const el=document.getElementById(id);
     if(el){
       if(filled===0)el.textContent='Seven steps to the name He is giving you';
-      else if(filled>=7||!dtpMissing.length)el.textContent='Complete — your card is saved';
-      else if(dtpMissing.length===1)el.textContent='One step left: '+dtpMissing[0];
-      else el.textContent=dtpMissing.length+' steps left — next: '+dtpMissing[0];
+      else if(filled<3)el.textContent='Started — '+filled+'/7 steps';
+      else if(filled<6)el.textContent='Taking shape — '+filled+'/7 steps';
+      else if(filled<7)el.textContent='Almost there — '+filled+'/7 steps';
+      else el.textContent='Complete — your card is saved';
     }
   });
 }
@@ -6270,13 +7045,23 @@ function openIdentityWorksheet(){
   if(aiLoading)aiLoading.style.display='none';
   if(aiResult)aiResult.style.display='none';
   if(dlSection)dlSection.style.display='none';
-  // Load saved data
-  if(state.identityWorksheet){
-    iwFields.forEach((f,i)=>{
-      const el=document.getElementById(f);
-      if(el&&state.identityWorksheet[iwStateKeys[i]])el.value=state.identityWorksheet[iwStateKeys[i]];
-    });
+  // Load saved data. Local state first; if it's blank (new device, cleared
+  // cache) fall back to the archived worksheet_v1 card so nobody starts over.
+  const ws=Object.assign({},state.identityWorksheet||{});
+  const wsBlank=!['callings','spiritualGifts','naturalAbilities','ministry','passion','vocation','identityStatement'].some(k=>(ws[k]||'').trim());
+  if(wsBlank&&Array.isArray(window._savedCardsCache)){
+    const arch=window._savedCardsCache.find(c=>c&&c.card_type==='worksheet_v1');
+    if(arch){
+      const map={callings:'callings',spiritualGifts:'spiritual_gifts',naturalAbilities:'natural_abilities',
+        ministry:'ministry',passion:'passion',vocation:'vocation',identityStatement:'identity_statement'};
+      Object.keys(map).forEach(k=>{if(arch[map[k]])ws[k]=arch[map[k]];});
+      state.identityWorksheet=Object.assign({},state.identityWorksheet||{},ws);
+    }
   }
+  iwFields.forEach((f,i)=>{
+    const el=document.getElementById(f);
+    if(el&&ws[iwStateKeys[i]])el.value=ws[iwStateKeys[i]];
+  });
   iwCurrentStep=0;
   iwShowStep(0);
   iwUpdateDiagram();
@@ -6566,8 +7351,10 @@ Be warm, grounded in Scripture, and specific to their answers. Avoid generic pla
         const note=document.getElementById('iwSavedNote');
         if(note)note.textContent=id?'\u2713 Saved to your identity cards — you can come back to this.'
                                   :'Couldn\u2019t save this to your account. Download it before you close the page.';
+        if(window._iwAiSynthesis)window._iwAiSynthesis._savedId=id||null;
         const acts=document.getElementById('iwDeclActions');
-        if(acts)acts.innerHTML=(id?'<button onclick="useDeclarationAsCard(\''+id+'\')">Make this my identity card</button>':'')+
+        if(acts)acts.innerHTML='<button onclick="openIdentityTalk('+(id?'\''+id+'\'':'null')+')">Talk it through</button>'+
+          (id?'<button onclick="useDeclarationAsCard(\''+id+'\')">Make this my identity card</button>':'')+
           '<button onclick="downloadDeclarationPDF('+(id?'\''+id+'\'':'null')+')">Download as PDF</button>';
       });
     }
@@ -7024,8 +7811,8 @@ async function dtpGenerateSynthesis(){
     const resp=await fetch(SUPABASE_URL+'/functions/v1/ai-chat',{
       method:'POST',headers:hdrs,
       body:JSON.stringify({
-        messages:(window._dtpSynthMessages=[{role:'system',content:systemPrompt},
-                  {role:'user',content:'Speak my identity back to me from everything I just worked through.'}]),
+        messages:[{role:'system',content:systemPrompt},
+                  {role:'user',content:'Speak my identity back to me from everything I just worked through.'}],
         userContext:typeof getUserContext==='function'?getUserContext():null,
         feature:'identity_synthesis'
       })
@@ -7033,10 +7820,44 @@ async function dtpGenerateSynthesis(){
     if(!resp.ok)throw new Error('AI request failed');
     const data=await resp.json();
     const reply=data.reply||'';
-    if(!reply)throw new Error('empty declaration');
-    window._dtpSynthMessages.push({role:'assistant',content:reply});
-    window._dtpSynthCtx=ctx;
-    dtpRenderSynth(reply,ctx,true);
+    const sect=function(tag){
+      const m=reply.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[\\/'+tag+'\\]','i'));
+      return m?m[1].trim():'';
+    };
+    const declaration=sect('DECLARATION'),scriptures=sect('SCRIPTURES'),
+          connections=sect('CONNECTIONS'),keyVerse=normalizeKeyVerse(sect('KEYVERSE'));
+    if(!declaration)throw new Error('empty declaration');
+    window._iwAiSynthesis={declaration,scriptures,connections,keyVerse,raw:reply};
+    window._dtpSynthDone=true;
+    let html='<span class="ai-section-title">Your Identity Declaration</span>'+
+             '<div class="ai-declaration">'+dtpEsc(declaration).replace(/\n/g,'<br>')+'</div>';
+    if(scriptures){
+      html+='<span class="ai-section-title">Scripture Foundation</span>';
+      scriptures.split('\n').filter(Boolean).forEach(function(x){html+='<div class="ai-scripture">'+dtpEsc(x.trim())+'</div>';});
+    }
+    if(connections){
+      html+='<span class="ai-section-title">Threads God Is Weaving</span>';
+      connections.split('\n').filter(Boolean).forEach(function(x){html+='<div class="ai-connection">'+dtpEsc(x.trim())+'</div>';});
+    }
+    html+='<div id="dtpSynthNote" style="margin-top:14px;font-size:0.76rem;color:var(--sage);">Saving…</div>'+
+          '<div class="decl-actions" id="dtpSynthActions"></div>';
+    if(content)content.innerHTML=html;
+    if(loading)loading.style.display='none';
+    if(result)result.style.display='block';
+    if(typeof saveDeclaration==='function'){
+      saveDeclaration(window._iwAiSynthesis,ctx).then(function(id){
+        const note=document.getElementById('dtpSynthNote');
+        if(note)note.textContent=id?'✓ Saved to your identity cards — you can come back to this.'
+                                  :'Couldn’t save this to your account. Download it before you close the page.';
+        if(window._iwAiSynthesis)window._iwAiSynthesis._savedId=id||null;
+        const acts=document.getElementById('dtpSynthActions');
+        if(acts)acts.innerHTML='<button onclick="openIdentityTalk('+(id?'\''+id+'\'':'null')+')">Talk it through</button>'+
+          (id?'<button onclick="useDeclarationAsCard(\''+id+'\')">Make this my identity card</button>':'')+
+          '<button onclick="downloadDeclarationPDF('+(id?'\''+id+'\'':'null')+')">Download as PDF</button>'+
+          '<button onclick="dtpRegenerateSynthesis()">Try again</button>';
+      });
+    }
+    setTimeout(function(){if(result)result.scrollIntoView({behavior:'smooth',block:'start'});},250);
   }catch(e){
     console.error('dtp synthesis',e);
     if(loading)loading.style.display='none';
@@ -7045,111 +7866,11 @@ async function dtpGenerateSynthesis(){
 }
 function dtpRegenerateSynthesis(){
   window._dtpSynthDone=false;
-  window._dtpSynthMessages=null;
   const btn=document.getElementById('dtpSynthBtn');
   if(btn){btn.style.display='flex';btn.textContent='Speak it over me';}
   const res=document.getElementById('dtpSynthResult');
   if(res)res.style.display='none';
   dtpGenerateSynthesis();
-}
-
-// Render the declaration + the back-and-forth refine box. doSave=true auto-saves
-// the first generation; refined versions save on demand (dtpSaveCurrentDeclaration)
-// so a running conversation doesn't spawn a saved card per turn.
-function dtpRenderSynth(reply,ctx,doSave){
-  const content=document.getElementById('dtpSynthContent');
-  const loading=document.getElementById('dtpSynthLoading');
-  const result=document.getElementById('dtpSynthResult');
-  const sect=function(tag){const m=reply.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[\\/'+tag+'\\]','i'));return m?m[1].trim():'';};
-  const declaration=sect('DECLARATION')||reply.trim();
-  const scriptures=sect('SCRIPTURES'),connections=sect('CONNECTIONS'),keyVerse=normalizeKeyVerse(sect('KEYVERSE'));
-  window._iwAiSynthesis={declaration:declaration,scriptures:scriptures,connections:connections,keyVerse:keyVerse,raw:reply};
-  window._dtpSynthCtx=ctx||window._dtpSynthCtx||{};
-  window._dtpSynthDone=true;
-  let html='<span class="ai-section-title">Your Identity Declaration</span>'+
-           '<div class="ai-declaration">'+dtpEsc(declaration).replace(/\n/g,'<br>')+'</div>';
-  if(scriptures){
-    html+='<span class="ai-section-title">Scripture Foundation</span>';
-    scriptures.split('\n').filter(Boolean).forEach(function(x){html+='<div class="ai-scripture">'+dtpEsc(x.trim())+'</div>';});
-  }
-  if(connections){
-    html+='<span class="ai-section-title">Threads God Is Weaving</span>';
-    connections.split('\n').filter(Boolean).forEach(function(x){html+='<div class="ai-connection">'+dtpEsc(x.trim())+'</div>';});
-  }
-  // ── the back-and-forth: keep talking to it until it sounds like you ──
-  html+='<div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);">'+
-        '<div style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:8px;">Not quite you yet? Tell Him what to adjust — it keeps the whole conversation.</div>'+
-        '<textarea id="dtpRefineInput" rows="2" placeholder="e.g. “make it shorter,” “that part isn’t me,” “lean into my calling to reconcile”" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--cream);padding:10px 12px;font-size:0.9rem;font-family:inherit;line-height:1.4;resize:vertical;box-sizing:border-box;"></textarea>'+
-        '<button class="iw-ai-generate-btn" style="margin-top:8px;" onclick="dtpRefineSynthesis()">✦ Refine it together</button>'+
-        '</div>';
-  html+='<div id="dtpSynthNote" style="margin-top:14px;font-size:0.76rem;color:var(--sage);"></div>'+
-        '<div class="decl-actions" id="dtpSynthActions"></div>';
-  if(content)content.innerHTML=html;
-  if(loading)loading.style.display='none';
-  if(result)result.style.display='block';
-  const note=document.getElementById('dtpSynthNote');
-  if(doSave&&typeof saveDeclaration==='function'){
-    if(note)note.textContent='Saving…';
-    saveDeclaration(window._iwAiSynthesis,window._dtpSynthCtx).then(function(id){
-      window._dtpLastCardId=id||null;
-      if(note)note.textContent=id?'✓ Saved to your identity cards.':'Couldn’t save to your account — download it before you close.';
-      dtpSynthActionsHtml(id);
-    });
-  }else{
-    if(note)note.textContent='Refined — keep going, or save this version when it sounds like you.';
-    dtpSynthActionsHtml(null);
-  }
-  setTimeout(function(){if(result)result.scrollIntoView({behavior:'smooth',block:'start'});},250);
-}
-function dtpSynthActionsHtml(id){
-  const acts=document.getElementById('dtpSynthActions');if(!acts)return;
-  acts.innerHTML=(id?'<button onclick="useDeclarationAsCard(\''+id+'\')">Make this my identity card</button>'
-                    :'<button onclick="dtpSaveCurrentDeclaration()">Save this version</button>')+
-    '<button onclick="downloadDeclarationPDF('+(id?'\''+id+'\'':'null')+')">Download as PDF</button>'+
-    '<button onclick="dtpRegenerateSynthesis()">Start over</button>';
-}
-function dtpSaveCurrentDeclaration(){
-  if(typeof saveDeclaration!=='function'||!window._iwAiSynthesis)return;
-  const note=document.getElementById('dtpSynthNote');if(note)note.textContent='Saving…';
-  saveDeclaration(window._iwAiSynthesis,window._dtpSynthCtx||{}).then(function(id){
-    window._dtpLastCardId=id||null;
-    if(note)note.textContent=id?'✓ Saved to your identity cards.':'Couldn’t save — download it before you close.';
-    dtpSynthActionsHtml(id);
-  });
-}
-// The back-and-forth: send a refinement request with the full conversation so the
-// model remembers everything it already said and everything the person asked for.
-async function dtpRefineSynthesis(){
-  const inp=document.getElementById('dtpRefineInput');
-  const text=(inp&&inp.value||'').trim();
-  if(!text)return;
-  if(!Array.isArray(window._dtpSynthMessages)||!window._dtpSynthMessages.length){dtpGenerateSynthesis();return;}
-  const loading=document.getElementById('dtpSynthLoading');
-  const result=document.getElementById('dtpSynthResult');
-  window._dtpSynthMessages.push({role:'user',content:text+'\n\nRewrite the whole declaration incorporating this. Keep the exact [DECLARATION]/[SCRIPTURES]/[CONNECTIONS]/[KEYVERSE] format.'});
-  if(result)result.style.display='none';
-  if(loading)loading.style.display='flex';
-  try{
-    const hdrs={'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY};
-    const sess=supa?await supa.auth.getSession():null;
-    const tok=sess&&sess.data&&sess.data.session?sess.data.session.access_token:null;
-    if(!tok){if(loading)loading.style.display='none';if(result)result.style.display='block';alert('Please sign in to refine your declaration.');return;}
-    hdrs['Authorization']='Bearer '+tok;
-    const resp=await fetch(SUPABASE_URL+'/functions/v1/ai-chat',{method:'POST',headers:hdrs,
-      body:JSON.stringify({messages:window._dtpSynthMessages,userContext:typeof getUserContext==='function'?getUserContext():null,feature:'identity_synthesis'})});
-    if(!resp.ok)throw new Error('AI request failed');
-    const data=await resp.json();
-    const reply=data.reply||'';
-    if(!reply)throw new Error('empty');
-    window._dtpSynthMessages.push({role:'assistant',content:reply});
-    dtpRenderSynth(reply,window._dtpSynthCtx,false);
-  }catch(e){
-    console.error('dtp refine',e);
-    if(loading)loading.style.display='none';
-    if(result)result.style.display='block';
-    if(inp)inp.value=text;
-    alert('Couldn’t refine just now — try again in a moment.');
-  }
 }
 
 async function dtpComplete(){
@@ -7567,7 +8288,8 @@ function dtpOpenCard(id){
     if(p.connections)h+='<div class="dtph-sec">Threads God is weaving</div><div class="dtph-v" style="white-space:pre-wrap">'+dtpEsc(p.connections)+'</div>';
     if(p.generatedFrom&&p.generatedFrom.counts){
       const gc=p.generatedFrom.counts;
-      h+='<div class="decl-actions"><button onclick="useDeclarationAsCard(\''+c.id+'\')">Make this my identity card</button>'+
+      h+='<div class="decl-actions"><button onclick="openIdentityTalk(\''+c.id+'\')">Talk it through</button>'+
+         '<button onclick="useDeclarationAsCard(\''+c.id+'\')">Make this my identity card</button>'+
          '<button onclick="downloadDeclarationPDF(\''+c.id+'\')">Download as PDF</button></div>';
       h+='<div class="dtph-sec">Built from</div><div class="dtph-v" style="font-size:0.8rem;color:var(--muted)">'+
          'Your worksheet, '+(gc.prophetic||0)+' prophetic, '+(gc.prayer||0)+' prayers, '+
@@ -7798,6 +8520,7 @@ function renderSavedIdentity(){
   if(!filled.length&&!newName&&!saved.length){host.innerHTML='';return;}
   let h='<div class="saved-id">';
   h+='<div class="saved-id-hd"><span>Your saved identity</span><span style="flex:1 1 auto"></span>'+
+     '<button onclick="openIdentityWorksheet()">Workshop my card</button>'+
      '<button onclick="openDeclaration()">Build my declaration</button>'+
      '<button onclick="openCardHistory()">See all saved cards</button></div>';
   if(newName){
@@ -7839,7 +8562,8 @@ function renderSavedIdentity(){
       const dt=(decl.identity_statement||'').trim();
       h+='<div class="saved-id-name"><span class="lbl">Your declaration</span>'+
          '<div class="v">'+intpEsc(dt.length>220?dt.slice(0,220)+'…':dt)+'</div>'+
-         '<div class="decl-actions"><button onclick="useDeclarationAsCard(\''+decl.id+'\')">'+
+         '<div class="decl-actions"><button onclick="openIdentityTalk(\''+decl.id+'\')">Talk it through</button>'+
+         '<button onclick="useDeclarationAsCard(\''+decl.id+'\')">'+
          (state.primaryDeclarationId===decl.id?'✓ This is your identity card':'Make this my identity card')+'</button>'+
          '<button onclick="downloadDeclarationPDF(\''+decl.id+'\')">Download as PDF</button></div></div>';
     }
@@ -8033,18 +8757,723 @@ async function saveDeclaration(synth, ctx){
   }
 }
 
-// Reachable entry point: build the AI declaration. Routes to the Drawing the
-// Picture synthesis — the current engine that weaves the person's seven answers
-// together with their prophetic words, prayers, dreams, visions, gifts and the
-// thirteen-week teaching. NOT the archived worksheet reveal (which read the
-// empty state.identityWorksheet fields and pulled nothing).
+// Reachable entry point: generate a declaration from outside the old worksheet.
 async function openDeclaration(){
-  if(typeof openDrawingThePicture!=='function')return;
-  openDrawingThePicture();
-  // Jump straight to the capstone step ("Now let Him say it back") and prime it.
-  // dtpShowStep(DTP_SYNTH_STEP) calls dtpSynthPrime(), which shows what it's
-  // drawing from — or tells them to work the steps first if there's nothing yet.
-  if(typeof dtpShowStep==='function'&&typeof DTP_SYNTH_STEP!=='undefined')dtpShowStep(DTP_SYNTH_STEP);
+  const ws=state.identityWorksheet||{};
+  const d=state.drawingPicture||{};
+  const hasSource=Object.keys(ws).some(function(k){return (ws[k]||'').trim();})
+    || (d.iam||'').trim() || (state.prophetic||[]).length || (state.dreams||[]).length
+    || (Array.isArray(window._savedCardsCache)&&window._savedCardsCache.length);
+  if(!hasSource){
+    alert('There isn’t enough saved yet to build a declaration. Add some journal entries or work through Drawing the Picture first.');
+    return;
+  }
+  const ov=document.getElementById('iwOverlay');
+  if(!ov)return;
+  ov.style.display='flex';
+  setTimeout(function(){ov.classList.add('open');},10);
+  document.body.style.overflow='hidden';
+  // Jump straight to the synthesis step of the old worksheet.
+  if(typeof iwShowStep==='function')iwShowStep(iwTotalSteps-1);
+  if(typeof iwPopulateSummary==='function')iwPopulateSummary();
+  const res=document.getElementById('iwAiResult');
+  const btn=document.getElementById('iwAiGenerateBtn');
+  if(res)res.style.display='none';
+  if(btn)btn.style.display='inline-flex';
+  iwAiGenerated=false;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// RESOURCES EDITOR (admin) — v2
+// Everything the AI Guide reads lives in the `resources` table.
+// This is the backend that was always meant to exist: browse,
+// search, review, bulk-approve, import and export the library,
+// and test what the Guide would pull for a given dream.
+// Writes are gated server-side by "Admins can manage resources".
+// window._ properties on purpose: module-level lets would TDZ.
+// ═══════════════════════════════════════════════════════════════
+const RESED_TYPE_LABEL={dream_symbol:'Symbol',formation_principle:'Principle',sermon:'Sermon',other:'Theme'};
+const RESED_CATS=['people','places','numbers','colors','actions','body','animals','nature','objects','other'];
+const RESED_PAGE=50;
+var resedPage=0;
+
+async function resedLoad(){
+  if(!supa||!isAdminUser)return;
+  const count=document.getElementById('resedCount');
+  try{
+    // Transcripts can be 20k+ chars each; fetch them only when a row is opened.
+    // Page through in 1000s — PostgREST caps a single response.
+    let all=[],from=0;
+    for(;;){
+      const{data,error}=await supa.from('resources')
+        .select('id,type,title,content,tags,active,sort_order,updated_at')
+        .order('title').range(from,from+999);
+      if(error)throw error;
+      all=all.concat(data||[]);
+      if(!data||data.length<1000)break;
+      from+=1000;
+    }
+    window._resedRows=all;
+    window._resedSel=window._resedSel||{};
+    resedPage=0;
+    resedRenderStats();resedRenderCats();resedRenderList();
+  }catch(err){
+    console.error('resources load',err);
+    if(count)count.textContent='Couldn’t load resources: '+(err.message||err);
+  }
+}
+function resedIsReview(r){return (r.tags||[]).indexOf('review')>=0;}
+function resedSources(r){const s=(r.content||{}).source;return Array.isArray(s)?s:(s?[s]:[]);}
+function resedRenderStats(){
+  const host=document.getElementById('resedStats');if(!host)return;
+  const rows=window._resedRows||[];
+  const sym=rows.filter(function(r){return r.type==='dream_symbol'&&r.active;});
+  const review=rows.filter(function(r){return r.active&&resedIsReview(r);}).length;
+  const retired=rows.filter(function(r){return !r.active;}).length;
+  const cats={};RESED_CATS.forEach(function(c){cats[c]=0;});
+  sym.forEach(function(r){const k=(r.content||{}).category;if(k in cats)cats[k]++;});
+  const empty=RESED_CATS.filter(function(c){return !cats[c];});
+  host.innerHTML=
+    '<div class="resed-stat"><b>'+sym.length.toLocaleString()+'</b>symbols live</div>'+
+    '<div class="resed-stat"><b>'+rows.filter(function(r){return r.type==='formation_principle'&&r.active;}).length+'</b>principles</div>'+
+    '<div class="resed-stat"><b>'+rows.filter(function(r){return r.type==='sermon'&&r.active;}).length+'</b>sermons</div>'+
+    '<div class="resed-stat'+(review?' warn':'')+'"><b>'+review.toLocaleString()+'</b>need review</div>'+
+    '<div class="resed-stat"><b>'+retired+'</b>retired</div>'+
+    (empty.length?'<div class="resed-stat warn"><b>'+empty.length+'</b>empty: '+empty.join(', ')+'</div>':'');
+}
+function resedRenderCats(){
+  const host=document.getElementById('resedCatChips');if(!host)return;
+  const f=window._resedFilter||'all';
+  if(f!=='dream_symbol'&&f!=='all'){host.innerHTML='';window._resedCat='';return;}
+  const rows=(window._resedRows||[]).filter(function(r){return r.type==='dream_symbol';});
+  const n={};rows.forEach(function(r){const k=(r.content||{}).category||'other';n[k]=(n[k]||0)+1;});
+  const cur=window._resedCat||'';
+  host.innerHTML='<button class="resed-chip'+(cur===''?' active':'')+'" onclick="resedCat(\'\',this)">all categories</button>'+
+    RESED_CATS.map(function(c){return '<button class="resed-chip'+(cur===c?' active':'')+'" onclick="resedCat(\''+c+'\',this)">'+c+'<small>'+(n[c]||0)+'</small></button>';}).join('');
+}
+function resedFilter(type,btn){
+  window._resedFilter=type;window._resedCat='';resedPage=0;
+  document.querySelectorAll('#resedChips .resed-chip').forEach(function(b){b.classList.toggle('active',b===btn);});
+  resedRenderCats();resedRenderList();
+}
+function resedCat(c,btn){window._resedCat=c;resedPage=0;resedRenderCats();resedRenderList();}
+function resedRowText(r){
+  const c=r.content||{};
+  return [r.title,c.meaning,c.canonicalStatement,c.principleStatement,c.quote,c.context,c.theme,c.category,
+    (c.keywords||[]).join(' '),(c.aliases||[]).join(' '),(r.tags||[]).join(' ')].filter(Boolean).join(' ').toLowerCase();
+}
+function resedFiltered(){
+  const rows=window._resedRows||[];
+  const f=window._resedFilter||'all', cat=window._resedCat||'';
+  const q=(document.getElementById('resedSearch').value||'').trim().toLowerCase();
+  const showInactive=document.getElementById('resedShowInactive').checked;
+  const needs=document.getElementById('resedNeedsReview').checked;
+  const sort=document.getElementById('resedSort').value;
+  let out=rows.filter(function(r){
+    if(f!=='all'&&r.type!==f)return false;
+    if(cat&&(r.type!=='dream_symbol'||((r.content||{}).category||'other')!==cat))return false;
+    if(!showInactive&&!r.active)return false;
+    if(needs&&!resedIsReview(r))return false;
+    if(q&&resedRowText(r).indexOf(q)<0)return false;
+    return true;
+  });
+  if(sort==='updated')out.sort(function(a,b){return (b.updated_at||'').localeCompare(a.updated_at||'');});
+  else if(sort==='category')out.sort(function(a,b){return (((a.content||{}).category||'')+a.title).localeCompare(((b.content||{}).category||'')+b.title);});
+  else out.sort(function(a,b){return a.title.localeCompare(b.title);});
+  return out;
+}
+function resedRenderList(){
+  const host=document.getElementById('resedList');
+  const count=document.getElementById('resedCount');
+  const pager=document.getElementById('resedPager');
+  if(!host)return;
+  const shown=resedFiltered();
+  const pages=Math.max(1,Math.ceil(shown.length/RESED_PAGE));
+  if(resedPage>=pages)resedPage=pages-1;
+  const slice=shown.slice(resedPage*RESED_PAGE,(resedPage+1)*RESED_PAGE);
+  const sel=window._resedSel||{};
+  if(count)count.textContent=shown.length.toLocaleString()+' of '+(window._resedRows||[]).length.toLocaleString()+' resources';
+  if(!shown.length){host.innerHTML='<div class="devadmin-empty">Nothing matches.</div>';pager.innerHTML='';return;}
+  host.innerHTML=slice.map(function(r){
+    const c=r.content||{};
+    const sub=r.type==='dream_symbol'?String(c.meaning||'').slice(0,110)
+      :r.type==='formation_principle'?'P'+(c.principleNumber||'?')+' · '+String(c.canonicalStatement||c.principleStatement||'').slice(0,90)
+      :r.type==='sermon'?[c.date,c.series].filter(Boolean).join(' · ')
+      :[c.category,c.sermon].filter(Boolean).join(' · ');
+    const src=resedSources(r);
+    const badges=(r.type==='dream_symbol'?'<span class="resed-b">'+dtpEsc(c.category||'—')+'</span>':'')+
+      (src.indexOf('breathitt')>=0?'<span class="resed-b b">B</span>':'')+
+      (src.indexOf('divinity_code')>=0?'<span class="resed-b dc">DC</span>':'')+
+      (src.indexOf('shepherd')>=0?'<span class="resed-b b">S</span>':'')+
+      (resedIsReview(r)?'<span class="resed-b rv">review</span>':'');
+    return '<div class="resed-row'+(r.active?'':' retired')+(sel[r.id]?' sel':'')+'" onclick="resedOpen(\''+r.id+'\')">'+
+      '<input type="checkbox" '+(sel[r.id]?'checked':'')+' onclick="event.stopPropagation();resedToggleSel(\''+r.id+'\',this.checked)">'+
+      '<span class="resed-dot" title="'+(r.active?'active':'retired')+'"></span>'+
+      '<span class="resed-type">'+(RESED_TYPE_LABEL[r.type]||r.type)+'</span>'+
+      '<span class="resed-title">'+(c.icon?dtpEsc(c.icon)+' ':'')+dtpEsc(r.title||'(untitled)')+'</span>'+
+      '<span class="resed-sub">'+dtpEsc(sub)+'</span>'+
+      '<span class="resed-badges">'+badges+'</span>'+
+      '</div>';
+  }).join('');
+  pager.innerHTML='<button onclick="resedPage=Math.max(0,resedPage-1);resedRenderList()" '+(resedPage===0?'disabled':'')+'>‹ Prev</button>'+
+    '<span>page '+(resedPage+1)+' of '+pages+'</span>'+
+    '<button onclick="resedPage=Math.min('+(pages-1)+',resedPage+1);resedRenderList()" '+(resedPage>=pages-1?'disabled':'')+'>Next ›</button>'+
+    '<button onclick="resedSelectPage()">Select page</button>';
+  resedRenderBulk();
+}
+// ── selection + bulk ──
+function resedToggleSel(id,on){window._resedSel=window._resedSel||{};if(on)window._resedSel[id]=true;else delete window._resedSel[id];resedRenderList();}
+function resedSelectPage(){const shown=resedFiltered().slice(resedPage*RESED_PAGE,(resedPage+1)*RESED_PAGE);window._resedSel=window._resedSel||{};shown.forEach(function(r){window._resedSel[r.id]=true;});resedRenderList();}
+function resedSelectNone(){window._resedSel={};resedRenderList();}
+function resedRenderBulk(){
+  const n=Object.keys(window._resedSel||{}).length;
+  const bar=document.getElementById('resedBulk');if(!bar)return;
+  bar.style.display=n?'':'none';
+  document.getElementById('resedBulkCount').textContent=n+' selected';
+}
+async function resedBulk(action,value){
+  const ids=Object.keys(window._resedSel||{});
+  if(!ids.length)return;
+  const rows=(window._resedRows||[]).filter(function(r){return ids.indexOf(r.id)>=0;});
+  const label={approve:'mark '+ids.length+' as reviewed',retire:'retire '+ids.length,restore:'restore '+ids.length,category:'set category to "'+value+'" on '+ids.length}[action];
+  if(!confirm('This will '+label+'. Continue?'))return;
+  const count=document.getElementById('resedCount');
+  if(count)count.textContent='Working…';
+  let done=0,failed=0;
+  for(const r of rows){
+    const patch={updated_at:new Date().toISOString()};
+    if(action==='approve')patch.tags=(r.tags||[]).filter(function(t){return t!=='review';});
+    else if(action==='retire')patch.active=false;
+    else if(action==='restore')patch.active=true;
+    else if(action==='category'){if(r.type!=='dream_symbol')continue;patch.content=Object.assign({},r.content||{},{category:value});}
+    const{error}=await supa.from('resources').update(patch).eq('id',r.id);
+    if(error){failed++;console.error('bulk',r.title,error);}else{done++;Object.assign(r,patch);}
+  }
+  window._resedSel={};
+  resedRenderStats();resedRenderCats();resedRenderList();
+  if(typeof showSaveToast==='function')showSaveToast(done+' updated'+(failed?', '+failed+' failed':''));
+  if(typeof loadResourcesFromDB==='function')loadResourcesFromDB(true).then(function(){if(typeof buildSymbolDict==='function')buildSymbolDict();});
+}
+// ── try it: what would the Guide pull? ──
+var resedTryTimer=null;
+function resedTryDebounced(){clearTimeout(resedTryTimer);resedTryTimer=setTimeout(resedTry,350);}
+function resedTry(){
+  const t=document.getElementById('resedTryText').value||'';
+  const out=document.getElementById('resedTryOut');
+  if(!t.trim()){out.innerHTML='';return;}
+  if(typeof extractSymbols!=='function'){out.innerHTML='<div class="resed-try-none">Matcher not loaded.</div>';return;}
+  const names=extractSymbols(t);
+  if(!names.length){out.innerHTML='<div class="resed-try-none">No symbol in the library matches strongly enough. The Guide would fall back to general knowledge for this one.</div>';return;}
+  const all=getAllSymbols();
+  out.innerHTML=names.map(function(n){
+    const s=all.find(function(x){return x.name===n;});if(!s)return '';
+    return '<div class="resed-try-hit"><div class="n">'+dtpEsc(s.name)+'</div><div><div class="m">'+dtpEsc(String(s.meaning||'').slice(0,260))+'</div>'+
+      (s.scripture?'<div class="s">'+dtpEsc(s.scripture)+'</div>':'')+'</div></div>';
+  }).join('');
+}
+// ── editor ──
+function resedTypeChanged(){
+  const t=document.getElementById('resedType').value;
+  ['dream_symbol','formation_principle','sermon','other'].forEach(function(k){
+    const el=document.getElementById('resedF_'+k);if(el)el.style.display=k===t?'':'none';
+  });
+  document.getElementById('resedTranscriptRow').style.display=(t==='formation_principle'||t==='sermon')?'':'none';
+}
+function resedSetLines(id,arr){document.getElementById(id).value=Array.isArray(arr)?arr.join('\n'):(arr||'');}
+function resedGetLines(id){return document.getElementById(id).value.split('\n').map(function(s){return s.trim();}).filter(Boolean);}
+function resedGetList(id){return document.getElementById(id).value.split(',').map(function(s){return s.trim();}).filter(Boolean);}
+function resedDupHint(){
+  const t=(document.getElementById('resedTitle').value||'').trim().toLowerCase();
+  const id=document.getElementById('resedId').value;
+  const el=document.getElementById('resedDup');
+  if(!t||t.length<3){el.textContent='';return;}
+  const near=(window._resedRows||[]).filter(function(r){return r.id!==id&&r.title.toLowerCase().indexOf(t)>=0;}).slice(0,5);
+  el.textContent=near.length?'Already in the library: '+near.map(function(r){return r.title;}).join(', '):'';
+}
+function resedNew(){
+  const f=window._resedFilter||'all';
+  resedFill({id:'',type:(f==='all'?'dream_symbol':f),title:'',content:{category:window._resedCat||'people',source:['shepherd']},active:true,sort_order:0,tags:[]},null);
+  document.getElementById('resedEdTitle').textContent='New resource';
+  document.getElementById('resedRetireBtn').style.display='none';
+  document.getElementById('resedReviewed').checked=true;
+  document.getElementById('resedTitle').focus();
+}
+async function resedOpen(id){
+  const r=(window._resedRows||[]).find(function(x){return x.id===id;});
+  if(!r)return;
+  let transcript=null;
+  if(r.type==='formation_principle'||r.type==='sermon'){
+    try{const{data}=await supa.from('resources').select('transcript').eq('id',id).maybeSingle();transcript=data?(data.transcript||''):'';}catch(e){transcript='';}
+  }
+  resedFill(r,transcript);
+  document.getElementById('resedEdTitle').textContent='Edit · '+(RESED_TYPE_LABEL[r.type]||r.type);
+  const rb=document.getElementById('resedRetireBtn');
+  rb.style.display='';rb.textContent=r.active?'Retire':'Restore';
+}
+function resedFill(r,transcript){
+  const c=r.content||{};
+  const g=function(id){return document.getElementById(id);};
+  g('resedId').value=r.id||'';
+  g('resedType').value=r.type||'dream_symbol';
+  g('resedTitle').value=r.title||'';
+  g('resedActive').checked=r.active!==false;
+  g('resedReviewed').checked=!resedIsReview(r);
+  g('resedSort2').value=r.sort_order||0;
+  g('resedCategory').value=c.category||'people';
+  if(!g('resedCategory').value)g('resedCategory').value='other';
+  g('resedIcon').value=c.icon||'';
+  g('resedMeaning').value=c.meaning||'';
+  g('resedScripture').value=c.scripture||'';
+  g('resedKeywords').value=(c.keywords||r.tags||[]).filter(function(k){return k!=='review';}).join(', ');
+  g('resedIdentity').value=c.identity||'';
+  g('resedAlsoSee').value=c.alsoSee||'';
+  g('resedAliases').value=(Array.isArray(c.aliases)?c.aliases:[]).join(', ');
+  const srcs=resedSources(r);
+  document.querySelectorAll('.resedSrc').forEach(function(cb){cb.checked=srcs.indexOf(cb.value)>=0;});
+  g('resedPNum').value=c.principleNumber||'';
+  g('resedPDate').value=c.scheduledDate||'';
+  g('resedPStatement').value=c.canonicalStatement||c.principleStatement||'';
+  g('resedPPreacher').value=c.preacher||'';
+  g('resedPScriptures').value=(c.scriptures||[]).join(', ');
+  resedSetLines('resedPQuotes',c.keyQuotes);resedSetLines('resedPIdentity',c.identityStatements);
+  resedSetLines('resedPDecl',c.propheticDeclarations);resedSetLines('resedPThemes',c.themes);
+  g('resedSDate').value=c.date||'';g('resedSSeries').value=c.series||'';g('resedSTheme').value=c.theme||'';
+  g('resedSVerses').value=(c.keyVerses||[]).join(', ');
+  resedSetLines('resedSQuotes',c.keyQuotes);resedSetLines('resedSIdentity',c.identityStatements);
+  g('resedOCat').value=c.category||'identity_theme';
+  g('resedOSermon').value=[c.sermon,c.date].filter(Boolean).join(' — ');
+  g('resedOContext').value=c.context||c.quote||c.description||'';
+  g('resedTranscript').value=transcript||'';
+  g('resedTranscriptMeta').textContent=transcript?'· '+transcript.length.toLocaleString()+' chars':'';
+  g('resedRaw').value=JSON.stringify(c,null,2);
+  g('resedStatus').textContent='';g('resedDup').textContent='';
+  resedTypeChanged();
+  const ed=g('resedEditor');ed.style.display='';
+  if(window.innerWidth<1100)ed.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function resedClose(){document.getElementById('resedEditor').style.display='none';}
+function resedCollect(){
+  const g=function(id){return document.getElementById(id);};
+  const type=g('resedType').value;
+  let c={};
+  try{const raw=g('resedRaw').value.trim();if(raw)c=JSON.parse(raw);if(!c||typeof c!=='object'||Array.isArray(c))c={};}
+  catch(e){throw new Error('The raw JSON isn’t valid: '+e.message);}
+  const title=g('resedTitle').value.trim();
+  if(!title)throw new Error('Give it a title.');
+  if(type==='dream_symbol'){
+    c.category=g('resedCategory').value;c.icon=g('resedIcon').value.trim();
+    c.meaning=g('resedMeaning').value.trim();c.scripture=g('resedScripture').value.trim();
+    c.keywords=resedGetList('resedKeywords').map(function(k){return k.toLowerCase();});
+    c.identity=g('resedIdentity').value.trim();c.alsoSee=g('resedAlsoSee').value.trim();
+    c.aliases=resedGetList('resedAliases').map(function(k){return k.toLowerCase();});
+    c.source=Array.from(document.querySelectorAll('.resedSrc:checked')).map(function(cb){return cb.value;});
+    if(!c.meaning)throw new Error('A symbol needs a meaning — that’s the part the Guide uses.');
+  }else if(type==='formation_principle'){
+    c.principleNumber=parseInt(g('resedPNum').value,10)||null;c.scheduledDate=g('resedPDate').value.trim();
+    c.canonicalStatement=g('resedPStatement').value.trim();c.principleStatement=c.principleStatement||c.canonicalStatement;
+    c.preacher=g('resedPPreacher').value.trim();c.scriptures=resedGetList('resedPScriptures');
+    c.keyQuotes=resedGetLines('resedPQuotes');c.identityStatements=resedGetLines('resedPIdentity');
+    c.propheticDeclarations=resedGetLines('resedPDecl');c.themes=resedGetLines('resedPThemes');
+  }else if(type==='sermon'){
+    c.date=g('resedSDate').value.trim();c.series=g('resedSSeries').value.trim();c.theme=g('resedSTheme').value.trim();
+    c.keyVerses=resedGetList('resedSVerses');c.keyQuotes=resedGetLines('resedSQuotes');c.identityStatements=resedGetLines('resedSIdentity');
+  }else{
+    c.category=g('resedOCat').value;
+    const sd=g('resedOSermon').value.split('—');c.sermon=(sd[0]||'').trim();if(sd[1])c.date=sd[1].trim();
+    const txt=g('resedOContext').value.trim();
+    if(c.category==='key_quote')c.quote=txt;else if(c.category==='prophetic_pattern')c.description=txt;else c.context=txt;
+  }
+  let tags=(type==='dream_symbol'?c.keywords:(c.themes||[]))||[];
+  tags=tags.slice();
+  if(!g('resedReviewed').checked)tags.push('review');
+  const row={type:type,title:title,content:c,active:g('resedActive').checked,sort_order:parseInt(g('resedSort2').value,10)||0,tags:tags};
+  if(type==='formation_principle'||type==='sermon')row.transcript=g('resedTranscript').value||null;
+  return row;
+}
+async function resedSave(){
+  const st=document.getElementById('resedStatus');
+  let row;
+  try{row=resedCollect();}catch(e){st.textContent=e.message;return;}
+  const id=document.getElementById('resedId').value;
+  st.textContent='Saving…';
+  try{
+    let q;
+    const sel='id,type,title,content,tags,active,sort_order,updated_at';
+    if(id){row.updated_at=new Date().toISOString();q=await supa.from('resources').update(row).eq('id',id).select(sel).maybeSingle();}
+    else{if(currentUser)row.created_by=currentUser.id;q=await supa.from('resources').insert(row).select(sel).maybeSingle();}
+    if(q.error)throw q.error;
+    const saved=q.data;
+    const rows=window._resedRows||[];
+    const i=rows.findIndex(function(x){return x.id===saved.id;});
+    if(i>=0)rows[i]=saved;else rows.push(saved);
+    window._resedRows=rows;
+    document.getElementById('resedId').value=saved.id;
+    document.getElementById('resedEdTitle').textContent='Edit · '+(RESED_TYPE_LABEL[saved.type]||saved.type);
+    const rb=document.getElementById('resedRetireBtn');rb.style.display='';rb.textContent=saved.active?'Retire':'Restore';
+    st.textContent='✓ Saved. The Guide will use this on its next request.';
+    resedRenderStats();resedRenderCats();resedRenderList();
+    if(typeof loadResourcesFromDB==='function')loadResourcesFromDB(true).then(function(){if(typeof buildSymbolDict==='function')buildSymbolDict();});
+    if(typeof showSaveToast==='function')showSaveToast('Resource saved');
+  }catch(err){
+    console.error('resource save',err);
+    st.textContent='Couldn’t save: '+(err.message||err)+(String(err.message||'').match(/policy|permission|denied/i)?' — your account isn’t marked admin.':'');
+  }
+}
+async function resedRetire(){
+  const id=document.getElementById('resedId').value;if(!id)return;
+  const r=(window._resedRows||[]).find(function(x){return x.id===id;});
+  document.getElementById('resedActive').checked=!(r&&r.active);
+  await resedSave();
+}
+// ── export / import ──
+function resedExport(){
+  const rows=resedFiltered().map(function(r){return {type:r.type,title:r.title,content:r.content,tags:r.tags,active:r.active,sort_order:r.sort_order};});
+  const blob=new Blob([JSON.stringify(rows,null,1)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='shepherd-resources-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);},2000);
+}
+function resedImportPick(input){
+  const f=input.files&&input.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=function(){try{resedImport(JSON.parse(rd.result));}catch(e){alert('That file isn’t valid JSON: '+e.message);}input.value='';};
+  rd.readAsText(f);
+}
+async function resedImport(arr){
+  if(!Array.isArray(arr)){alert('Expected a JSON array of resources.');return;}
+  const byTitle={};(window._resedRows||[]).forEach(function(r){byTitle[r.type+'|'+r.title.toLowerCase()]=r;});
+  const valid=arr.filter(function(x){return x&&typeof x.title==='string'&&x.content&&typeof x.content==='object';});
+  const ins=[],upd=[];
+  valid.forEach(function(x){
+    const type=x.type||'dream_symbol';
+    const ex=byTitle[type+'|'+x.title.toLowerCase()];
+    const tags=Array.isArray(x.tags)?x.tags.slice():((x.content.keywords||[]).slice());
+    if(tags.indexOf('review')<0)tags.push('review');
+    const row={type:type,title:x.title,content:x.content,tags:tags,active:x.active!==false,sort_order:x.sort_order||0};
+    if(ex)upd.push([ex.id,row]);else ins.push(row);
+  });
+  if(!confirm('Import '+valid.length+' resources: '+ins.length+' new, '+upd.length+' updating existing titles. Everything imported is tagged "review". Continue?'))return;
+  const count=document.getElementById('resedCount');if(count)count.textContent='Importing…';
+  let ok=0,bad=0;
+  for(let i=0;i<ins.length;i+=200){
+    const chunk=ins.slice(i,i+200).map(function(r){if(currentUser)r.created_by=currentUser.id;return r;});
+    const{error}=await supa.from('resources').insert(chunk);
+    if(error){bad+=chunk.length;console.error('import insert',error);}else ok+=chunk.length;
+  }
+  for(const pair of upd){
+    const{error}=await supa.from('resources').update(Object.assign({updated_at:new Date().toISOString()},pair[1])).eq('id',pair[0]);
+    if(error){bad++;console.error('import update',error);}else ok++;
+  }
+  if(typeof showSaveToast==='function')showSaveToast(ok+' imported'+(bad?', '+bad+' failed':''));
+  await resedLoad();
+  if(typeof loadResourcesFromDB==='function')loadResourcesFromDB(true).then(function(){if(typeof buildSymbolDict==='function')buildSymbolDict();});
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TALK IT THROUGH — the identity conversation
+// The synthesis speaks once; this is where the person answers back.
+// One overlay, opened from either worksheet's declaration, the saved
+// identity panel, or the card history. The Guide is pinned to THIS
+// declaration, everything the person has captured in the app, and the
+// formation principles + sermon themes in the resources library. When
+// the person wants a change it proposes a revision inside [REVISED]
+// markers; nothing changes until they tap "Use this version", which
+// saves a new declaration card (the old one is kept) and makes it
+// their identity card.
+// window._ properties on purpose: module-level lets would TDZ.
+// ═══════════════════════════════════════════════════════════════
+const IDC_CHIPS=[
+  'Why this name?',
+  'What scripture backs this?',
+  'One line doesn’t sound like me',
+  'Where do my dreams and words point?',
+  'Make it shorter and sharper',
+  'What do I do with this this week?'
+];
+const IDC_MAX_TURNS=18; // messages sent to the model (after the system prompt)
+
+function idcEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function idcMd(text){
+  return idcEsc(text)
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*\n]+?)\*/g,'$1<em>$2</em>')
+    .replace(/\n/g,'<br>');
+}
+function idcStoreKey(){const c=window._idc;return 'shepherd_idc_'+((c&&c.id)||'draft');}
+
+// Which declaration are we talking about? A saved one by id, the one just
+// generated (maybe not saved yet), or whichever one is standing as the card.
+function idcResolve(id){
+  const saved=Array.isArray(window._savedCardsCache)?window._savedCardsCache:[];
+  let c=id?saved.find(function(x){return x.id===id;}):null;
+  if(c){
+    const p=c.payload||{};
+    return {id:c.id,declaration:(p.declaration||c.identity_statement||'').trim(),scriptures:p.scriptures||'',
+            connections:p.connections||'',keyVerse:p.keyVerse||'',createdAt:c.created_at||null};
+  }
+  if(window._iwAiSynthesis&&window._iwAiSynthesis.declaration){
+    const s=window._iwAiSynthesis;
+    return {id:s._savedId||null,declaration:s.declaration,scriptures:s.scriptures||'',connections:s.connections||'',keyVerse:s.keyVerse||'',createdAt:null};
+  }
+  const a=(typeof activeDeclaration==='function')?activeDeclaration():null;
+  if(a){
+    const p=a.payload||{};
+    return {id:a.id,declaration:(p.declaration||a.identity_statement||'').trim(),scriptures:p.scriptures||'',
+            connections:p.connections||'',keyVerse:p.keyVerse||'',createdAt:a.created_at||null};
+  }
+  return null;
+}
+
+async function openIdentityTalk(id){
+  const sess=supa?await supa.auth.getSession():null;
+  if(!(sess&&sess.data&&sess.data.session)){alert('Sign in to talk your identity through with the Guide.');return;}
+  const decl=idcResolve(id);
+  if(!decl||!decl.declaration){alert('Build your declaration first — then we can talk it through.');return;}
+  window._idc={id:decl.id,decl:decl,history:[],revisions:[],busy:false};
+  try{
+    const raw=localStorage.getItem(idcStoreKey());
+    if(raw){const s=JSON.parse(raw);if(s&&Array.isArray(s.history))window._idc.history=s.history;if(s&&Array.isArray(s.revisions))window._idc.revisions=s.revisions;}
+  }catch(_){}
+  idcRenderDecl();
+  idcRenderAll();
+  const ov=document.getElementById('idcOverlay');
+  ov.style.display='block';
+  setTimeout(function(){ov.classList.add('open');},10);
+  document.body.style.overflow='hidden';
+  setTimeout(function(){const i=document.getElementById('idcInput');if(i&&window.innerWidth>760)i.focus();},350);
+}
+function closeIdentityTalk(){
+  const ov=document.getElementById('idcOverlay');
+  ov.classList.remove('open');
+  setTimeout(function(){ov.style.display='none';},300);
+  // Give scroll back to whichever overlay is underneath, if any.
+  const under=['iwOverlay','dtpOverlay','dtpHistOverlay'].some(function(x){const e=document.getElementById(x);return e&&e.style.display&&e.style.display!=='none';});
+  if(!under)document.body.style.overflow='';
+}
+function idcPersist(){
+  try{localStorage.setItem(idcStoreKey(),JSON.stringify({history:window._idc.history.slice(-40),revisions:window._idc.revisions.slice(-10)}));}catch(_){}
+}
+function idcRenderDecl(){
+  const c=window._idc;if(!c)return;
+  document.getElementById('idcDeclText').textContent=c.decl.declaration;
+  const meta=document.getElementById('idcDeclMeta');
+  const isCard=c.id&&state.primaryDeclarationId===c.id;
+  meta.textContent=(isCard?'your identity card':(c.id?'saved':'not saved yet'))+(c.decl.createdAt?' · '+new Date(c.decl.createdAt).toLocaleDateString(undefined,{month:'short',day:'numeric'}):'');
+}
+function idcRenderAll(){
+  const host=document.getElementById('idcMessages');
+  host.innerHTML='';
+  const c=window._idc;
+  if(!c.history.length){
+    idcAppend('assistant','This one is yours to test, not mine to hand you. Ask me why a line is there, tell me which part doesn’t sound like you, or ask where a scripture, a dream or a word you’ve been given points. If you want something changed, say so — I’ll offer a revision and you decide what stands.',false);
+  }else{
+    c.history.forEach(function(m,i){
+      if(m.role==='user')idcAppend('user',m.content,false);
+      else{
+        const parsed=idcParse(m.content);
+        idcAppend('assistant',parsed.text,false);
+        if(parsed.revised)idcAppendRevision(parsed,m._revIndex,false);
+      }
+    });
+  }
+  idcRenderChips();
+  host.scrollTop=host.scrollHeight;
+}
+function idcRenderChips(){
+  const el=document.getElementById('idcChips');
+  el.innerHTML=IDC_CHIPS.map(function(t){return '<button class="idc-chip" onclick="idcSend('+JSON.stringify(t).replace(/"/g,'&quot;')+')">'+idcEsc(t)+'</button>';}).join('');
+}
+function idcAppend(role,text,scroll){
+  const host=document.getElementById('idcMessages');
+  const div=document.createElement('div');
+  div.className='idc-msg '+role;
+  div.innerHTML=role==='user'?idcEsc(text).replace(/\n/g,'<br>'):idcMd(text);
+  host.appendChild(div);
+  if(scroll!==false)host.scrollTop=host.scrollHeight;
+  return div;
+}
+function idcAppendRevision(parsed,revIndex,scroll){
+  const host=document.getElementById('idcMessages');
+  const c=window._idc;
+  const div=document.createElement('div');
+  const adopted=revIndex!=null&&c.revisions[revIndex]&&c.revisions[revIndex].adopted;
+  div.className='idc-rev'+(adopted?' adopted':'');
+  div.innerHTML='<span class="lbl">'+(adopted?'You took this version':'A revision to consider')+'</span>'+
+    '<div class="txt">'+idcEsc(parsed.revised)+'</div>'+
+    (parsed.keyVerse?'<div class="kv">Key verse: '+idcEsc(parsed.keyVerse)+'</div>':'')+
+    (adopted?'':'<div class="acts"><button class="primary" onclick="idcAdopt('+revIndex+',this)">Use this version</button>'+
+      '<button onclick="idcSend(\'Keep the current one — but tell me what you were trying to fix.\')">Keep mine</button></div>');
+  host.appendChild(div);
+  if(scroll!==false)host.scrollTop=host.scrollHeight;
+}
+function idcTyping(on){
+  const host=document.getElementById('idcMessages');
+  let t=document.getElementById('idcTyping');
+  if(on&&!t){t=document.createElement('div');t.className='idc-typing';t.id='idcTyping';t.innerHTML='<span></span><span></span><span></span>';host.appendChild(t);host.scrollTop=host.scrollHeight;}
+  if(!on&&t)t.remove();
+}
+function idcParse(reply){
+  const m=reply.match(/\[REVISED\]([\s\S]*?)\[\/REVISED\]/i);
+  const kv=reply.match(/\[KEYVERSE\]([\s\S]*?)\[\/KEYVERSE\]/i);
+  const text=reply.replace(/\[REVISED\][\s\S]*?\[\/REVISED\]/i,'').replace(/\[KEYVERSE\][\s\S]*?\[\/KEYVERSE\]/i,'').replace(/\n{3,}/g,'\n\n').trim();
+  return {text:text||(m?'Here is a version to weigh:':reply.trim()),revised:m?m[1].trim():'',
+          keyVerse:kv?(typeof normalizeKeyVerse==='function'?normalizeKeyVerse(kv[1]):kv[1].trim()):''};
+}
+function idcKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();idcSend();}
+}
+function idcGrow(t){t.style.height='auto';t.style.height=Math.min(t.scrollHeight,140)+'px';}
+
+// ─── grounding ───────────────────────────────────────────────────
+async function idcPrinciples(){
+  if(Array.isArray(window._idcPrinciples))return window._idcPrinciples;
+  let out=[];
+  try{
+    if(supa){
+      const{data}=await supa.from('resources').select('title,content').eq('type','formation_principle').eq('active',true);
+      out=(data||[]).map(function(p){const c=p.content||{};return {n:parseInt(c.principleNumber,10)||0,stmt:String(c.canonicalStatement||c.principleStatement||p.title||'').trim(),scriptures:(c.scriptures||[]).slice(0,3)};})
+        .filter(function(p){return p.stmt;}).sort(function(a,b){return a.n-b.n;});
+    }
+  }catch(e){console.warn('idc principles',e);}
+  window._idcPrinciples=out;
+  return out;
+}
+function idcList(a){return (a||[]).filter(Boolean).map(function(x){return '- '+x;}).join('\n');}
+async function idcSystemPrompt(){
+  const c=window._idc;const d=c.decl;
+  const ws=state.identityWorksheet||{};
+  const pl=(typeof dtpPayload==='function'&&state.drawingPicture)?dtpPayload():null;
+  const ctx=(typeof iwBuildAIContext==='function')?iwBuildAIContext():{relevantThemes:[],relevantQuotes:[],userGifts:[]};
+  const prin=await idcPrinciples();
+  const kb=(typeof SERMON_KNOWLEDGE_BASE!=='undefined')?SERMON_KNOWLEDGE_BASE:{};
+  const sermons=(kb.sermons||[]).slice(0,10).map(function(s){return s.title+(s.theme?' — '+s.theme:'')+((s.identityStatements||[]).length?' ("'+s.identityStatements[0]+'")':'');});
+  const FIELD_LABELS={calling:'Calling',spiritualGifts:'Spiritual gifts',naturalAbilities:'Natural abilities',passion:'Passion',vocation:'Vocation',ministry:'Ministry'};
+  let dtp='';
+  if(pl){
+    dtp='\nFROM "DRAWING THE PICTURE" (their capstone worksheet):\n'+
+      (pl.revelations&&pl.revelations.length?'What God showed them about Himself:\n'+idcList(pl.revelations)+'\n':'')+
+      (pl.circled&&pl.circled.length?'The ones they circled:\n'+idcList(pl.circled)+'\n':'')+
+      'Season — what they called it: '+(pl.season&&pl.season.wasCalled||'not given')+'; what He is renaming it: '+(pl.season&&pl.season.renamedTo||'not given')+'\n'+
+      'Where they are on the journey: '+(pl.spiritualStage||'not given')+'\n'+
+      (pl.namesAlreadyGiven&&pl.namesAlreadyGiven.length?'Names He has already given them:\n'+idcList(pl.namesAlreadyGiven)+'\n':'')+
+      Object.keys(FIELD_LABELS).map(function(k){const v=(pl.fields&&pl.fields[k]||'').trim();return v?'- '+FIELD_LABELS[k]+(pl.fitsBest&&pl.fitsBest.indexOf(k)>=0?' (where the name fits best)':'')+': '+v:'';}).filter(Boolean).join('\n')+'\n'+
+      'What they believe He is naming them: '+(pl.name||'not written yet')+'\n'+
+      (pl.instruction?'What they are obeying this week: '+pl.instruction+'\n':'');
+  }
+  return 'You are the Shepherd Guide, in a specific mode: helping one member of Shepherd Church NWI test, question and refine THEIR identity declaration. '+
+'This is a conversation, not a sermon. You are grounded in Scripture and in what Shepherd has actually taught this season. You never flatter.\n\n'+
+'THE DECLARATION ON THE TABLE:\n"""\n'+d.declaration+'\n"""\n'+
+(d.scriptures?'Its scripture foundation:\n'+d.scriptures+'\n':'')+
+(d.connections?'The threads it drew together:\n'+d.connections+'\n':'')+
+(d.keyVerse?'Key verse: '+d.keyVerse+'\n':'')+
+dtp+
+(ws.identityStatement||ws.callings||ws.passion?'\nFROM THEIR IDENTITY WORKSHEET:\n'+[['Identity statement',ws.identityStatement],['Callings',ws.callings],['Spiritual gifts',ws.spiritualGifts],['Natural abilities',ws.naturalAbilities],['Ministry',ws.ministry],['Passion',ws.passion],['Vocation',ws.vocation]].filter(function(p){return (p[1]||'').trim();}).map(function(p){return '- '+p[0]+': '+p[1].trim();}).join('\n')+'\n':'')+
+(ctx.userGifts&&ctx.userGifts.length?'\nConfirmed spiritual gifts: '+ctx.userGifts.join(', ')+'\n':'')+
+'\nTheir journal (prophetic words, dreams, visions, prayers, what stirred them) is supplied separately below under the user context — you DO have it. Cite specific entries by date when you draw on them.\n'+
+(prin.length?'\nWHAT SHEPHERD HAS TAUGHT — THE FORMATION PRINCIPLES (this is the frame; stay inside it):\n'+prin.map(function(p){return (p.n?p.n+'. ':'- ')+p.stmt+(p.scriptures.length?' ('+p.scriptures.join('; ')+')':'');}).join('\n')+'\n':'')+
+(sermons.length?'\nRECENT SHEPHERD SERMONS:\n'+idcList(sermons)+'\n':'')+
+(ctx.relevantThemes&&ctx.relevantThemes.length?'\nSHEPHERD IDENTITY THEMES THAT TOUCH THIS PERSON:\n'+ctx.relevantThemes.map(function(t){return '- '+t.theme+': '+t.context;}).join('\n')+'\n':'')+
+(ctx.relevantQuotes&&ctx.relevantQuotes.length?'\nLINES FROM SHEPHERD SERMONS:\n'+idcList(ctx.relevantQuotes)+'\n':'')+
+'\nHOW YOU WORK:\n'+
+'- Identity is received, not achieved. God names; we agree with what He has said. Keep pointing them back to what HE has said — in Scripture, in the words they have been given, in what they wrote themselves — not to what they wish were true or what would sound impressive.\n'+
+'- Their own words are the primary source. When you explain a line, show where it came from (which answer, which entry, which verse). When you revise, keep their vocabulary and images.\n'+
+'- Scripture is the plumb line. Anything in the declaration that Scripture would not stand behind, say so plainly and gently. Cite chapter and verse. Do not invent references.\n'+
+'- Prophetic words are weighed, not swallowed (1 Thess 5:20-21; 1 Cor 14:29). You never add a prophetic word of your own, never predict their future, never tell them what God is "about to do", and never speak as God in the first person.\n'+
+'- Instructions come before identity. When they ask what to do with it, point to the concrete obedience already in front of them (what they wrote for this week, the people they named) rather than inventing a mission.\n'+
+'- A declaration is tested in community. For anything weighty — a decision, a relationship, a calling that would cost others — send them to their Fold and elders; you are not the final word.\n'+
+'- You are not a counselor or physician. If pain, harm or crisis surfaces, respond with care and point them to a real person at Shepherd.\n'+
+'- Ask before you assume. One good question beats three paragraphs of guessing.\n'+
+'- Be brief: under 160 words unless they ask for depth. Warm, direct, specific. No platitudes, no lists of options, no hedging preambles.\n\n'+
+'REVISING THE DECLARATION:\n'+
+'Only propose a revision when they ask for a change or clearly want one. When you do, put the complete new declaration (first person, "I am…", 4-6 sentences, their words kept wherever possible) between [REVISED] and [/REVISED] markers, and if the key verse should change put one reference only between [KEYVERSE] and [/KEYVERSE]. Say in a sentence or two what you changed and why. Never put anything else inside the markers. Nothing changes until they choose to take it.';
+}
+
+// ─── send / receive ─────────────────────────────────────────────
+async function idcSend(preset){
+  const c=window._idc;if(!c||c.busy)return;
+  const input=document.getElementById('idcInput');
+  const text=(typeof preset==='string'?preset:input.value).trim();
+  if(!text)return;
+  const sess=supa?await supa.auth.getSession():null;
+  const tok=sess&&sess.data&&sess.data.session?sess.data.session.access_token:null;
+  if(!tok){idcAppend('system','Sign in to keep talking.');return;}
+  if(typeof preset!=='string'){input.value='';idcGrow(input);}
+  c.busy=true;document.getElementById('idcSend').disabled=true;
+  idcAppend('user',text);
+  c.history.push({role:'user',content:text});
+  idcTyping(true);
+  try{
+    const system=await idcSystemPrompt();
+    const turns=c.history.slice(-IDC_MAX_TURNS).map(function(m){return {role:m.role,content:m.content};});
+    const uc=(typeof getUserContext==='function')?getUserContext():{};
+    uc.identityWorksheet=state.identityWorksheet||null;
+    const resp=await fetch(SUPABASE_URL+'/functions/v1/ai-chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+tok},
+      body:JSON.stringify({messages:[{role:'system',content:system}].concat(turns),userContext:uc,feature:'identity_synthesis'})
+    });
+    idcTyping(false);
+    if(!resp.ok){
+      const err=await resp.json().catch(function(){return {};});
+      idcAppend('system',resp.status===429?'You’ve reached today’s AI limit. Come back tomorrow.':'I had trouble connecting ('+(err.detail||resp.status)+'). Try again.');
+      c.history.pop();
+    }else{
+      const data=await resp.json();
+      const reply=(data.reply||'').trim()||'I wasn’t able to respond. Try again.';
+      const parsed=idcParse(reply);
+      const msg={role:'assistant',content:reply};
+      if(parsed.revised){
+        c.revisions.push({text:parsed.revised,keyVerse:parsed.keyVerse,adopted:false,at:new Date().toISOString()});
+        msg._revIndex=c.revisions.length-1;
+      }
+      c.history.push(msg);
+      idcAppend('assistant',parsed.text);
+      if(parsed.revised)idcAppendRevision(parsed,msg._revIndex);
+      idcPersist();
+    }
+  }catch(e){
+    idcTyping(false);
+    idcAppend('system','Connection error. Check your internet and try again.');
+    c.history.pop();
+    console.warn('identity talk',e);
+  }
+  c.busy=false;document.getElementById('idcSend').disabled=false;
+}
+
+// Take a revision: save it as a NEW declaration card (the old one is kept),
+// make it the identity card, and carry the conversation over to it.
+async function idcAdopt(k,btn){
+  const c=window._idc;if(!c)return;
+  const rev=c.revisions[k];if(!rev||rev.adopted)return;
+  if(btn){btn.disabled=true;btn.textContent='Saving…';}
+  const synth={declaration:rev.text,scriptures:c.decl.scriptures||'',connections:c.decl.connections||'',
+               keyVerse:rev.keyVerse||c.decl.keyVerse||'',raw:'Revised in conversation from declaration '+(c.id||'(unsaved)')+'\n\n'+rev.text};
+  const ctx=(typeof iwBuildAIContext==='function')?iwBuildAIContext():null;
+  let newId=null;
+  if(typeof saveDeclaration==='function')newId=await saveDeclaration(synth,ctx);
+  if(!newId){
+    if(btn){btn.disabled=false;btn.textContent='Use this version';}
+    idcAppend('system','Couldn’t save that version to your account. Try again in a moment.');
+    return;
+  }
+  // Carry the thread across: the conversation now belongs to the new card.
+  const oldKey=idcStoreKey();
+  rev.adopted=true;
+  window._iwAiSynthesis=Object.assign({},window._iwAiSynthesis||{},synth,{_savedId:newId});
+  c.id=newId;c.decl={id:newId,declaration:rev.text,scriptures:synth.scriptures,connections:synth.connections,keyVerse:synth.keyVerse,createdAt:new Date().toISOString()};
+  try{localStorage.removeItem(oldKey);}catch(_){}
+  idcPersist();
+  if(typeof useDeclarationAsCard==='function')await useDeclarationAsCard(newId);
+  idcRenderDecl();
+  // Update the declaration wherever it is showing underneath.
+  ['dtpSynthContent','iwAiResultContent'].forEach(function(id){
+    const host=document.getElementById(id);if(!host)return;
+    const el=host.querySelector('.ai-declaration');if(el)el.innerHTML=idcEsc(rev.text).replace(/\n/g,'<br>');
+  });
+  idcRenderAll();
+  idcAppend('system','Saved as a new version and set as your identity card. The earlier one is still in your saved cards.');
+  if(typeof showSaveToast==='function')showSaveToast('This is your identity card now.');
 }
 
 // ═══ PCO EMBED: postMessage API ═══
@@ -8052,7 +9481,7 @@ window.addEventListener('message',function(e){if(e.data&&e.data.type==='shepherd
 // ═══ PWA: Service Worker + Install Prompt ═══
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('/sw.js').then(reg=>{
+    navigator.serviceWorker.register('sw.js').then(reg=>{
       console.log('SW registered',reg.scope);
       reg.addEventListener('updatefound',()=>{
         const nw=reg.installing;
